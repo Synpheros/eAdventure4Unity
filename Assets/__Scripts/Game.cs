@@ -152,7 +152,6 @@ public class Game : MonoBehaviour {
 			ret = macros [id];
 		}
 
-		Debug.Log (id);
 		if (id == "Random-Marcado-Pierna-ConTemplates")
 			Debug.Log ("SE EJECUTO");
 		return ret;
@@ -184,7 +183,17 @@ public class Game : MonoBehaviour {
 		guistate = guiState.NOTHING;
 		Game.Instance = this;
 		xmld = new XmlDocument ();
-		xmld.LoadXml (File.ReadAllText(selected_game + "chapter1.xml"));
+
+		// SYSTEM.IO.FILE Method
+		//xmld.LoadXml (File.ReadAllText(selected_game + "chapter1.xml"));
+
+		// RESOURCES.LOAD Method
+		TextAsset tmp = (Resources.Load (selected_game + "chapter1") as TextAsset);
+
+		if (tmp == null)
+			Debug.Log ("soy null");
+		else
+			xmld.LoadXml (tmp.text);
 
 		loader_state = loaderState.LOADING;
 		gameloader.Start ();
@@ -543,7 +552,7 @@ public class Game : MonoBehaviour {
 				GUILayout.BeginVertical ();
 				GUILayout.Label ("Cargando",style.label);
 
-				if(totals != null){
+				if(totals != null && totals.Count >= 8){
 					GUILayout.Box ("Personajes: " + this.characters.Count + " de " + totals["Characters"],style.box);
 					GUILayout.Box ("Objetos: " + this.objects.Count + " de " + totals["Objects"],style.box);
 					GUILayout.Box ("Objetos de Atrezzo: " + this.atrezzos.Count + " de " + totals["Atrezzos"],style.box);
@@ -567,7 +576,7 @@ public class Game : MonoBehaviour {
 			GUILayout.Label("eAdventure Loader v0.1",style.label);
 			foreach(string game in games){
 				if(GUILayout.Button (game.Split('/')[2],style.button)){
-					this.selected_game = game + "/";
+					this.selected_game = game.Split('/')[2] + "/";
 					this.startLoad();
 				};
 			}

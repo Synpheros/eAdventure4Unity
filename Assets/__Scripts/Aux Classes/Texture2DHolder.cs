@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 public class Texture2DHolder {
 
-	public static Texture2D LoadTexture(string filePath) {
+	/*public static Texture2D LoadTexture(string filePath) {
 		
 		Texture2D tex = null;
 		byte[] fileData;
@@ -23,18 +23,25 @@ public class Texture2DHolder {
 			fileData = System.IO.File.ReadAllBytes(filePath);
 		
 		return fileData;
-	}
+	}*/
 
 
-
-	byte[] fileData;
+	private string path;
 	private Texture2D tex;
 	public Texture2D Texture {
 		get { 
 			if (this.tex == null) {
-				tex = new Texture2D(2, 2,TextureFormat.BGRA32,false);
-				tex.LoadImage(fileData);
-				this.fileData = null;
+				tex = new Texture2D (100, 100, TextureFormat.BGRA32,false);
+				Texture2D tmp = (Resources.Load (path) as Texture2D);
+
+				if (tmp == null) {
+					Regex pattern = new Regex("[óñ]");
+					path = pattern.Replace(path, "+¦");
+
+					tmp = (Resources.Load (path) as Texture2D);
+				}
+
+				tex = tmp;
 			}
 			
 			return tex;
@@ -42,15 +49,13 @@ public class Texture2DHolder {
 		set { tex = value; }
 	}
 
-	public Texture2DHolder(byte[] data){
-		this.fileData = data;
-	}
-
 	public Texture2DHolder(string path){
 		if(!path.Contains(Game.Instance.selected_game))
 			path = Game.Instance.selected_game + path;
 
-		this.fileData = LoadBytes(path);
+		this.path = path.Split('.')[0];
+
+		/*this.fileData = LoadBytes(path);
 
 		if(this.fileData==null){
 			Regex pattern = new Regex("[óñ]");
@@ -60,6 +65,10 @@ public class Texture2DHolder {
 			
 			if(this.fileData==null)
 				Debug.Log("No se pudo cargar: " + path);
-		}
+		}*/
+	}
+
+	public Texture2DHolder(Texture2D texture){
+		this.tex = texture;
 	}
 }

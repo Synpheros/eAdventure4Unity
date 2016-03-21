@@ -24,7 +24,7 @@ public class eFrame {
 
 }
 
-public class eAnim {
+public class eAnim : ResourceHandler{
 	public List<eFrame> frames;
 	public XmlDocument xmld;
 
@@ -36,10 +36,27 @@ public class eAnim {
 
 		string[] splitted = path.Split ('.');
 		if (splitted [splitted.Length - 1] == "eaa") {
-			string eaaText = System.IO.File.ReadAllText (path);
-			parseEea (eaaText);
+			/*string eaaText = System.IO.File.ReadAllText (path);
+			string eaaText = (Resources.Load (path) as TextAsset).text;
+			parseEea (eaaText);*/
+			ResourceLoader.S.loadResource<TextAsset>(this, path.Replace(".eaa",""));
 		} else
 			createOldMethod (path);
+	}
+
+	public void loaded (object o){
+		if (o == null) {
+			createOldMethod (o as Texture2D);
+		} else {
+			switch (o.GetType ().ToString ()) {
+			case "UnityEngine.TextAsset":
+				parseEea (((TextAsset)o).text);
+				break;
+			case "UnityEngine.Texture2D":
+				createOldMethod (o as Texture2D);
+				break;
+			}
+		}
 	}
 
 	private void parseEea(string eaaText){
@@ -78,8 +95,8 @@ public class eAnim {
 		}
 	}
 
-
-	private static string[] extensions = {".png",".jpg",".jpeg"};
+	//############# SYSTEM.IO.FILE method #############
+	/*private static string[] extensions = {".png",".jpg",".jpeg"};
 	private void createOldMethod(string name){
 		xmld = new XmlDocument ();
 		
@@ -88,7 +105,7 @@ public class eAnim {
 		string ruta = name + "_" + intToStr (num);
 
 		string working_extension = "";
-		foreach(string extension in extensions)
+		foreach (string extension in extensions)
 			if (System.IO.File.Exists (ruta + extension)){
 				working_extension = extension;
 				break;
@@ -103,6 +120,32 @@ public class eAnim {
 			num++;
 			ruta = name + "_" + intToStr (num) + working_extension;
 		}
+	}*/
+
+	private int current = 1;
+	private string name = "";
+	private void createOldMethod(string name){
+		this.current = 1;
+		this.name = name;
+		this.frames = new List<eFrame> ();
+
+		string ruta = this.name + "_" + intToStr (this.current);
+
+		ResourceLoader.S.loadResource<Texture2D>(this, ruta);
+	}
+
+	private void createOldMethod(Texture2D t){
+		if (t != null) {
+			eFrame tmp = new eFrame ();
+			tmp.Duration = 500;
+			tmp.Holder = new Texture2DHolder (t);
+			this.frames.Add (tmp);
+
+			this.current++;
+			string ruta = this.name + "_" + intToStr (this.current);
+			ResourceLoader.S.loadResource<Texture2D>(this, ruta);
+		} else
+			this.current = 1;
 	}
 
 	private static string intToStr(int number){
