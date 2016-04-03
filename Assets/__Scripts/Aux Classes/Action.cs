@@ -10,7 +10,7 @@ public class Action : Secuence{
 	string type;
 	public Dictionary<string,Texture2DHolder> resources;
 	private Condition condition;
-	Effect effect;
+	public Effect effect;
 
 	public string Name {
 		get { return name;}

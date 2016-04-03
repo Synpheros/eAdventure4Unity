@@ -4,10 +4,30 @@ using System.Collections.Generic;
 using System.Xml;
 
 public class EffectNode{
+	public static string[] NodeTypes = {
+		"activate",
+		"deactivate",
+		"speak-player",
+		"speak-char",
+		"macro-ref",
+		"trigger-scene",
+		"trigger-cutscene",
+		"trigger-last-scene",
+		"trigger-conversation",
+		"random-effect",
+		"set-value",
+		"increment",
+		"decrement"
+	};
+
+	public Rect Position = new Rect (0, 0, 25, 25);
+
 	public string action;
 	public string target;
 	public Dictionary<string,object> aditional_info;
 	public Condition conditions;
+
+	public bool Collapsed = false;
 
 	private bool runs_once = true;
 	private int times_runed = 0;
@@ -136,7 +156,8 @@ public class EffectNode{
 }
 
 public class Effect : Secuence{
-	private List<EffectNode> effects;
+	public List<EffectNode> effects;
+
 	private string documentation;
 
 	public Effect(XmlNode effects){
@@ -156,6 +177,7 @@ public class Effect : Secuence{
 					conditions.Add(ConditionFactory.Create(effect));
 				}else{
 					this.effects.Add(new EffectNode(effect));
+					this.effects[this.effects.Count-1].Position = new Rect (0, this.effects.Count, 25, 25);
 				}
 			}
 

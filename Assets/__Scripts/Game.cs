@@ -562,11 +562,11 @@ public class Game : MonoBehaviour {
 		case guiState.GAME_SELECTION:
 			GUILayout.BeginArea (new Rect (Screen.width*0.1f, Screen.height*0.1f, Screen.width*0.8f, Screen.height*0.8f));
 			GUILayout.BeginVertical ();
-			string[] games = Directory.GetDirectories("Assets/Resources/");
+			string[] games = Directory.GetDirectories("Games/");
 
 			GUILayout.Label("eAdventure Loader v0.1",style.label);
 			foreach(string game in games){
-				if(GUILayout.Button (game.Split('/')[2],style.button)){
+				if(GUILayout.Button (game.Split('/')[1],style.button)){
 					this.selected_game = game + "/";
 					this.startLoad();
 				};
