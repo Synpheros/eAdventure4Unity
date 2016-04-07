@@ -136,8 +136,13 @@ public class Scene : MonoBehaviour{
 				this.transform.FindChild("Background").GetComponent<Renderer> ().material.mainTexture = current_resource.assets["slides"].frames[current_slide].Image;
 				forcewait = true;
 			}else{
-				if(((SlidesceneData) sceneData).next == "new-scene")
-					Game.Instance.renderScene(((SlidesceneData) sceneData).target);
+				string next = ((SlidesceneData)sceneData).next;
+
+				switch(next){
+					case "new-scene": Game.Instance.renderScene (((SlidesceneData)sceneData).target); break;
+					case "end-chapter": Game.Instance.nextChapter(); break;
+				}
+				
 			}
 			break;
 		}

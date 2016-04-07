@@ -14,6 +14,9 @@ public enum loaderState {
 }
 
 public class Game : MonoBehaviour {
+	Descriptor descriptor;
+	int currentChapter = -1;
+
 	private guiState guistate;
 	private string guitext;
 	private string guitalker;
@@ -183,8 +186,24 @@ public class Game : MonoBehaviour {
 	void startLoad(){
 		guistate = guiState.NOTHING;
 		Game.Instance = this;
+		XmlDocument xmldesc = new XmlDocument ();
+		xmldesc.LoadXml (File.ReadAllText(selected_game + "descriptor.xml"));
+
+		this.descriptor = new Descriptor (xmldesc.SelectSingleNode ("game-descriptor"));
+		nextChapter ();
+	}
+
+	public void nextChapter(){
+		stopRendering ();
+		gameloader = new Thread (loadGame);
+		loader_state = loaderState.NOT_LOADING;
+
+		this.currentChapter++;
+
+		guistate = guiState.NOTHING;
+		Game.Instance = this;
 		xmld = new XmlDocument ();
-		xmld.LoadXml (File.ReadAllText(selected_game + "chapter1.xml"));
+		xmld.LoadXml (File.ReadAllText(selected_game + descriptor.chapters[currentChapter].path));
 
 		loader_state = loaderState.LOADING;
 		gameloader.Start ();
@@ -390,6 +409,12 @@ public class Game : MonoBehaviour {
 
 		current_scene = ret;
 		return ret;
+	}
+
+	public void stopRendering(){
+		if (current_scene != null) {
+			GameObject.Destroy(current_scene);
+		}
 	}
 
 	public void reRenderScene(){
