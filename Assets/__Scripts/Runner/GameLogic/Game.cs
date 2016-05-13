@@ -116,6 +116,11 @@ public class Game : MonoBehaviour {
     //##########################################################################
     //##########################################################################
 
+	public bool useSystemIO = true;
+
+	public ResourceManager.LoadingType getLoadingType(){
+		return (useSystemIO ? ResourceManager.LoadingType.SYSTEM_IO : ResourceManager.LoadingType.RESOURCES_LOAD);
+	}
 
     private GUISkin style;
     public GUISkin Style {
@@ -128,31 +133,55 @@ public class Game : MonoBehaviour {
         style = Resources.Load("basic") as GUISkin;
     }
 
-    public string gameName = "Fire";
+	public string getGameName(){
+		return gameName;
+	}
+
+	public string gamePath = "c:/Games/";
+	public string gameName = "Fire";
+	private string selected_game;
+	private string selected_path;
+
+	public string getSelectedGame(){
+		return selected_game;
+	}
+	public string getSelectedPath(){
+		return selected_path;
+	}
+
+	public bool forceScene = false;
+	public string scene_name = "";
+	public GameObject Scene_Prefab;
+	private GUIProvider guiprovider;
 
 
-    public string selected_game;
-    public string selected_path;
-    public bool forceScene = false;
-    public string scene_name = "";
-    public GameObject Scene_Prefab;
-    private GUIProvider guiprovider;
+	AdventureData data;
+	MenuMB menu;
 
-	
-    AdventureData data;
-    MenuMB menu;
-
-    int current_chapter = 0;
+	int current_chapter = 0;
 	void Start () {
-        selected_path = "c:/Games/" + gameName;
-        selected_game = selected_path + "/";
+		selected_path = gamePath + gameName;
+		selected_game = selected_path + "/";
 
         //Controller.getInstance ().init ("Games/Fire.eap");
         List<Incidence> incidences = new List<Incidence>();
 
         data = new AdventureData ();
         AdventureHandler_ adventure = new AdventureHandler_ (data);
-        adventure.Parse (selected_game + "descriptor.xml");
+		switch (getLoadingType ()) {
+		case ResourceManager.LoadingType.RESOURCES_LOAD:
+			adventure.Parse (gameName +  "/descriptor");
+			break;
+		case ResourceManager.LoadingType.SYSTEM_IO:
+			adventure.Parse (selected_game + "descriptor.xml");
+			break;
+		}
+        
+
+		/*Texture2DHolder holder = new Texture2DHolder (data.getChapters () [0].getScenes () [0].getResources () [0].getAssetPath (Scene.RESOURCE_TYPE_BACKGROUND));
+
+		if (!holder.Loaded ())
+			Debug.Log ("no se ha cargado");*/
 
         if(data.getCursors().Count == 0) loadDefaultCursors ();
 
@@ -405,59 +434,6 @@ public class Game : MonoBehaviour {
                     GUILayout.EndArea ();
                 }
             }
-            break;
-        case guiState.OPTIONS_MENU:
-            /*int box_width = 0, box_height = 0;
-            foreach(Action a in guiactions){
-                if(a.getType() == Action.CUSTOM){
-                    CustomAction ca = a as CustomAction;
-                    Texture2D button = null;
-                    foreach (ResourcesUni ru in ca.getResources()) {
-                        if (ConditionChecker.check(ru.getConditions ())) {
-                            button = ResourceManager.Instance.getImage (ru.getAssetPath ("buttonNormal"));
-                        }
-                    }
-
-                    if (button != null) {
-                        box_width += button.width;
-                        if (button.height > box_height)
-                            box_height = button.height;
-                    }
-                }else{
-                    box_width += 100;
-                    if(box_height<50)
-                        box_height = 50;
-                }
-            }
-
-            GUILayout.BeginArea (new Rect (clicked_on.x-(box_width/2),(Screen.height - clicked_on.y) -(box_height/2),box_width, box_height));
-            GUILayout.BeginHorizontal ();
-            foreach(Action a in guiactions){
-                switch(a.getType()){
-                case Action.CUSTOM:
-                    CustomAction ca = a as CustomAction;
-                    Texture2D button = null;
-                    foreach (ResourcesUni ru in ca.getResources()) {
-                        if (ConditionChecker.check(ru.getConditions ())) {
-                            button = ResourceManager.Instance.getImage (ru.getAssetPath ("buttonNormal"));
-                        }
-                    }
-                    if(button!=null)
-                        if(GUILayout.Button (button,style.GetStyle("action_with_image"))){
-                            this.guistate = guiState.NOTHING;
-                            //Execute(a);
-                        }
-                    break;
-                default:
-                    if(GUILayout.Button (a.getType().ToString(),style.button)){
-                        this.guistate = guiState.NOTHING;
-                        //Execute(a);
-                    }
-                    break;
-                }
-            }
-            GUILayout.EndHorizontal ();
-            GUILayout.EndArea ();*/
             break;
         case guiState.ANSWERS_MENU:
             GUILayout.BeginArea (new Rect (Screen.width * 0.1f, Screen.height * 0.1f, Screen.width * 0.8f, Screen.height * 0.8f));

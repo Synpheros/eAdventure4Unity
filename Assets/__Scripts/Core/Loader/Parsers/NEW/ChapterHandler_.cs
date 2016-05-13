@@ -42,7 +42,28 @@ public class ChapterHandler_{
     public void Parse(string path)
     {
         XmlDocument xmld = new XmlDocument();
-        xmld.Load(path);
+
+		string xml = "";
+		switch (ResourceManager.Instance.getLoadingType ()) {
+		case ResourceManager.LoadingType.RESOURCES_LOAD:
+			if (path.Contains (".xml")) {
+				path = path.Replace (".xml", "");
+			}
+
+			TextAsset ta = Resources.Load (path) as TextAsset;
+
+			if (ta == null) {
+				Debug.Log ("Can't load chapter file: " + path);
+				return;
+			} else
+				xml = ta.text;
+			break;
+		case ResourceManager.LoadingType.SYSTEM_IO:
+			xml = System.IO.File.ReadAllText(path);
+			break;
+		}
+
+		xmld.LoadXml(xml);
 
         XmlElement element = xmld.DocumentElement;
         XmlNodeList

@@ -4,18 +4,37 @@ using System.Text.RegularExpressions;
 
 public class Texture2DHolder {
 
-	public static Texture2D LoadTexture(string filePath) {
+	public Texture2D LoadTexture() {
+		Texture2D tex = new Texture2D (1, 1);
+		switch(ResourceManager.Instance.getLoadingType()){
+		case ResourceManager.LoadingType.RESOURCES_LOAD:
+			tex = Resources.Load (this.path.Split('.')[0]) as Texture2D;
+
+			if (tex == null) {
+				loaded = false;
+				Debug.Log ("No se pudo cargar: " + this.path);
+			}else
+				loaded = true;
+			
+			break;
+		case ResourceManager.LoadingType.SYSTEM_IO:
+			/*byte[] fileData;
 		
-		Texture2D tex = null;
-		byte[] fileData;
-		
-		if (System.IO.File.Exists(filePath))     {
-			fileData = System.IO.File.ReadAllBytes(filePath);
-			tex = new Texture2D(2, 2);
-			tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
+			if (System.IO.File.Exists (filePath)) {
+				fileData = System.IO.File.ReadAllBytes (filePath);
+				tex = new Texture2D (2, 2);
+				tex.LoadImage (fileData); //..this will auto-resize the texture dimensions.
+			}*/
+
+			tex = new Texture2D(2, 2,TextureFormat.BGRA32,false);
+			tex.LoadImage(fileData);
+			this.fileData = null;
+			break;
 		}
+
 		return tex;
 	}
+
 	public static byte[] LoadBytes(string filePath) {
 		byte[] fileData = null;
 		
@@ -25,16 +44,13 @@ public class Texture2DHolder {
 		return fileData;
 	}
 
-
-
 	byte[] fileData;
+	string path;
 	private Texture2D tex;
 	public Texture2D Texture {
 		get { 
 			if (this.tex == null) {
-				tex = new Texture2D(2, 2,TextureFormat.BGRA32,false);
-				tex.LoadImage(fileData);
-				this.fileData = null;
+				tex = LoadTexture ();
 			}
 			
 			return tex;
@@ -53,21 +69,29 @@ public class Texture2DHolder {
 
 	public Texture2DHolder(string path){
         loaded = true;
-		if(!path.Contains(Game.Instance.selected_game))
-            path = Game.Instance.selected_game + path;
+		switch (ResourceManager.Instance.getLoadingType ()) {
+		case ResourceManager.LoadingType.RESOURCES_LOAD:
+			this.path = Game.Instance.getGameName () + "/" + path;
+			tex = LoadTexture ();
+			break;
+		case ResourceManager.LoadingType.SYSTEM_IO:
+			if (!path.Contains (Game.Instance.getSelectedGame()))
+				this.path = Game.Instance.getSelectedGame() + path;
 
-		this.fileData = LoadBytes(path);
+			this.fileData = LoadBytes (this.path);
 
-		if(this.fileData==null){
-			Regex pattern = new Regex("[óñ]");
-			path = pattern.Replace(path, "+¦");
+			if (this.fileData == null) {
+				Regex pattern = new Regex ("[óñ]");
+				this.path = pattern.Replace (this.path, "+¦");
 			
-			this.fileData = LoadBytes(path);
+				this.fileData = LoadBytes (this.path);
 			
-            if (this.fileData == null) {
-                loaded = false;
-                Debug.Log ("No se pudo cargar: " + path);
-            }
+				if (this.fileData == null) {
+					loaded = false;
+					Debug.Log ("No se pudo cargar: " + this.path);
+				}
+			}
+			break;
 		}
 	}
 }

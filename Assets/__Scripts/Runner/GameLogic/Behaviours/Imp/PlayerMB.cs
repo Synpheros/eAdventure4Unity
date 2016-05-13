@@ -129,7 +129,7 @@ public class PlayerMB : MonoBehaviour, Interactuable {
         } else if (moves.Count > 0) {
             move (moves.Dequeue ());
         } else if (moving && moves.Count <= 0) {
-            this.current_anim = new eAnim (current_resource.getAssetPath (NPC.RESOURCE_TYPE_STAND_UP));
+			this.current_anim = ResourceManager.Instance.getAnimation(current_resource.getAssetPath (NPC.RESOURCE_TYPE_STAND_UP));
             moving = false;
         }
     }
@@ -174,9 +174,9 @@ public class PlayerMB : MonoBehaviour, Interactuable {
 
         this.current_frame = 0;
         if (this.start_pos.x < this.end_pos.x) {
-            this.current_anim = new eAnim (current_resource.getAssetPath (NPC.RESOURCE_TYPE_WALK_RIGHT));
+			this.current_anim = ResourceManager.Instance.getAnimation(current_resource.getAssetPath (NPC.RESOURCE_TYPE_WALK_RIGHT));
         }else
-            this.current_anim = new eAnim (current_resource.getAssetPath (NPC.RESOURCE_TYPE_WALK_LEFT));
+			this.current_anim = ResourceManager.Instance.getAnimation(current_resource.getAssetPath (NPC.RESOURCE_TYPE_WALK_LEFT));
 
         speed = player_speed * (50 / Vector2.Distance (start_pos, end_pos));
     }

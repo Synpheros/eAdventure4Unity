@@ -25,7 +25,7 @@ public class CharacterMB : MonoBehaviour, Interactuable {
                 string path = cr.getAssetPath (NPC.RESOURCE_TYPE_STAND_UP);
 
                 //current_anim = Loader.loadAnimation(AssetsController.InputStreamCreatorEditor.getInputStreamCreator (path),path,new EditorImageLoader());
-                current_anim = new eAnim(path);
+				current_anim = ResourceManager.Instance.getAnimation(path);
 
 				break;
 			}

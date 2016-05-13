@@ -47,11 +47,39 @@ public class AdventureHandler_
         return adventureData;
     }
 
+	string directory = "";
     string tmpString = "";
     public void Parse(string path)
     {
-        XmlDocument xmld = new XmlDocument();
-        xmld.Load(path);
+		XmlDocument xmld = new XmlDocument ();
+
+		string xml = "";
+		switch (ResourceManager.Instance.getLoadingType ()) {
+		case ResourceManager.LoadingType.RESOURCES_LOAD:
+			directory = path.Split ('/') [0] + "/";
+			if (path.Contains (".xml")) {
+				path = path.Replace (".xml", "");
+			}
+			TextAsset ta = Resources.Load (path) as TextAsset;
+			if (ta == null) {
+				Debug.Log ("Can't load Descriptor file: " + path);
+				return;
+			} else
+				xml = ta.text;
+			break;
+		case ResourceManager.LoadingType.SYSTEM_IO:
+			xml = System.IO.File.ReadAllText(path);
+
+			directory = "";
+			string[] parts = path.Split ('/');
+
+			for(int i = 0; i < parts.Length-1; i++)
+				directory += parts[i] + "/";
+
+			break;
+		}
+
+		xmld.LoadXml(xml);
 
         XmlElement element = xmld.DocumentElement
             ,descriptor     = (XmlElement) element.SelectSingleNode ("/game-descriptor")
@@ -244,11 +272,6 @@ public class AdventureHandler_
 
         if (contents != null) {
             Chapter currentChapter;
-            string dir = "";
-            string[] parts = path.Split ('/');
-
-            for(int i = 0; i < parts.Length-1; i++)
-                dir += parts[i] + "/";
 
             XmlNodeList chapters = contents.SelectNodes ("chapter");
             foreach (XmlElement chapter in chapters) {
@@ -259,10 +282,10 @@ public class AdventureHandler_
                 if (!string.IsNullOrEmpty(tmpString)){
                     chapterPath = tmpString;
                 }
-                currentChapter.setChapterPath(chapterPath);
+                currentChapter.setChapterPath(directory + chapterPath);
 
                 ChapterHandler_ chapterParser = new ChapterHandler_(currentChapter);
-                chapterParser.Parse (dir + chapterPath);
+				chapterParser.Parse (directory + chapterPath);
 
                 title = (XmlElement) chapter.SelectSingleNode ("title");
                 if (title != null) {

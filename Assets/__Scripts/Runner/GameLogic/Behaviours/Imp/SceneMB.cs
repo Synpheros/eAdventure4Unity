@@ -651,10 +651,10 @@ public class SceneMB : MonoBehaviour, Interactuable{
     IEnumerator loadMovie(){
         string videoname = ((Videoscene)sceneData).getResources () [0].getAssetPath (Videoscene.RESOURCE_TYPE_VIDEO);
         string dir = "";
-        if (System.IO.File.Exists (Game.Instance.selected_game + videoname.Split ('.') [0] + ".ogv"))
-            dir = url_prefix + Game.Instance.selected_game + videoname.Split ('.') [0] + ".ogv";
-        else
-            dir = url_prefix + Game.Instance.selected_game + videoname;
+		if (System.IO.File.Exists (Game.Instance.getSelectedGame() + videoname.Split ('.') [0] + ".ogv"))
+			dir = url_prefix + Game.Instance.getSelectedGame() + videoname.Split ('.') [0] + ".ogv";
+	    else
+			dir = url_prefix + Game.Instance.getSelectedGame() + videoname;
     
         WWW www = new WWW (dir);
         yield return www;
