@@ -12,7 +12,7 @@ public class ActiveAreaMB : MonoBehaviour, Interactuable {
 
 	// Use this for initialization
 	void Start () {
-        adaptate ();
+        //adaptate ();
 	}
 	
 	// Update is called once per frame

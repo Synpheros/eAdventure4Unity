@@ -201,7 +201,7 @@ public class SceneMB : MonoBehaviour, Interactuable{
             }
         }
 
-        if (movie != null && !movie.isPlaying) {
+		if (movieplayer != MovieState.NOT_MOVIE && movieplayer != MovieState.PLAYING) {
             Interacted ();
         }
     }
@@ -646,47 +646,58 @@ public class SceneMB : MonoBehaviour, Interactuable{
     }
 
     // VIDEOSCENE FUNCTIONS
-    MovieTexture movie;
-    string url_prefix = "file:///";
-    IEnumerator loadMovie(){
-        string videoname = ((Videoscene)sceneData).getResources () [0].getAssetPath (Videoscene.RESOURCE_TYPE_VIDEO);
-        string dir = "";
+private enum MovieState { NOT_MOVIE, LOADING, PLAYING, STOPPED };
+private MovieState movieplayer;
+
+#if UNITY_ANDROID
+	//Handheld.PlayFullScreenMovie("");
+	IEnumerator loadMovie(){
+	yield break;
+	}
+#else
+	MovieTexture movie;
+	string url_prefix = "file:///";
+	IEnumerator loadMovie(){
+		string videoname = ((Videoscene)sceneData).getResources () [0].getAssetPath (Videoscene.RESOURCE_TYPE_VIDEO);
+		string dir = "";
 		if (System.IO.File.Exists (Game.Instance.getSelectedGame() + videoname.Split ('.') [0] + ".ogv"))
-			dir = url_prefix + Game.Instance.getSelectedGame() + videoname.Split ('.') [0] + ".ogv";
-	    else
-			dir = url_prefix + Game.Instance.getSelectedGame() + videoname;
-    
-        WWW www = new WWW (dir);
-        yield return www;
-        
-        if (www.error != null) {
-            Debug.Log ("Error: Can't laod movie! - " + www.error);
-            yield break;
+		dir = url_prefix + Game.Instance.getSelectedGame() + videoname.Split ('.') [0] + ".ogv";
+		else
+		dir = url_prefix + Game.Instance.getSelectedGame() + videoname;
 
-        } else {
-            MovieTexture video = www.movie as MovieTexture;
-            Debug.Log("Movie loaded");
-            Debug.Log(www.movie);
-            movie = video;
-            setMovie();
-            playMovie();
-        }
-    }
+		WWW www = new WWW (dir);
+		yield return www;
+
+		if (www.error != null) {
+			Debug.Log ("Error: Can't laod movie! - " + www.error);
+			yield break;
+
+		} else {
+			MovieTexture video = www.movie as MovieTexture;
+			Debug.Log("Movie loaded");
+			Debug.Log(www.movie);
+			movie = video;
+			setMovie();
+			playMovie();
+		}
+	}
 
 
-    public void setMovie(){
-        Debug.Log (movie.name + " ------");
-        this.transform.FindChild ("Background").GetComponent<Renderer>().material.mainTexture = movie;
-        //sound.clip = movie.audioClip;
-    }
+	public void setMovie(){
+		Debug.Log (movie.name + " ------");
+		this.transform.FindChild ("Background").GetComponent<Renderer>().material.mainTexture = movie;
+		//sound.clip = movie.audioClip;
+	}
 
-    public void playMovie(){
-        movie.Play ();
-        //sound.Play ();
-    }
+	public void playMovie(){
+		movie.Play ();
+		//sound.Play ();
+	}
 
-    public void pauseMovie(){
-        movie.Pause ();
-        //sound.Pause ();
-    }
+	public void pauseMovie(){
+		movie.Pause ();
+		//sound.Pause ();
+	}
+
+#endif
 }

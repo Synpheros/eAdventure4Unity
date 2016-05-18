@@ -80,11 +80,11 @@ public class ObjectMB : MonoBehaviour, Interactuable, Movable {
                 textures.Add (Item.RESOURCE_TYPE_IMAGEOVER, textures[Item.RESOURCE_TYPE_IMAGE]);
         }*/
 
-        GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (current_resource.getAssetPath(Item.RESOURCE_TYPE_IMAGE)); //textures[Item.RESOURCE_TYPE_IMAGEOVER].Texture;
+		GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (current_resource.getAssetPath(Item.RESOURCE_TYPE_IMAGEOVER)); //textures[Item.RESOURCE_TYPE_IMAGEOVER].Texture;
 	}
 	
 	void OnMouseExit() {
-        GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (current_resource.getAssetPath(Item.RESOURCE_TYPE_IMAGEOVER)); //textures[Item.RESOURCE_TYPE_IMAGE].Texture;
+		GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (current_resource.getAssetPath(Item.RESOURCE_TYPE_IMAGE)); //textures[Item.RESOURCE_TYPE_IMAGE].Texture;
 	}
 
     public InteractuableResult Interacted (RaycastHit hit = new RaycastHit()){

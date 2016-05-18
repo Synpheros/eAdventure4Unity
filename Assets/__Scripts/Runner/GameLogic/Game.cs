@@ -131,6 +131,7 @@ public class Game : MonoBehaviour {
     void Awake(){
         Game.instance = this;
         style = Resources.Load("basic") as GUISkin;
+		optionlabel = new GUIStyle(style.label);
     }
 
 	public string getGameName(){
@@ -152,6 +153,7 @@ public class Game : MonoBehaviour {
 	public bool forceScene = false;
 	public string scene_name = "";
 	public GameObject Scene_Prefab;
+	public GameObject Blur_Prefab;
 	private GUIProvider guiprovider;
 
 
@@ -348,8 +350,11 @@ public class Game : MonoBehaviour {
         this.clicked_on = position;
     }
 
+	GameObject blur;
     public void showOptions(ConversationNodeHolder options){
         if (options.getNode ().getType () == ConversationNodeViewEnum.OPTION) {
+			blur = GameObject.Instantiate (Blur_Prefab);
+			blur.transform.position = new Vector3 (Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1);
             this.guioptions = options;
             this.guistate = guiState.ANSWERS_MENU;
         }
@@ -375,13 +380,16 @@ public class Game : MonoBehaviour {
     private List<Action> guiactions;
     private ConversationNodeHolder guioptions;
 
+	GUIStyle optionlabel;
+
     void OnGUI () {
         float guiscale = Screen.width/800f;
 
         style.box.fontSize = Mathf.RoundToInt(guiscale * 20);
         style.button.fontSize = Mathf.RoundToInt(guiscale * 20);
-        style.label.fontSize = Mathf.RoundToInt(guiscale * 36);
         style.label.fontSize = Mathf.RoundToInt(guiscale * 20);
+		optionlabel.fontSize = Mathf.RoundToInt (guiscale * 36);
+        //style.label.fontSize = Mathf.RoundToInt(guiscale * 20);
         style.GetStyle("talk_player").fontSize = Mathf.RoundToInt(guiscale * 20);
 
         float rectwith = guiscale * 330;
@@ -435,14 +443,17 @@ public class Game : MonoBehaviour {
                 }
             }
             break;
-        case guiState.ANSWERS_MENU:
-            GUILayout.BeginArea (new Rect (Screen.width * 0.1f, Screen.height * 0.1f, Screen.width * 0.8f, Screen.height * 0.8f));
-            GUILayout.BeginVertical ();
-            OptionConversationNode options = (OptionConversationNode) guioptions.getNode ();
+		case guiState.ANSWERS_MENU:
+			GUILayout.BeginArea (new Rect (Screen.width * 0.1f, Screen.height * 0.1f, Screen.width * 0.8f, Screen.height * 0.8f));
+			GUILayout.BeginVertical ();
+			OptionConversationNode options = (OptionConversationNode)guioptions.getNode ();
+
+			GUILayout.Label (guitext, optionlabel);
             for(int i = 0; i < options.getLineCount(); i++){
                 ConversationLine ono = options.getLine (i);
                 if(ConditionChecker.check(options.getLineConditions(i)))
                     if(GUILayout.Button ((string) ono.getText(),style.button)){
+						GameObject.Destroy (blur);
                         guioptions.clicked(i);
                         Interacted();
                     };
