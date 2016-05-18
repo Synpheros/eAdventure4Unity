@@ -373,20 +373,43 @@ public class Game : MonoBehaviour {
 	bool getTalker = false;
     public void talk(string text, string character){
         if (character == null || character == Player.IDENTIFIER){
+			this.guitalker = "Player";
             this.guitext = text.Replace("[]","["+playerName+"]");
             this.guistate = guiState.TALK_PLAYER;
+			Vector2 position;
 
-			GUIManager.Instance.ShowBubble (
-				new BubbleData (
-					guitext
+			if (isFirstPerson ()) {
+				GUIManager.Instance.ShowBubble (
+					new BubbleData (
+						guitext
 					, new Vector2 (40, 60)
 					, new Vector2 (40, 45)
 					, Color.white
 					, Color.blue
 					, Color.white
 					, Color.blue
-				)
-			);
+					)
+				);
+			} else {
+				this.guitalkerObject = null;
+				this.guitalkerObject = GameObject.Find (guitalker);
+				if (this.guitalkerObject == null) {
+					getTalker = true;
+					return;
+				}
+
+				NPC cha = data.getChapters () [current_chapter].getPlayer ();
+
+				BubbleData bubble = generateBubble (cha);
+
+				position = this.guitalkerObject.transform.localPosition;
+
+				position.y += this.guitalkerObject.transform.localScale.y/2;
+
+				bubble.Destiny = position;
+				bubble.Origin = new Vector2 (position.x, position.y - 10f);
+				GUIManager.Instance.ShowBubble (bubble);
+			}
         }else {
             this.guitext = text;
             this.guitalker = character;
@@ -402,24 +425,11 @@ public class Game : MonoBehaviour {
 				}
 			}
 
-			
-			BubbleData bubble = new BubbleData (guitext, new Vector2 (40, 60), new Vector2 (40, 45));
-
-			position = this.guitalkerObject.transform.localPosition;
 			NPC cha = data.getChapters () [current_chapter].getCharacter (guitalker);
 
-			Color textColor, textOutline, background, border;
-			ColorUtility.TryParseHtmlString (cha.getTextFrontColor (), out textColor);
-			ColorUtility.TryParseHtmlString (cha.getTextBorderColor (), out textOutline);
-			ColorUtility.TryParseHtmlString (cha.getBubbleBkgColor (), out background);
-			ColorUtility.TryParseHtmlString (cha.getBubbleBorderColor (), out border);
+			BubbleData bubble = generateBubble (cha);
 
-
-			bubble.TextColor = textColor;
-			bubble.TextOutlineColor = textOutline;
-			bubble.BaseColor = background;
-			bubble.OutlineColor = border;
-
+			position = this.guitalkerObject.transform.localPosition;
 
 			/*if(position.x <= rectwith/2)
 				position.x = rectwith/2;
@@ -433,6 +443,23 @@ public class Game : MonoBehaviour {
 			GUIManager.Instance.ShowBubble (bubble);
         }
     }
+
+	private BubbleData generateBubble(NPC cha){
+		BubbleData bubble = new BubbleData (guitext, new Vector2 (40, 60), new Vector2 (40, 45));
+
+		Color textColor, textOutline, background, border;
+		ColorUtility.TryParseHtmlString (cha.getTextFrontColor (), out textColor);
+		ColorUtility.TryParseHtmlString (cha.getTextBorderColor (), out textOutline);
+		ColorUtility.TryParseHtmlString (cha.getBubbleBkgColor (), out background);
+		ColorUtility.TryParseHtmlString (cha.getBubbleBorderColor (), out border);
+
+		bubble.TextColor = textColor;
+		bubble.TextOutlineColor = textOutline;
+		bubble.BaseColor = background;
+		bubble.OutlineColor = border;
+
+		return bubble;
+	}
 
     private Vector2 clicked_on;
     private guiState guistate = guiState.NOTHING;
