@@ -75,6 +75,7 @@ public class Texture2DHolder {
 			tex = LoadTexture ();
 			break;
 		case ResourceManager.LoadingType.SYSTEM_IO:
+			this.path = path;
 			if (!path.Contains (Game.Instance.getSelectedGame()))
 				this.path = Game.Instance.getSelectedGame() + path;
 

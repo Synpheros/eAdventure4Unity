@@ -207,7 +207,8 @@ public class Game : MonoBehaviour {
                 Interacted ();
             } else if(guistate == guiState.NOTHING){
                 Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-                RaycastHit[] hits = Physics.RaycastAll (ray);
+				List<RaycastHit> hits = new List<RaycastHit>( Physics.RaycastAll (ray));
+				//hits.Reverse ();
 
                 bool no_interaction = true;
                 foreach (RaycastHit hit in hits) {
@@ -224,6 +225,14 @@ public class Game : MonoBehaviour {
         } else if (Input.GetMouseButtonDown (1)) {
             MenuMB.Instance.hide ();
         }
+
+		if (getTalker) {
+			this.guitalkerObject = GameObject.Find(guitalker);
+			if (this.guitalkerObject != null) {
+				getTalker = false;
+				talk (guitext, guitalker);
+			}
+		}
     }
 
     private bool InteractWith(Interactuable interacted){
@@ -253,10 +262,11 @@ public class Game : MonoBehaviour {
 
     private void Interacted(){
         guistate = guiState.NOTHING;
+		GUIManager.Instance.destroyBubbles ();
         if (this.next_interaction != null) {
             Interactuable tmp = next_interaction;
             next_interaction = null;
-            Execute(tmp);
+			Execute(tmp);
         }
     }
 
@@ -360,15 +370,67 @@ public class Game : MonoBehaviour {
         }
     }
 
+	bool getTalker = false;
     public void talk(string text, string character){
         if (character == null || character == Player.IDENTIFIER){
             this.guitext = text.Replace("[]","["+playerName+"]");
             this.guistate = guiState.TALK_PLAYER;
+
+			GUIManager.Instance.ShowBubble (
+				new BubbleData (
+					guitext
+					, new Vector2 (40, 60)
+					, new Vector2 (40, 45)
+					, Color.white
+					, Color.blue
+					, Color.white
+					, Color.blue
+				)
+			);
         }else {
             this.guitext = text;
-            this.guitalkerObject = null;
             this.guitalker = character;
+			this.guitalkerObject = null;
             this.guistate = guiState.TALK_CHARACTER;
+			Vector2 position;
+
+			if (this.guitalkerObject == null) {
+				this.guitalkerObject = GameObject.Find (guitalker);
+				if (this.guitalkerObject == null) {
+					getTalker = true;
+					return;
+				}
+			}
+
+			
+			BubbleData bubble = new BubbleData (guitext, new Vector2 (40, 60), new Vector2 (40, 45));
+
+			position = this.guitalkerObject.transform.localPosition;
+			NPC cha = data.getChapters () [current_chapter].getCharacter (guitalker);
+
+			Color textColor, textOutline, background, border;
+			ColorUtility.TryParseHtmlString (cha.getTextFrontColor (), out textColor);
+			ColorUtility.TryParseHtmlString (cha.getTextBorderColor (), out textOutline);
+			ColorUtility.TryParseHtmlString (cha.getBubbleBkgColor (), out background);
+			ColorUtility.TryParseHtmlString (cha.getBubbleBorderColor (), out border);
+
+
+			bubble.TextColor = textColor;
+			bubble.TextOutlineColor = textOutline;
+			bubble.BaseColor = background;
+			bubble.OutlineColor = border;
+
+
+			/*if(position.x <= rectwith/2)
+				position.x = rectwith/2;
+			else if(position.x >= (Screen.width - rectwith/2) )
+				position.x = (Screen.width - rectwith/2);*/
+
+			position.y += this.guitalkerObject.GetComponent<CharacterMB> ().transform.localScale.y/2;
+
+			bubble.Destiny = position;
+			bubble.Origin = new Vector2 (position.x, position.y - 10f);
+			GUIManager.Instance.ShowBubble (bubble);
         }
     }
 
@@ -395,20 +457,15 @@ public class Game : MonoBehaviour {
         float rectwith = guiscale * 330;
 
         switch (guistate) {
-        case guiState.TALK_PLAYER:
-            GUILayout.BeginArea (new Rect ((Screen.width/2)-rectwith/2, 50, rectwith, 400));
+		case guiState.TALK_PLAYER:
+            /*GUILayout.BeginArea (new Rect ((Screen.width/2)-rectwith/2, 50, rectwith, 400));
             GUILayout.BeginHorizontal ();
             GUILayout.Box (guitext,style.GetStyle("talk_player"));
             GUILayout.EndHorizontal ();
-            GUILayout.EndArea ();
+            GUILayout.EndArea ();*/
             break;
         case guiState.TALK_CHARACTER:
-            if(Camera.current!=null){
-                Vector2 position;
-                if(this.guitalkerObject == null){
-                    this.guitalkerObject = GameObject.Find(guitalker);
-                }else{
-                    GUIStyle current = new GUIStyle(style.box);
+			/*GUIStyle current = new GUIStyle(style.box);
                     if (this.guitalkerObject != null) {
                         position = Camera.current.WorldToScreenPoint (this.guitalkerObject.transform.position);
                         Color tmp = Color.black;
@@ -439,9 +496,7 @@ public class Game : MonoBehaviour {
                     GUILayout.BeginHorizontal ();
                     GUILayout.Box (guitext,current);
                     GUILayout.EndHorizontal ();
-                    GUILayout.EndArea ();
-                }
-            }
+                    GUILayout.EndArea ();*/
             break;
 		case guiState.ANSWERS_MENU:
 			GUILayout.BeginArea (new Rect (Screen.width * 0.1f, Screen.height * 0.1f, Screen.width * 0.8f, Screen.height * 0.8f));

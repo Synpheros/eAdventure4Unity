@@ -120,7 +120,7 @@ public class CharacterSubParser_ : Subparser_
                 npc.setBubbleBorderColor(tmpArgVal);
             }
 
-            frontcolors = element.SelectNodes("frontcolor");
+			frontcolors = el.SelectNodes("frontcolor");
             foreach (XmlElement ell in frontcolors)
             {
                 string color = "";
@@ -134,12 +134,12 @@ public class CharacterSubParser_ : Subparser_
                 npc.setTextFrontColor(color);
             }
 
-            bordercolors = element.SelectNodes("bordercolor");
+			bordercolors = el.SelectNodes("bordercolor");
             foreach (XmlElement ell in bordercolors)
             {
                 string color = "";
 
-                tmpArgVal = el.GetAttribute("color");
+                tmpArgVal = ell.GetAttribute("color");
                 if (!string.IsNullOrEmpty(tmpArgVal))
                 {
                     color = tmpArgVal;

@@ -122,7 +122,7 @@ public class eAnim {
 			}
 			break;
 		case ResourceManager.LoadingType.SYSTEM_IO:
-			ruta = name + "_" + intToStr (num);
+			ruta = Game.Instance.getSelectedGame() + name + "_" + intToStr (num);
 			string working_extension = "";
 			
 			foreach (string extension in extensions) {
