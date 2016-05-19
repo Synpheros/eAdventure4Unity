@@ -42,6 +42,8 @@ public class ObjectMB : MonoBehaviour, Interactuable, Movable {
 		
         Vector2 tmppos = new Vector2(context.getX(),context.getY()) / 10 + (new Vector2(0,-transform.localScale.y))/2;
         transform.localPosition = new Vector3(tmppos.x,60-tmppos.y,-context.getLayer());
+
+		hasOverSprite = current_resource.getAssetPath (Item.RESOURCE_TYPE_IMAGEOVER) != null;
 	}
 	
     bool dragging = false;
@@ -82,11 +84,15 @@ public class ObjectMB : MonoBehaviour, Interactuable, Movable {
 	}
 
 	bool interactable = false;
+	bool hasOverSprite = false;
 	void showHand(bool show){
 		if (show && !interactable) {
-			GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (current_resource.getAssetPath(Item.RESOURCE_TYPE_IMAGEOVER));
+			Game.Instance.setCursor ("over");
+			if(hasOverSprite)
+				GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (current_resource.getAssetPath(Item.RESOURCE_TYPE_IMAGEOVER));
 			interactable = true;
 		} else if (!show && interactable) {
+			Game.Instance.setCursor ("default");
 			GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (current_resource.getAssetPath(Item.RESOURCE_TYPE_IMAGE));
 			interactable = false;
 		}
