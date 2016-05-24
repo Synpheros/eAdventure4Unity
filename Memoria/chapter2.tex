@@ -1,0 +1,57 @@
+% +--------------------------------------------------------------------+
+% | Sample Chapter 2
+% +--------------------------------------------------------------------+
+
+\cleardoublepage
+
+% +--------------------------------------------------------------------+
+% | Replace "This is Chapter 2" below with the title of your chapter.
+% | LaTeX will automatically number the chapters.
+% +--------------------------------------------------------------------+
+
+\chapter{Comenzando con el Proyecto}
+\label{makereference2}
+
+Tras obtener el videojuego Checklist en su versión ejecutable, el cual se puede descargar a través del repositorio de eAdventure en Sourceforge, se realizó un estudio. Se completó el videojuego en repetidas ocasiones intentando buscar la aleatoriedad que aparecía descrita en los documentos del proyecto, y analizar a fondo el funcionamiento del mismo. 
+
+En una primera instancia parece un videojuego sencillo, con mecánicas muy simples, apenas reglas para el desarrollo, más allá de las que se nos imponen circunstancialmente en alguna de las escenas en las que no podremos avanzar sin tener la atención del equipo. Sin embargo, el juego esconde una mayor complejidad, pues tus decisiones dentro del juego te llevarán a alcanzar un final diferente cada vez que el juego es completado. El análisis de la no linealidad del juego, así como la aleatoriedad de algunos de sus elementos, como la no colaboración de miembros del equipo, o la posibilidad de que algunas de las labores que se comprueban en la Lista de Verificación Quirúrgica estén mal realizadas, hacen que implementación del videojuego no sea tan sencilla al perder la linealidad. Asimismo, el videojuego está compuesto por multitud de recursos de gran variedad de tipos, entre los que encontramos imágenes, animaciones, y textos. 
+
+La obtención de los recursos del videojuego se realiza mediante la extracción del paquete ejecutable standalone producido por eAdventure. Dicho paquete es un archivo “.jar”, disponible en el repositorio de SourdeForge de eAdventure, más concretamente en su carpeta Games1. Mediante la extracción de dicho paquete, no sólo se obtienen los recursos del juego. El paquete “.jar” está compuesto por: Una carpeta “Assets” donde se encuentran los recursos pertenecientes al juego en concreto, una carpeta “gui” que contiene recursos que utilizan los juegos de eAdventure y que son genéricos para todos ellos, como botones, cursores para el ratón, e iconos; además, dentro del paquete se incluye el núcleo de eAdventure, intérprete capaz de ejecutar el juego, junto a multitud de librerías y codecs para la decodificación de vídeo. Finalmente, en la raíz de este fichero se encuentran los archivos de definición del juego, en formato XML junto a las DTD que permiten la interpretación correcta de dichos ficheros. Adicionalmente, este paquete es interpretable por eAdventure, por lo que permite el estudio del videojuego de una forma más visual y aclaratoria. Abrir el paquete con esta plataforma y dedicar un tiempo a analizar cómo se han construido algunos de los elementos que lo forman permite una mejor elección de la estrategia que se llevará a cabo para la implementación de dicho juego en Unity.
+
+Cabe destacar la existencia de ficheros de Animación dentro de la carpeta “/assets/animation/”. Estos ficheros son el formato “.eaa”, y son generados por eAdventure. Aunque en primera instancia parezcan un formato propio de dicha plataforma, estos ficheros son interpretables por un editor de texto, y son descripciones en XML de cómo se debe realizar la animación. Asimismo, la DTD de dicho fichero XML se puede encontrar en la raíz de archivos del videojuego. 
+
+Un análisis en profundidad de los ficheros de definición del videojuego, es decir, de los ficheros XML, explica que, dentro de dicho fichero XML podemos encontrar las definiciones de los siguientes elementos: Escenas, Personajes, Objetos, Objetos de Atrezo, estados de la máquina de estado, Macros, Efectos, Acciones… Además, dentro de dicho archivo se especifican todas aquellas condiciones que, dependiendo del estado del juego, causan la representación de escenas de una forma diferente, así como las diferentes respuestas contextuales que podemos obtener al interactuar con algún personaje en un momento concreto, junto a los Grafos de diálogo. Cabe destacar que dichos archivos de definición alcanzan un gran tamaño, siendo, en el caso de Checklist, de una longitud aproximada de 10.000 lineas de código, sin contar los archivos de animaciones que también definen más elementos del juego. 
+
+Encontrar dichos grafos separados del código plantea un dilema a la hora de la implementación. Se nos presentan dos opciones. La primera opción consiste en transcribir los diálogos a mano e incluirlos dentro del código del programa, y la segunda opción consiste en mantener diálogos y textos en general, separados del código del programa. Ambas opciones son válidas y ambas se realizan en la implementación de cualquier tipo de software. Un análisis breve nos lleva a las siguientes conclusiones: 
+
+\begin{itemize}
+	\item 
+	Transcribir el texto a mano e incluirlo dentro del código del programa es laborioso, y ese tiempo es mucho más valioso invertirlo en realizar un buen diseño de la arquitectura del videojuego. En general, el coste del salario de cada trabajador es más alto cuanto más compleja sea la labor que desempeña, y mayor sea su cualificación, es por ello que el precio de un arquitecto de software y el de un programador no es el mismo. Por ello invertir el tiempo en realizar una labor de más alto nivel, reducirá costes
+	\item 
+	Pese a que existen herramientas para la localización de programas mediante el análisis del código en busca de fragmentos de texto para traducir [8], Incluirlo dentro del código del programa, más concretamente dentro del código de cada uno de los personajes, dificulta esta tarea de localización, teniendo que volver a producir el juego una vez se haya traducido y sus elementos se hayan adaptado a la cultura en la cual se va a desplegar dicho programa. 
+	\item
+	Finalmente, la obtención de los textos de un archivo externo permite la reutilización del software que desempeñe esa función, para otros proyectos similares, pudiendo realizar la interpretación de textos para otros videojuegos de eAdventure. 
+\end{itemize}
+
+Es habitual encontrar los textos de un programa separados del código. Uno de los fundamentos de la construcción de Web consiste en mantener el HTML con únicamente datos de contenido, y CSS con la definición acerca de la representación de dichos datos [10]. Otro ejemplo es el de los programas desarrollados para Android, los cuales disponen de un archivo llamado “strings.xml”, junto a muchos otros archivos similares, en donde se incita a los desarrolladores a incluir todos los textos del programa, como los títulos de los menús, los nombres de los campos de los formularios, o las descripciones de algunos elementos[9]; y que facilita la traducción del programa cuando un usuario de la Google Play Store de otro país instala dicha aplicación. En la reconstrucción de Checklist sobre Unity se opta por mantener separados el código y los textos, y realizar un análisis con la librería System.Xml de C#, extrayendo el contenido de los diálogos de los ficheros de definición del juego. 
+
+Analizando en profundidad el último punto de la anterior lista de conclusiones acerca de mantener el código separado del texto, remarcando la posibilidad de reutilizar dicho software, y pudiendo obtener de los archivos de definición del juego, todas las descripciones de los elementos, junto a los diálogos, efectos, condiciones, macros, personajes, etc. Se plantea la opción de poder generar una herramienta capaz de interpretar cualquier juego de eAdventure, sin ninguna implementación específica, y “reproducir” dicho juego en Unity. 
+
+La implementación de dicha herramienta capaz de interpretar cualquier juego es más costosa frente a una implementación centrada y enfocada en Checklist, pero, la realización de dicho esfuerzo ahorrará mucho más esfuerzo en el futuro cuando se desee aprovechar muchos de los otros juegos generados con eAdventure. 
+
+Por todo ello, se tomó la decisión de realizar un intérprete de juegos de eAdventure, y,habiendo alcanzado dicho punto, no mucha más información es necesaria para comenzar con el diseño e implementación del videojuego. 
+
+%\section{Page Number References}
+%\label{makereference2.1} I should also be able to refer to a
+%specific page number, such as page~\pageref{makereference}.  Of
+%course, I'll need to have a slash label command and a unique name
+%in each section that I want to be able to refer to later in the
+%text.
+%
+%\section{Referring to Sections Within Chapter 1}
+%\label{makereference2.2} Now, I'm going to refer to different
+%sections within Chapter 1. I gave an example of a figure in
+%section~\ref{makereference1.1} and an example of a table in
+%section~\ref{makereference1.2}.  In
+%section~\ref{makereference1.3}, we looked at examples of
+%bibliographic citations.

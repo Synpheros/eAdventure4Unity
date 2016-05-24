@@ -30,7 +30,7 @@ public class AutoGlower : MonoBehaviour {
 			size += Time.deltaTime*flashduration;
 
 			if (style == GlowingStyle.FADE_AND_FLASH || style == GlowingStyle.FADE) {
-				fade += Time.deltaTime/3;
+				fade += Time.deltaTime/2;
 			}
 
 			if (size >= 0.5f) {
@@ -49,7 +49,7 @@ public class AutoGlower : MonoBehaviour {
 			size -= Time.deltaTime*flashduration;
 
 			if (style == GlowingStyle.FADE_AND_FLASH || style == GlowingStyle.FADE) {
-				fade -= Time.deltaTime/3;
+				fade -= Time.deltaTime/2;
 			}
 
 			if (size <= 0f) {
