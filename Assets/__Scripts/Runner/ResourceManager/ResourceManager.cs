@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class ResourceManager{
 
+	//#############################################
+	//################# SINGLETON #################
+	//#############################################
+
 	public enum LoadingType
 	{
 		SYSTEM_IO,
@@ -18,6 +22,10 @@ public class ResourceManager{
             return instance;
         }
     }
+
+	//##################################################
+	//################# IMPLEMENTATION #################
+	//##################################################
 
 	LoadingType type = LoadingType.SYSTEM_IO;
 
