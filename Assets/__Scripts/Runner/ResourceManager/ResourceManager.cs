@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using NReco.VideoConverter;
+using Unity.IO.Compression;
+using Ionic.Zip;
 
 public class ResourceManager{
 
@@ -49,6 +52,13 @@ public class ResourceManager{
 		return type;
 	}
 
+	public string getSelectedGame(){
+		if (Game.Instance != null)
+			return Game.Instance.getSelectedGame ();
+		else
+			return "";
+	}
+
     public Texture2D getImage(string uri){
         if (images.ContainsKey (uri))
             return images [uri].Texture;
@@ -72,6 +82,32 @@ public class ResourceManager{
 				return animation;
 			} else
 				return null;
+		}
+	}
+
+	/*public void convertVideo(string path, string video){
+		Zi
+		FFMpegConverter converter = new FFMpegConverter ();
+
+		converter.ConvertMedia (path, video, Format.ogg);
+	}*/
+
+	public void extractFile(string path, string file){
+		string zipfilePath = path + file;
+		string exportLocation = System.IO.Directory.GetCurrentDirectory () + System.IO.Path.DirectorySeparatorChar + "Games" + System.IO.Path.DirectorySeparatorChar + file.Split('.')[0];
+
+		ZipUtil.Unzip (zipfilePath, exportLocation);
+
+		foreach(string f in System.IO.Directory.GetFiles(exportLocation)){
+			if (!f.Contains (".xml"))
+				System.IO.File.Delete (f);
+		}
+
+		string[] tmp;
+		foreach(string f in System.IO.Directory.GetDirectories(exportLocation)){
+			tmp = f.Split (System.IO.Path.DirectorySeparatorChar);
+			if (tmp[tmp.Length-1] != "assets" && tmp[tmp.Length-1] != "gui")
+				System.IO.Directory.Delete (f,true);
 		}
 	}
 }

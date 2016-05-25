@@ -76,8 +76,8 @@ public class Texture2DHolder {
 			break;
 		case ResourceManager.LoadingType.SYSTEM_IO:
 			this.path = path;
-			if (!path.Contains (Game.Instance.getSelectedGame()))
-				this.path = Game.Instance.getSelectedGame() + path;
+			if (!path.Contains (ResourceManager.Instance.getSelectedGame()))
+				this.path = ResourceManager.Instance.getSelectedGame() + path;
 
 			this.fileData = LoadBytes (this.path);
 
