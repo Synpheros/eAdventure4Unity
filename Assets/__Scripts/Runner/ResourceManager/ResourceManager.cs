@@ -92,11 +92,10 @@ public class ResourceManager{
 		converter.ConvertMedia (path, video, Format.ogg);
 	}*/
 
-	public void extractFile(string path, string file){
-		string zipfilePath = path + file;
+	public void extractFile(string file){
 		string exportLocation = System.IO.Directory.GetCurrentDirectory () + System.IO.Path.DirectorySeparatorChar + "Games" + System.IO.Path.DirectorySeparatorChar + file.Split('.')[0];
 
-		ZipUtil.Unzip (zipfilePath, exportLocation);
+		ZipUtil.Unzip (file, exportLocation);
 
 		foreach(string f in System.IO.Directory.GetFiles(exportLocation)){
 			if (!f.Contains (".xml"))
