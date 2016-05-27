@@ -8,6 +8,11 @@ using System.IO;
 
 public class ZipUtil
 {
+	static float progress = 0;
+	public static float Progress{
+		get{ return progress; }
+	}
+
 #if UNITY_IPHONE
 	[DllImport("__Internal")]
 	private static extern void unzip (string zipFilePath, string location);
@@ -17,24 +22,43 @@ public class ZipUtil
 
 	[DllImport("__Internal")]
 	private static extern void addZipFile (string addFile);
+#else
+	ZipFile current;
 
+	static void zip_ExtractProgress(object sender, ExtractProgressEventArgs e)
+	{
+		if(e.EventType == ZipProgressEventType.Extracting_AfterExtractEntry)
+			progress = (float)e.EntriesExtracted / (float)e.EntriesTotal;
+	}
 #endif
 
 	public static void Unzip (string zipFilePath, string location)
 	{
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_STANDALONE_LINUX
-		Directory.CreateDirectory (location);
-		
-		using (ZipFile zip = ZipFile.Read (zipFilePath)) {
-			
-			zip.ExtractAll (location, ExtractExistingFileAction.OverwriteSilently);
-		}
-#elif UNITY_ANDROID
+#if UNITY_ANDROID
 		using (AndroidJavaClass zipper = new AndroidJavaClass ("com.tsw.zipper")) {
 			zipper.CallStatic ("unzip", zipFilePath, location);
 		}
 #elif UNITY_IPHONE
 		unzip (zipFilePath, location);
+#else
+		Directory.CreateDirectory (location);
+
+		/*using (ZipFile zip = ZipFile.Read (zipFilePath)) {
+		current = zip;
+		zip.ExtractAll (location, ExtractExistingFileAction.OverwriteSilently);
+		}*/
+
+		int n;
+		using(ZipFile zip = ZipFile.Read(zipFilePath))
+		{                
+		zip.ExtractProgress += zip_ExtractProgress;
+		n = 0;
+		foreach (ZipEntry entry in zip)
+		{
+		n++;
+		entry.Extract(location, ExtractExistingFileAction.OverwriteSilently);                    
+		}
+		}
 #endif
 	}
 

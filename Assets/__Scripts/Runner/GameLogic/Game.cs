@@ -15,6 +15,12 @@ public class Game : MonoBehaviour {
         get{ return instance; }
     }
 
+	static string gameToLoad = "";
+	public static string GameToLoad {
+		get{ return gameToLoad; }
+		set{ gameToLoad = value; }
+	}
+
     //###########################################################################
     //########################### GAME STATE HANDLING ###########################
     //###########################################################################
@@ -162,6 +168,12 @@ public class Game : MonoBehaviour {
 
 	int current_chapter = 0;
 	void Start () {
+		if (Game.GameToLoad != "") {
+			gameName = Game.GameToLoad;
+			gamePath = System.IO.Directory.GetCurrentDirectory () + System.IO.Path.DirectorySeparatorChar + "Games" + System.IO.Path.DirectorySeparatorChar;
+			useSystemIO = true;
+		}
+
 		selected_path = gamePath + gameName;
 		selected_game = selected_path + "/";
 

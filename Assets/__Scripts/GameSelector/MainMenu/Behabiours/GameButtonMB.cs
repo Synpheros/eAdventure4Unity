@@ -2,14 +2,17 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Xml;
+using UnityEngine.SceneManagement;
 
 public class GameButtonMB : MonoBehaviour {
 
-	string path, imagepath;
+	string path, imagepath, gamename;
 
 	public string Path{
 		get { return path; }
 		set { 
+			string[] tmp = value.Split (System.IO.Path.DirectorySeparatorChar);
+			gamename = tmp [tmp.Length - 1];
 			path = value + System.IO.Path.DirectorySeparatorChar; 
 			imagepath = path + System.IO.Path.DirectorySeparatorChar + "gui" + System.IO.Path.DirectorySeparatorChar;
 		}
@@ -35,10 +38,20 @@ public class GameButtonMB : MonoBehaviour {
 		doc.Load (path + "descriptor.xml");
 
 		text.text = doc.SelectSingleNode ("/game-descriptor/title").InnerText;
+
+		Button.ButtonClickedEvent ev = new Button.ButtonClickedEvent ();
+		ev.AddListener (delegate {startGame();});
+
+		this.GetComponent<Button> ().onClick = ev;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	void startGame(){
+		Game.GameToLoad = gamename;
+		SceneManager.LoadScene ("_Scene1");
 	}
 }

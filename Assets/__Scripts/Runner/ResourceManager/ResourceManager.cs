@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using NReco.VideoConverter;
-using Unity.IO.Compression;
 using Ionic.Zip;
 
-public class ResourceManager{
+public sealed class ResourceManager{
 
 	//#############################################
 	//################# SINGLETON #################
@@ -92,8 +90,13 @@ public class ResourceManager{
 		converter.ConvertMedia (path, video, Format.ogg);
 	}*/
 
+	public bool extracted = false;
 	public void extractFile(string file){
-		string exportLocation = System.IO.Directory.GetCurrentDirectory () + System.IO.Path.DirectorySeparatorChar + "Games" + System.IO.Path.DirectorySeparatorChar + file.Split('.')[0];
+		extracted = false;
+		string[] dir = file.Split (System.IO.Path.DirectorySeparatorChar);
+		string filename = dir [dir.Length - 1].Split ('.') [0];
+			
+		string exportLocation = System.IO.Directory.GetCurrentDirectory () + System.IO.Path.DirectorySeparatorChar + "Games" + System.IO.Path.DirectorySeparatorChar + filename;
 
 		ZipUtil.Unzip (file, exportLocation);
 
@@ -108,6 +111,8 @@ public class ResourceManager{
 			if (tmp[tmp.Length-1] != "assets" && tmp[tmp.Length-1] != "gui")
 				System.IO.Directory.Delete (f,true);
 		}
+
+		extracted = true;
 	}
 }
 
