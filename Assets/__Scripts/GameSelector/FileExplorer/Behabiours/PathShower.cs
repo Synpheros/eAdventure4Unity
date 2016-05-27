@@ -30,7 +30,7 @@ public class PathShower : MonoBehaviour {
 	Button addbutton;
 	// Use this for initialization
 	void Start () {
-		Path = Directory.GetCurrentDirectory ();
+		Path = ResourceManager.Instance.getStoragePath();
 
 		if (folderimage == null) 
 			folderimage = Resources.Load ("GUI/folder") as Sprite;

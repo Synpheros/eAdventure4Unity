@@ -8,7 +8,7 @@ public class ButtonCreatorMB : MonoBehaviour {
 	string[] directories;
 
 	void Start () {
-		directories = System.IO.Directory.GetDirectories (System.IO.Directory.GetCurrentDirectory ()
+		directories = System.IO.Directory.GetDirectories (ResourceManager.Instance.getCurrentDirectory()
 		+ System.IO.Path.DirectorySeparatorChar + "Games" + System.IO.Path.DirectorySeparatorChar);
 	}
 	

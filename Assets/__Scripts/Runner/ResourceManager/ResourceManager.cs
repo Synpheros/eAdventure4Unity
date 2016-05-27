@@ -96,7 +96,7 @@ public sealed class ResourceManager{
 		string[] dir = file.Split (System.IO.Path.DirectorySeparatorChar);
 		string filename = dir [dir.Length - 1].Split ('.') [0];
 			
-		string exportLocation = System.IO.Directory.GetCurrentDirectory () + System.IO.Path.DirectorySeparatorChar + "Games" + System.IO.Path.DirectorySeparatorChar + filename;
+		string exportLocation = getCurrentDirectory () + System.IO.Path.DirectorySeparatorChar + "Games" + System.IO.Path.DirectorySeparatorChar + filename;
 
 		ZipUtil.Unzip (file, exportLocation);
 
@@ -114,5 +114,31 @@ public sealed class ResourceManager{
 
 		extracted = true;
 	}
+
+	public string getCurrentDirectory(){
+		string ret = "";
+#if UNITY_ANDROID
+		ret = "/mnt/sdcard/uAdventure";//Application.persistentDataPath;
+#elif UNITY_IPHONE
+		ret = "";
+#else
+		ret = System.IO.Directory.GetCurrentDirectory ();
+#endif
+		return ret;
+	}
+
+	public string getStoragePath(){
+		string ret = "";
+#if UNITY_ANDROID
+		ret = "/mnt/sdcard";
+#elif UNITY_IPHONE
+		ret = "";
+#else
+		ret = System.IO.Directory.GetCurrentDirectory ();
+#endif
+	return ret;
+	}
+
+
 }
 

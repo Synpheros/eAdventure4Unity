@@ -6,20 +6,23 @@ using System.Threading;
 
 public class LoaderMB : MonoBehaviour {
 
-	Slider slider;
+
+
+	//Slider slider;
 	Thread unzipthread;
 
 	// Use this for initialization
 	void Start () {
 		//Debug.Log (LoaderController.Instance.gamePath);
-		slider = this.GetComponent<Slider> ();
-		unzipthread = new Thread (unZip);
-		unzipthread.Start();
+		//slider = this.GetComponent<Slider> ();
+		/*unzipthread = new Thread (unZip);
+		unzipthread.Start();*/
+		unZip ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		slider.value = ZipUtil.Progress;
+		//slider.value = ZipUtil.Progress;
 
 		if (ResourceManager.Instance.extracted) {
 			unzipthread.Abort ();

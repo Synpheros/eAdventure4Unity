@@ -34,6 +34,7 @@ public class ZipUtil
 
 	public static void Unzip (string zipFilePath, string location)
 	{
+		Debug.Log ("Entrando en unzip");
 #if UNITY_ANDROID
 		using (AndroidJavaClass zipper = new AndroidJavaClass ("com.tsw.zipper")) {
 			zipper.CallStatic ("unzip", zipFilePath, location);
@@ -41,24 +42,29 @@ public class ZipUtil
 #elif UNITY_IPHONE
 		unzip (zipFilePath, location);
 #else
+		Debug.Log ("UNZIP WINDOWS");
 		Directory.CreateDirectory (location);
 
-		/*using (ZipFile zip = ZipFile.Read (zipFilePath)) {
-		current = zip;
-		zip.ExtractAll (location, ExtractExistingFileAction.OverwriteSilently);
-		}*/
+		Debug.Log ("DIRECTORIO CREADO");
 
-		int n;
+		using (ZipFile zip = ZipFile.Read (zipFilePath)) {
+			//current = zip;
+			zip.ExtractAll (location, ExtractExistingFileAction.OverwriteSilently);
+		}
+
+		Debug.Log ("TERMINADO");
+
+		/*int n;
 		using(ZipFile zip = ZipFile.Read(zipFilePath))
 		{                
-		zip.ExtractProgress += zip_ExtractProgress;
-		n = 0;
-		foreach (ZipEntry entry in zip)
-		{
-		n++;
-		entry.Extract(location, ExtractExistingFileAction.OverwriteSilently);                    
-		}
-		}
+			zip.ExtractProgress += zip_ExtractProgress;
+			n = 0;
+			foreach (ZipEntry entry in zip)
+			{
+				n++;
+				entry.Extract(location, ExtractExistingFileAction.OverwriteSilently);                    
+				}
+		}*/
 #endif
 	}
 

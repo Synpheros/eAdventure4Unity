@@ -170,7 +170,7 @@ public class Game : MonoBehaviour {
 	void Start () {
 		if (Game.GameToLoad != "") {
 			gameName = Game.GameToLoad;
-			gamePath = System.IO.Directory.GetCurrentDirectory () + System.IO.Path.DirectorySeparatorChar + "Games" + System.IO.Path.DirectorySeparatorChar;
+			gamePath = ResourceManager.Instance.getCurrentDirectory () + System.IO.Path.DirectorySeparatorChar + "Games" + System.IO.Path.DirectorySeparatorChar;
 			useSystemIO = true;
 		}
 
