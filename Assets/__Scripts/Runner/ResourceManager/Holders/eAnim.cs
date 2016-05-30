@@ -21,7 +21,6 @@ public class eFrame {
 		get { return duration; }
 		set { duration = value; }
 	}
-
 }
 
 public class eAnim {
@@ -63,36 +62,20 @@ public class eAnim {
 		xmld.LoadXml (eaaText);
 
 		eFrame tmp;
-		foreach (XmlElement node in xmld.SelectNodes("/animation/frame")) {
-			tmp = new eFrame ();
-			tmp.Duration = int.Parse(node.GetAttribute("time"));
-
-			//#################################################
-			//############# RESOURCES.LOAD METHOD #############
-			//#################################################
-			/*
-				string ruta = node.GetAttribute("uri").Split('/')[2].Split('.')[0];
-				tmp.Image = Resources.Load("animation/" + ruta) as Texture2D;
-				if(tmp.Image==null){
-					Regex pattern = new Regex("[óñ]");
-					ruta = pattern.Replace(ruta, "+¦");
-
-					tmp.Image = Resources.Load("animation/" + ruta) as Texture2D;
-
-					if(tmp.Image==null)
-						Debug.Log("No se pudo cargar: " + ruta);
-				}
-			*/
-
-			//############################################
-			//############# SYSTEM.IO METHOD #############
-			//############################################
+		XmlNode animation = xmld.SelectSingleNode ("/animation");
+		foreach (XmlElement node in animation.ChildNodes) {
+			if (node.Name == "frame") {
+				tmp = new eFrame ();
+				tmp.Duration = int.Parse (node.GetAttribute ("time"));
 			
-			string ruta = node.GetAttribute("uri");//.Split('/')[2];
+				string ruta = node.GetAttribute ("uri");
 
-			tmp.Holder = new Texture2DHolder(ruta);
+				tmp.Holder = new Texture2DHolder (ruta);
 
-			frames.Add(tmp);
+				frames.Add (tmp);
+			} else if (node.Name == "transition") {
+				frames [frames.Count - 1].Duration += int.Parse(node.GetAttribute ("time"));
+			}
 		}
 	}
 
