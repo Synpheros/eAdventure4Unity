@@ -15,17 +15,19 @@ public class Bubble : MonoBehaviour {
 	}
 
 	Transform text;
+	RectTransform bubblePos;
 	// Use this for initialization
 	void Start () {
-		resize ();
+		//resize ();
 		text = this.transform.FindChild ("Text");
 		text.GetComponent<Text> ().text = data.Line;
+		bubblePos = this.GetComponent<RectTransform> ();
 
-		float guiscale = Screen.height/600f;
+		/*float guiscale = Screen.height/600f;
 
-		text.GetComponent<Text>().fontSize = Mathf.RoundToInt(guiscale * 20);
+		text.GetComponent<Text>().fontSize = Mathf.RoundToInt(guiscale * 20);*/
 
-		this.transform.localPosition = data.origin;
+		this.bubblePos.anchoredPosition = data.origin;
 		this.moveTo (data.destiny);
 		this.state = BubbleState.SHOWING;
 	}
@@ -70,15 +72,19 @@ public class Bubble : MonoBehaviour {
 				destination = finalPosition;
 			}
 
-			destination = Vector3.Lerp (this.transform.localPosition, destination, easing);
+			destination = Vector3.Lerp (this.bubblePos.anchoredPosition, destination, easing);
 			destination.z = camZ;
 
 
 			completed = 1f - (Vector2.Distance (destination, finalPosition) / distance);
+
+			if (float.IsNaN (completed))
+				completed = 1f;
+			
 			setAlpha (completed);
 			setScale (completed);
 
-			this.transform.localPosition = destination;
+			this.bubblePos.anchoredPosition = destination;
 
 			if (completed >= 1f) {
 				this.state = BubbleState.NOTHING;
@@ -88,7 +94,7 @@ public class Bubble : MonoBehaviour {
 	}
 
 	public void moveTo(Vector2 position){
-		this.distance = Vector2.Distance (this.transform.localPosition, position);
+		this.distance = Vector2.Distance (this.bubblePos.anchoredPosition, position);
 		this.finalPosition = position;
 	}
 
@@ -117,6 +123,6 @@ public class Bubble : MonoBehaviour {
 	public void resize(){
 		float newwidth = (Screen.width / 600f) * width;
 
-		this.GetComponent<RectTransform> ().sizeDelta = new Vector2 (newwidth, 0);
+		this.bubblePos.sizeDelta = new Vector2 (newwidth, 0);
 	}
 }

@@ -19,12 +19,12 @@ public class GUIManager : MonoBehaviour {
 	
 	}
 
-	/*void Update () {
-		if (Input.GetMouseButtonDown (0)) {
-			BubbleData b = new BubbleData ("Hola, ¿cómo estás Gorka?", new Vector2 (0, 0), new Vector2 (0, 10f));
+	void Update () {
+		/*if (Input.GetMouseButtonDown (0)) {
+			BubbleData b = new BubbleData ("Hola, ¿cómo estás Gorka?", new Vector2 (0, 0), new Vector2 (40f, 30f));
 			ShowBubble (b);
-		}
-	}*/
+		}*/
+	}
 
 	public void ShowBubble(BubbleData data){
 		data.origin = sceneVector2guiVector(data.origin);
@@ -42,13 +42,23 @@ public class GUIManager : MonoBehaviour {
 			this.bubble.GetComponent<Bubble> ().destroy ();
 	}
 
+
 	private Vector2 sceneVector2guiVector(Vector2 v){
+		/* OLD METHOD
+		 * float width = (Screen.height / 600) * 800;
+		 * float y = ((v.y / 60f) * Screen.height) - Screen.height/2;
+		 * float x = ((v.x / 80f) * width) - width/2;
+		*/
 
-		float width = (Screen.height / 600) * 800;
+		float w = Screen.width, h = Screen.height,
+			relation = w / h,
+			height = 800 / relation, 
+			width = (height / 600) * 800,
+			scale = width / 800f,
+			leftmargin = (800 - width)/2;
 
-		float y = ((v.y / 60f) * Screen.height) - Screen.height/2;
-
-		float x = ((v.x / 80f) * width) - width/2;
+		float x = (v.x * 10 * scale) + leftmargin;
+		float y = (v.y * 10 * scale);
 
 		return new Vector2 (x, y);
 
