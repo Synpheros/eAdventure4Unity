@@ -44,6 +44,9 @@ public class Game : MonoBehaviour {
         }
 
         //Debug.Log ("Flag '" + name + " puesta a " + state);
+		Tracker.T ().Var (name, (state == FlagCondition.FLAG_ACTIVE ? 1 : 0));
+		Tracker.T ().RequestFlush ();
+
         TimerController.Instance.checkTimers();
         this.reRenderScene ();
     }
@@ -62,6 +65,9 @@ public class Game : MonoBehaviour {
         }else{
             variables.Add (name, value);
         }
+
+		Tracker.T ().Var (name, value);
+		Tracker.T ().RequestFlush ();
 
         this.reRenderScene ();
     }
@@ -315,6 +321,9 @@ public class Game : MonoBehaviour {
         ret.GetComponent<Transform> ().localPosition = new Vector2(0f,0f);
         ret.GetComponent<SceneMB> ().sceneData = data.getChapters () [current_chapter].getGeneralScene (scene_id);
 
+		Tracker.T ().Screen (scene_id);
+		Tracker.T ().RequestFlush ();
+
         current_scene = ret;
         return ret;
     }
@@ -549,6 +558,8 @@ public class Game : MonoBehaviour {
                     if(GUILayout.Button ((string) ono.getText(),style.button)){
 						GameObject.Destroy (blur);
                         guioptions.clicked(i);
+						Tracker.T ().Choice (guitext, ono.getText());
+						Tracker.T ().RequestFlush ();
                         Interacted();
                     };
             }
