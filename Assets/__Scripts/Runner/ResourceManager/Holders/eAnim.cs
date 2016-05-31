@@ -74,7 +74,8 @@ public class eAnim {
 
 				frames.Add (tmp);
 			} else if (node.Name == "transition") {
-				frames [frames.Count - 1].Duration += int.Parse(node.GetAttribute ("time"));
+				if(frames.Count>0)
+					frames [frames.Count - 1].Duration += int.Parse(node.GetAttribute ("time"));
 			}
 		}
 	}
