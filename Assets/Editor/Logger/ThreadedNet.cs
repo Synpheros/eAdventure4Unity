@@ -24,10 +24,9 @@ using System.Threading;
 
 public class ThreadedNet
 {
-	public WWW GET (string url, IRequestListener requestListener)
+	public WWW GET (string url, Dictionary<string,string> headers, IRequestListener requestListener)
 	{
-
-		WWW www = new WWW (url);
+		WWW www = new WWW (url,null,headers);
 		ContinuationManager.Add(() => www.isDone, () => WaitForRequest (www, requestListener));
 		return www;
 	}
