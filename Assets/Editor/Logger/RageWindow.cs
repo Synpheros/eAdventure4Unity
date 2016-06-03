@@ -67,13 +67,14 @@ public class RageWindow : EditorWindow {
 		public JSONClass toJson(){
 			JSONClass json = new JSONClass ();
 
-			json.Add ("_id", versionId);
-			json.Add ("alias", alias);
-			json.Add ("gameId", gameId);
+			if(versionId != "") 	json.Add ("_id", versionId);
+			if(alias != "") 		json.Add ("alias", alias);
+			if(gameId != "") 		json.Add ("gameId", gameId);
+			if(progress != "") 		json.Add ("progress", progress);
+			if(score != "") 		json.Add ("score", score);
+			if(trackingCode != "") 	json.Add ("trackingCode", trackingCode);
+
 			json.Add ("maxScore", new JSONData (maxScore));
-			json.Add ("progress", progress);
-			json.Add ("score", score);
-			json.Add ("trackingCode", trackingCode);
 
 			JSONArray ws = new JSONArray ();
 			foreach (Warning w in warnings) {
