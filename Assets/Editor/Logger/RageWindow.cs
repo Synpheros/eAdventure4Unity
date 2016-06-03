@@ -127,6 +127,7 @@ public class RageWindow : EditorWindow {
 	string[] gameids, gametitles;
 
 	GameConfiguration currentConfig;
+	List<GameConfiguration> configs;
 
 	int selectedgame = 0, selectedGameVersion = 0;
 
@@ -148,6 +149,9 @@ public class RageWindow : EditorWindow {
 	[MenuItem("eAdventure4Unity/Open Login Screen")]
 	static void Init()
 	{
+		if (window != null)
+			window.Close ();
+		
 		window = (RageWindow) EditorWindow.GetWindow(typeof(RageWindow));
 		window.net = new ThreadedNet ();
 		window.trackHeaders.Add ("Content-Type", "application/json");
@@ -186,10 +190,12 @@ public class RageWindow : EditorWindow {
 			}
 		} else {
 			if (gameids != null) {
-				EditorGUIUtility.labelWidth = GUI.skin.label.CalcSize (new GUIContent ("Version")).x;
+				GUILayout.BeginHorizontal ();
+
+				EditorGUIUtility.labelWidth = GUI.skin.label.CalcSize (new GUIContent ("Game ")).x;
 				int preselected = selectedgame;
 
-				selectedgame = EditorGUILayout.Popup ("Game", selectedgame, gametitles, GUILayout.Width (200));
+				selectedgame = EditorGUILayout.Popup ("Game ", selectedgame, gametitles);
 				if (GUILayout.Button ("+")) {
 					AddGameWindow.Init (trackHeaders);
 				}
@@ -197,25 +203,33 @@ public class RageWindow : EditorWindow {
 				if (preselected != selectedgame) {
 					getGameVersions (gameids [selectedgame]);
 				}
+				GUILayout.EndHorizontal ();
 			}
 		}
 
 
 		if(gameVersions!=null){
 			GUILayout.BeginHorizontal ();
-			EditorGUIUtility.labelWidth = GUI.skin.label.CalcSize (new GUIContent ("Version")).x;
-			selectedGameVersion = EditorGUILayout.Popup ("Version", selectedGameVersion, gameVersions, GUILayout.Width (200));
+			EditorGUIUtility.labelWidth = GUI.skin.label.CalcSize (new GUIContent ("Version ")).x;
+			selectedGameVersion = EditorGUILayout.Popup ("Version ", selectedGameVersion, gameVersions);
 			GUILayout.EndHorizontal ();
+
+			currentConfig = configs [selectedGameVersion];
 
 			EditorGUILayout.LabelField ("Configuration");
 			EditorGUIUtility.labelWidth = GUI.skin.label.CalcSize (new GUIContent ("Alias")).x;
-			gametitle = EditorGUILayout.TextField ("Alias", gametitle, GUILayout.Width (200));
+			currentConfig.Alias = EditorGUILayout.TextField ("Alias", currentConfig.Alias);
 			EditorGUIUtility.labelWidth = GUI.skin.label.CalcSize (new GUIContent ("Score")).x;
-			gametitle = EditorGUILayout.TextField ("Score", gametitle, GUILayout.Width (200));
+			EditorGUILayout.PrefixLabel ("Score");
+			currentConfig.Score = EditorGUILayout.TextArea (currentConfig.Score, GUILayout.Height (75));
 			EditorGUIUtility.labelWidth = GUI.skin.label.CalcSize (new GUIContent ("Max Score")).x;
-			gametitle = EditorGUILayout.TextField ("Max Score", gametitle, GUILayout.Width (200));
-			EditorGUIUtility.labelWidth = GUI.skin.label.CalcSize (new GUIContent ("Progress")).x;
-			gametitle = EditorGUILayout.TextField ("Progress", gametitle, GUILayout.Width (200));
+			currentConfig.MaxScore = EditorGUILayout.IntField ("Max Score", currentConfig.MaxScore);
+			EditorGUILayout.PrefixLabel ("Progress");
+			currentConfig.Progress = EditorGUILayout.TextArea (currentConfig.Progress, GUILayout.Height (75));
+
+			if (GUILayout.Button ("Save Configuration")) {
+				saveGameVersion (currentConfig);
+			}
 		}
 			
 		EditorGUILayout.HelpBox ("This is the log:\n" + log, MessageType.None);
@@ -253,12 +267,21 @@ public class RageWindow : EditorWindow {
 
 	public void setGameVersions(JSONNode versions){
 		List<string> vs = new List<string>();
-		List<GameConfiguration> configs = new List<GameConfiguration> ();
+		configs = new List<GameConfiguration> ();
 		foreach (JSONNode child in versions.Childs) {
-			vs.Add (child.Value);
+			vs.Add (child["_id"]);
 			configs.Add (new GameConfiguration (child));
 		}
 		this.gameVersions = vs.ToArray ();
+	}
+
+	public void saveGameVersion(GameConfiguration config){
+		net.POST (
+			baseurl + gameurl + "/" + config.GameId + "/versions/" + config.VersionId,
+			System.Text.Encoding.UTF8.GetBytes (config.toJson ().ToString ()),
+			trackHeaders,
+			new HelpBoxListener ()
+		);
 	}
 
 	public void setAuthToken(string token){
