@@ -167,9 +167,47 @@ Asimismo, otras de las características de este motor incluyen la, ampliamente u
 
 En Unity, cada objeto que toma partido dentro de la escena, está constituido por un GameObject y todas aquellas componentes asociadas, extendiendo a la clase MonoBehabiour, así como una componente Transform que le permite orientarse y deformarse en la escena, y una
 
-
 \section{Estado del Arte}
 \label{estadodelarte}
+
+Una vez hemos definido correctamente el objeto de trabajo de este proyecto, compuesto por todos aquellos elementos que lo forman, se analizarán otras alternativas a los objetos presentados en el anterior apartado. 
+
+Frecuentemente ocurre que no existe una única forma de hacer las cosas, y por ello, existen multitud de herramientas disponibles para el desarrollo de Aventuras Gráficas Point and Click, así como de generación de aplicaciones multiplataforma, motores de videojuegos, y herramientas de learning analytics. Todas estas herramientas, además de ayudar a definir mejor los objetivos del trabajo, buscando generar una herramienta que innove y añada funcionalidad adicional a las existentes, ayudan en el desarrollo del proyecto a contextualizar mejor la aplicación, y a inspirar algunos de los elementos de esta misma aplicación.
+
+\subsection{Herramientas de desarrollo de Aventuras Gráficas}
+\label{herramientasaventuras}
+
+Al ser un género tan conocido el de las aventuras gráficas, existen multitud de editores que facilitan la generación de este tipo de juegos. Algunos mas conocidos que otros, con diferentes características y funcionalidades propias. Otros que, desgraciadamente, aunque son conocidos por generar aventuras gráficas de renombre, no son públicos, pero de los cuales podemos, mediante el análisis de dichos juegos, extraer funcionalidades, y casos reales de características que tuvieron éxito.
+
+Dentro de esto de editores, encontramos a el más conocido de todos ellos, Adventure Game Studio, también conocido por sus siglas AGS. Está caracterizado por la increíble personalización que tienen los juegos que se generan con esta herramienta, permitiendo modificar prácticamente todos los elementos que lo conforman, además de dar la oportunidad a los desarrolladores, de generar su propios Scripts e incluirlos en el juego. Este software no sólo es un gran editor que da casi infinitas posibilidades, sino que además está acompañado de una gran comunidad de usuarios, desarrolladores indie y aficionados, que comparten entre ellos sus proyectos. Todos estos proyectos compartidos, son debidamente catalogados en el repositorio de juegos que provee la propia página web de esta herramienta. Una de las pegas que tiene este editor es que únicamente funciona en Windows, aunque existen alternativas muy similares para linux. Finalmente mencionar que este motor, pese a ser gratuito para proyectos que no son comerciales, tiene una licencia que, en caso de ser comercializado, establece que el usuario debe encargarse de pagar por todas las librerías que AGS utiliza para funcionar a los desarrolladores de dichas librerías.
+
+\begin{figure}[htb]
+    \includegraphics[height=2.5in]{figures/ags.png}
+    \caption[Adventure Game Studio]{Una escena en Adventure Game Studio}
+    \label{agsfigure}
+\end{figure}
+
+En la figura \ref{agsfigure} se puede observar la vista principal del editor, con una escena en la parte del centro-izquierda. En la parte superior derecha se ve la lista de escenas disponibles, y cuando estas se abren, se añaden en forma de pestañas al editor.
+
+Otro de los editores de aventuras gráficas más conocidos es Open SLUDGE. Este editor tiene una enorme lista de características disponibles, entre las cuales encontramos no sólo las básicas como personajes, objetos, escenas, o elementos interactuables; sino que además, encontramos características como poder realizar paralajes en fondos de escenas, que además pueden moverse a lo largo de la escena, posibilidad de añadir música y efectos de sonido, uso de timers, y muchas otras características. No obstante, este editor tiene algunos problemas, como que, por ejemplo, la cámara no sigue al personaje, o no tiene un buen editor de conversaciones, pese a que estas, si que tienen soporte para ser traducidas y localizadas fácilmente. Como detalle adicional de este editor, y característica de las más importantes, es que, es multiplataforma, y no solo se puede ejecutar en Windows, OSX y Linux, sino que además, le da al usuario la posibilidad de generar su juego para estas plataformas, en un paquete individual, con todos los recursos incluidos dentro del mismo.
+
+\begin{figure}[htb]
+	\includegraphics[height=2.5in]{figures/sludge.png}
+	\caption[Open SLUDGE]{Multitud de ventanas de Open SLUDGE ejecutándose en OSX}
+	\label{sludgefigure}
+\end{figure}
+
+En la figura \ref{sludgefigure} se observa como Open SLUDGE se ejecuta en OSX. Las ventanas que se muestran son, por ejemplo, la superior derecha, una previsualización de una escena, con los elementos que hay en ella, y el área dentro de la cual el personaje puede moverse. También, se observa, en el fóndo, un diálogo que está siendo traducido del Inglés al Alemán.
+
+Por último encontramos WinterMute Engine. Este pack de herramientas, cuya primera versión data de enero de 2003, para crear aventuras Point and Click, está caracterizado por ser capaz de crear aventuras gráficas 2D, 2.5D (Personajes en 2 dimensiones, y entornos en 3D, y viceversa), y aventuras generadas completamente en 3D. Al igual que SLUDGE, tiene características estándar como personajes y paralaje en escenas, aunque, frente a este, añade características como editores de interfaz, o soporte a accesibilidad, como poder hacer Text-To-Speech. Sin embargo, una de las características más llamativas de este editor, es la posilibidad de poder generar aventuras gráficas y que estas se ejecuten en iOS, pudiendo instalarlas en un iPad o iPhone. Finalmente decir que el proyecto se distribuye bajo licencia MIT.
+
+\begin{figure}[htb]
+	\includegraphics[height=2.5in]{figures/wme.jpg}
+	\caption[WinterMute Engine]{Gestor de proyectos de Wintermute Engine}
+	\label{wmengine}
+\end{figure}
+
+en la figura \ref{wmengine} se muestra una vista del editor WinterMute Engine. La columna central muestra un explorador de archivos que conforman el proyecto, con imágenes y sprites, junto a scripts o otro tipo de archivos. La columna de la izquierda permite configurar el proyecto, y editar características del juego como la resolución del mismo. Y finalmente, la coluna de la derecha es una previsualización del archivo seleccionado.
 
 \section{Metodología de desarrollo}
 \label{metodologiadedesarrollo}
@@ -178,18 +216,17 @@ Una parte crucial de todo proyecto de ingeniería del software es la metodologí
 
 Asimismo, este proyecto, como muchos de los Trabajos de Fin de Máster, consta de una amplia parte dedicada a la investigación, aprendizaje de nuevas tecnologías, o del desarrollo de prototipos para verificar si esa es la manera más apropiada de hacerlo.
 
-Es por ello que, para desarrollar este proyecto se ha utilizado una metodología de desarrollo ágil, basada en prototipos, en la que se realizan múltiples iteraciones, tanto sobre cada uno de los componentes que conforman el sistema, como sobre el sistema en sí mismo, realizando tres grandes iteraciones sobre el mismo: 
+Es por ello que, para desarrollar este proyecto se ha utilizado una metodología de desarrollo ágil, basada en prototipos, en la que se realizan múltiples iteraciones, sobre cada uno de los componentes que conforman el sistema, así como sobre el sistema en sí mismo, realizando tres grandes iteraciones sobre el mismo: 
 
 \begin{itemize}
 	\item 
-	Una primera iteración para estudiar y analizar los videojuegos de eAdventure, así como para interpretar dichos paquetes e intentar representarlos, aprendiendo de los resultados obtenidos mediante el primer prototipo.
+	Una primera iteración para estudiar y analizar los videojuegos de eAdventure, así como para interpretar dichos paquetes e intentar representarlos, aprendiendo de los resultados obtenidos mediante el primer prototipo. 
 	\item
-	Una segunda iteración generando un mejor diseño de la aplicación, nuevas interfaces, refactorización de clases y código replicado,  
+	Una segunda iteración generando un mejor diseño de la aplicación, nuevas interfaces, refactorización de clases y código replicado, así como mejoras gráficas visuales dentro de la aplicación.
+	\item
+	Una tercera iteración, que consiste en poner en funcionamiento el proyecto, separando el proyecto en dos ramas. La primera, en la que se genera un emulador capaz de importar juegos de eAdventure, y permitir al usuario jugarlos, y una segunda que integrando el proyecto de Piotr Marszal junto al intérprete de juegos, transformando ambos proyectos en una única herramienta capaz de generar juegos dentro de Unity. En esta iteración no sólo se generan estos dos proyectos, sino que, como parte del proceso de integración, se adaptan algunas de las clases, eliminando clases que cumplen con la misma función, y reconstruyendo algunos de los elementos para que sean capaces de trabajar en múltiples condiciones.
 \end{itemize}
 
-Como 
+Estas tres iteraciones hacen al proyecto evolucionar desde el primer experimento de "hacer funcionar un juego de eAdventure en Unity" a "generar un framework completo de creación, interpretación, y ejecución de aventuras point and click basado en eAdventure". 
 
-
-
-Esta metodología ha influido muy fuertemente en el desarrollo de este proyecto, 
-
+Para dar soporte a la metodología de desarrollo, con mayor frecuencia en la última iteración del desarrollo, se realizaban reuniones periódicas de revisión, generación de tareas para la próxima reunión. Estas reuniones tenían lugar cada 1 o 2 semanas, y estaban formadas por todos los integrantes del desarrollo de ambos proyectos, Baltasar Fernandez Manjón, Iván Martínez Ortiz, Piotr Marszal e Iván José Pérez Colado. Gracias a estas reuniones, la comunicación entre los integrantes ha sido mucho más fluida.
