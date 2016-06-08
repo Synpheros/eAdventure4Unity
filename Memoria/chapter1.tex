@@ -207,10 +207,14 @@ Sin embargo, en nuestro equipo existen dos factores por los que Unreal Engine 4 
 \label{unreal}
 
 
-\subsection{Herramientas de desarrollo de Aventuras Gráficas}
+\subsection{Motores de desarrollo de Aventuras Gráficas}
 \label{herramientasaventuras}
 
-Al ser un género tan conocido el de las aventuras gráficas, existen multitud de editores que facilitan la generación de este tipo de juegos. Algunos mas conocidos que otros, con diferentes características y funcionalidades propias. Otros que, desgraciadamente, aunque son conocidos por generar aventuras gráficas de renombre, no son públicos, pero de los cuales podemos, mediante el análisis de dichos juegos, extraer funcionalidades, y casos reales de características que tuvieron éxito.
+Al igual que los motores de videojuegos añaden una capa más de abstracción para los desarrolladores a la hora de crear videojuegos, existen herramientas que se especializan en géneros de videojuegos concretos para añadir funcionalidades específicas que permiten explotar las posibilidades de dichos géneros, y automatizan otras tareas que en otro tipo de videojuegos necesitarían ser controladas o desarrolladas independientemente. Algunos de estos editores son, RPG Maker para videojuegos del género Role Playing Game, RPG, GameGuru para videojuegos del género First Person Shooter, FPS, o Quintus para videojuegos de Plataformas.
+
+Entre estos géneros que gozan de editores que facilitan el proceso de creación de juegos para su propio género, encontramos las Aventuras Gráficas Point and Click. Existen multitud de editores que facilitan la generación de este tipo de juegos. Algunos mas conocidos que otros, con diferentes características y funcionalidades propias. Otros que, desgraciadamente, aunque son conocidos por generar aventuras gráficas de renombre, no son públicos, pero de los cuales podemos, mediante el análisis de dichos juegos, extraer funcionalidades, y casos reales de características que tuvieron éxito.
+
+Entre las características que abstraen los motores de desarrollo de aventuras gráficas, encontramos que, el usuario no debe de preocuparse de tratar con la cámara, una de las tareas que, si se hace indebidamente, llevará al fracaso al juego, además de ser una de las tareas más complejas de realizar. La mayoría de motores se encargan de facilitar un entorno basado en escenas, personajes y objetos, pudiendo establecer zonas por la que el jugador se moverá, ya sea mediante trayectorias o mediante áreas que se encargan de cambiar la escala del personaje y determinar las zonas por donde el personaje se podrá mover.
 
 \subsubsection{Adventure Game Studio}
 \label{adventuregamestudio}
@@ -282,7 +286,29 @@ Esta funcionalidad de emulador de eAdventure en Android, es la que se consigue o
 
 Por otra parte, no existe un editor que permita generar juegos que utilicen la localización mediante GPS, ni la lectura de códigos QR, por lo que, en uAdventure, como trabajo futuro, está pendiente añadir dichas características, y un editor que facilite la creación de videojuegos que los utilicen. 
 
-Con la llegada del TFG de Antonio Calvo Morata y Dan Cristian Rotaru, Mokap, eAdventure Android se abandonó para centrar el esfuerzo en el desarrollo de esta herramienta de autoría permitía generar videojuegos sencillos, utilizando recursos de un repositorio, desde Android. 
+Con la llegada del TFG de Antonio Calvo Morata y Dan Cristian Rotaru, Mokap, eAdventure Android se abandonó para centrar el esfuerzo en el desarrollo de esta herramienta de autoría cuyo objetivo es el de generar videojuegos que puedan ser extremadamente simples, y sin la necesidad de herramientas externas. Surge como una herramienta de prototipado que permita al usuario transformar una idea a algo real de la manera más rápida posible.
+
+En un comienzo, el proyecto se llamo eAdventure Editor y se ejecutaría en Android, este tendría una funcionalidad muy básica, pudiendo generar juegos con escenas, añadir elementos mediante una herramienta para pintar, escritura de texto, o incluyendo imágenes de un repositorio externo. Además, permitiría añadir efectos simples al interactuar con los elementos, como eliminarlos, o realizar transiciones de escenas, así como la posibilidad de añadir condiciones a la hora de ejecutar esos efectos.
+
+Esta primera versión se puede observar en la figura \ref{mokap1}. El personaje se ha dibujado mediante la herramienta de pincel, que permite modificar su grosor y color. Este personaje, una vez se termina de pintar, se transforma en una figura geométrica rodeando las formas que lo componen con polígonos. Esto facilita la detección de colisiones, para saber si el usuario realiza una interacción con dicho elemento. En la imagen se puede ver un texto generado con la herramienta de generación de textos, el cual pone "hola" en color azul con borde negro. Finalmente, en la imagen se observa el menú que permite posicionar los elementos en diferente orden de profundidad en la escena.
+
+\begin{figure}[htb]
+	\includegraphics[height=2.5in]{figures/mokap1.png}
+	\caption[Mokap - eAdventure Editor]{Primera versión de Mokap, llamada eAdventure Editor en Android.}
+	\label{mokap1}
+\end{figure}
+
+Sin embargo, de la primera versión a la última ocurrieron muchos cambios significativos, un completo lavado de cara a la aplicación entera, así como un cambio de nombre, pasando a llamarse Mokap, con un nuevo logotipo. En el desarrollo de esta nueva versión estuvo implicado todo el equipo de e-UCM, y sin hablar de cambios en la infraestructura y el código, la lista de funcionalidades añadidas es muy extensa. Entre estas funcionalidades encontramos capacidades como poder mover elementos en la escena y hacer que parpadeen, ya sea periódicamente, una vez, o un número determinado de veces. El repositorio fue mejorado para permitir incorporar elementos compuestos y animados, así como música y sonidos. Otra de las características que se incorporaron en Mokap es la habilidad de incorporar Shaders a la escena, para conseguir resultados mucho más vistosos.
+
+\begin{figure}[htb]
+	\includegraphics[height=2.5in]{figures/mokap2.png}
+	\caption[Mokap - Última Versión]{Última versión de Mokap, mostrando una escena compleja compuesta por múltiples elementos compuestos.}
+	\label{mokap2}
+\end{figure}
+
+En la figura \ref{mokap2} se observa una escena mucho más elaborada. El fondo de la escena, compuesto por el cielo, los árboles, y el cohete -el cual se mueve- son una forma compuesta descargable desde el repositorio de recursos de Mokap. Los robots que se hayan en el frente son elementos animados, el robot de la izquierda ha sido animado mediante frames, es decir, mediante una secuencia de imágenes, sin embargo, el robot de la derecha utiliza Spine, animación basada en esqueleto. Las animaciones generadas con Spine son mucho más ligeras, ocupando unos pocos kilobytes, frente al elevado peso que tienen las animaciones generadas con frames, el cual puede llegar a las decenas de megabytes, dependiendo de la resolución y calidad de la imagen. El menú de la derecha muestra los submenús que permiten editar el movimiento y el parpadeo de dicho objeto.
+
+Observando la evolución que han seguido ambos proyectos, extraemos la conclusión de que, la necesidad de desarrollar un intérprete para Android, e incorporarle las características que eAdventure Android introducía a eAdventure, es una necesidad real, ya que, aunque existe un proyecto que satisfacía esta carencia, la realidad es que dicho proyecto no es utilizable, y las posibilidades de retomarlo son mucho menores dado su elevado nivel de complejidad. Por otra parte su evolución, Mokap, tiene un objetivo muy diferente al de uAdventure, y son dos proyectos totalmente diferentes, aunque ambos son herramientas de autoría capaces de generar y ejecutar juegos en Android.
 
 \section{Metodología de desarrollo}
 \label{metodologiadedesarrollo}
