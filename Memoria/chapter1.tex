@@ -174,12 +174,52 @@ Una vez hemos definido correctamente el objeto de trabajo de este proyecto, comp
 
 Frecuentemente ocurre que no existe una única forma de hacer las cosas, y por ello, existen multitud de herramientas disponibles para el desarrollo de Aventuras Gráficas Point and Click, así como de generación de aplicaciones multiplataforma, motores de videojuegos, y herramientas de learning analytics. Todas estas herramientas, además de ayudar a definir mejor los objetivos del trabajo, buscando generar una herramienta que innove y añada funcionalidad adicional a las existentes, ayudan en el desarrollo del proyecto a contextualizar mejor la aplicación, y a inspirar algunos de los elementos de esta misma aplicación.
 
+\subsection{Motores de videojuegos}
+\label{motoresdevideojuegos}
+
+Los motores de videojuegos son aquellas herramientas, o conjunto de herramientas que permiten el diseño, creación, y visualización de un videojuego. La funcionalidad básica de un motor de videojuegos es la de proveer de un entorno gráfico, ya sea bidimensional o tridimensional, que simplifique el proceso de representación de un videojuego, permitiendo en muchos casos interactuar directamente con el entorno gráfico, y pudiendo posicional los elementos que conforman el videojuego con mayor facilidad. Para completar el ecosistema de generación de videojuegos, estos motores proveen al desarrollador de un motor físico, con detección de colisiones entre los elementos, así como soporte a archivos multimedia como música, vídeos, imágenes, e incluso modelos tridimensionales, y finalmente, permiten al desarrollador programar los comportamientos que los elementos deben tener.
+
+No obstante, estos motores tendrían poca utilidad si únicamente permitieran visualizar los juegos en su interior, por lo que dichos motores tienen un compilador que genera un ejecutable de dicho videojuego. Existen motores especializados en plataformas concretas, como ordenador, y sus diferentes sistemas operativos, como Windows, Mac OSX, o Linux; aunque también existen motores especializados en videoconsolas como PlayStation, XBOX o consolas portátiles de Nintendo. Finalmente, existen otros motores que están caracterizados por su capacidad para generar videojuegos para un amplio catálogo de plataformas, reduciendo mucho los costes de producción y distribución de un videojuego.
+
+Finalmente, uno de los puntos que está cambiando la industria del videojuego a escala mundial, es el acceso que las personas pueden tener a esos motores de videojuegos, y las licencias con las que estos son distribuidos. Desde los primeros motores de videojuegos, que en un comienzo tomaron el nombre de los videojuegos que desarrollaban, como DOOM o Quake, estos eran desarrollados por empresas privadas, y para el beneficio de las mismas, es decir, una empresa desarrollaba un motor, y mantenía su ciclo de vida y modelo de negocio orientado a rentabilizar el esfuerzo y dinero invertidos en dicho motor. Poco a poco, empresas fueron centrando su modelo de negocio en desarrollar un muy potente motor, y vender licencias de dicho motor a los desarrolladores para que ellos explotaran el potencial del motor. Dentro de estos motores se hayan Unreal Engine, Unity o CryEngine. El modelo de negocio de estos motores fue evolucionando, y algunos de ellos ahora disponen de licencias gratuitas para desarrolladores. Y finalmente, existen motores de desarrollo libres, con su código completamente disponible para editarlo si se necesita, y con licencias libres y gratuitas ayudan a los desarrolladores independientes.
+
+Estos motores, aun así, siguen teniendo un nivel de abstracción bastante grande, y han surgido motores que abstraen comportamientos y entidades que componen algunos videojuegos concretos, 
+
+\subsubsection{Unreal Engine}
+
+Uno de los motores que fueron planteados cuando surgió este proyecto es Unreal Engine, esto es debido a que, al igual que Unity3D, ofrece licencias gratuitas para desarrolladores independientes que no obtienen beneficio, o obtienen poco beneficio de sus juegos. Este motor es conocido por la gran calidad gráfica que se consigue produciendo juegos con el.
+
+Unreal Engine fue desarrollado por Epic Games, inicialmente en 1998 para el desarrollo de videojuego First Person Shooter Unreal. El motor ha ido evolucionando desarrollando videojuegos como Unreal Tournament, Turok, America's Army -videojuego desarrollado por un equipo de desarrolladores de la Marina estadounidense con el objetivo de formar a civiles en armamento y estrategias de combate, y conseguir reclutarlos posteriormente en el ejercito de los Estados Unidos-, Gears of War, la saga Bioshock, o la saga Mass Effect. 
+
+Unreal Engine está caracterizado por tener una gran capacidad de renderización y calidad gráfica, así como un complejo sistema de materiales, iluminación y sombras, que consiguen, si se aplican correctamente, un resultado muy similar a una imagen real, como en la demo técnica London Apartment, visible en la figura \ref{londonapartment}. Esto, no obstante, no implica que todo lo generado con Unreal Engine tenga una calidad gráfica excenelente; únicamente hace más sencillo este proceso.
+
+\begin{figure}[htb]
+	\includegraphics[height=2.5in]{figures/london-apartment.jpg}
+	\caption[Unreal Engine 4 - London Apartment]{London Apartment, una demo técnica desarrollada con Unreal Engine 4.}
+	\label{londonapartment}
+\end{figure}
+
+Uno de los factores que influyen en la decisión de elegir qué motor es el mas apropiado para realizar la reconstrucción de eAdventure dentro de el, es la capacidad de producir videojuegos para el mayor número de plataformas posibles. Unreal Engine 4 posee esta capacidad, pues es capaz de generar videojuegos para Windows, XBOX, LINUX, OSX, PlayStation 4, iOS, Android, Ouya, iOS, y JavaScript/WebGL, entre otros.
+
+Sin embargo, en nuestro equipo existen dos factores por los que Unreal Engine 4 fué descartado. En primer lugar encontramos que modificar Unreal Engine 4, pese a que se han incorporado nuevos sistemas de gestión de Plugins en esta última versión, es una tarea extremadamente laboriosa, sobre la que hay disponible escasa documentación, y que todavía se encuentra en estado de desarrollo. Por otra parte, ambos integrantes del equipo tenemos gran experiencia en el uso de Unity, por lo que el proceso de aprendizaje hubiera sido bastante laborioso.
+
+\subsubsection{}
+\label{unreal}
+
+
 \subsection{Herramientas de desarrollo de Aventuras Gráficas}
 \label{herramientasaventuras}
 
 Al ser un género tan conocido el de las aventuras gráficas, existen multitud de editores que facilitan la generación de este tipo de juegos. Algunos mas conocidos que otros, con diferentes características y funcionalidades propias. Otros que, desgraciadamente, aunque son conocidos por generar aventuras gráficas de renombre, no son públicos, pero de los cuales podemos, mediante el análisis de dichos juegos, extraer funcionalidades, y casos reales de características que tuvieron éxito.
 
-Dentro de esto de editores, encontramos a el más conocido de todos ellos, Adventure Game Studio, también conocido por sus siglas AGS. Está caracterizado por la increíble personalización que tienen los juegos que se generan con esta herramienta, permitiendo modificar prácticamente todos los elementos que lo conforman, además de dar la oportunidad a los desarrolladores, de generar su propios Scripts e incluirlos en el juego. Este software no sólo es un gran editor que da casi infinitas posibilidades, sino que además está acompañado de una gran comunidad de usuarios, desarrolladores indie y aficionados, que comparten entre ellos sus proyectos. Todos estos proyectos compartidos, son debidamente catalogados en el repositorio de juegos que provee la propia página web de esta herramienta. Una de las pegas que tiene este editor es que únicamente funciona en Windows, aunque existen alternativas muy similares para linux. Finalmente mencionar que este motor, pese a ser gratuito para proyectos que no son comerciales, tiene una licencia que, en caso de ser comercializado, establece que el usuario debe encargarse de pagar por todas las librerías que AGS utiliza para funcionar a los desarrolladores de dichas librerías.
+\subsubsection{Adventure Game Studio}
+\label{adventuregamestudio}
+
+Dentro de esto de editores, encontramos a el más conocido de todos ellos, Adventure Game Studio, también conocido por sus siglas AGS. Está caracterizado por la increíble personalización que tienen los juegos que se generan con esta herramienta, permitiendo modificar prácticamente todos los elementos que lo conforman, además de dar la oportunidad a los desarrolladores, de generar su propios Scripts e incluirlos en el juego. 
+
+Este software no sólo es un gran editor que da casi infinitas posibilidades a los desarrolladores, sino que además está acompañado de una gran comunidad de usuarios, desarrolladores independientes y aficionados, que comparten entre ellos sus proyectos. Todos estos proyectos compartidos, son debidamente catalogados en el repositorio de juegos que provee la propia página web de esta herramienta. Una de las pegas que tiene este editor es que únicamente funciona en Windows, aunque existen alternativas muy similares para linux.
+
+Finalmente mencionar que este motor, pese a ser gratuito para proyectos que no son comerciales, tiene una licencia que, en caso de ser comercializado, establece que el usuario debe encargarse de pagar por todas las librerías que AGS utiliza para funcionar a los desarrolladores de dichas librerías.
 
 \begin{figure}[htb]
     \includegraphics[height=2.5in]{figures/ags.png}
@@ -189,7 +229,14 @@ Dentro de esto de editores, encontramos a el más conocido de todos ellos, Adven
 
 En la figura \ref{agsfigure} se puede observar la vista principal del editor, con una escena en la parte del centro-izquierda. En la parte superior derecha se ve la lista de escenas disponibles, y cuando estas se abren, se añaden en forma de pestañas al editor.
 
-Otro de los editores de aventuras gráficas más conocidos es Open SLUDGE. Este editor tiene una enorme lista de características disponibles, entre las cuales encontramos no sólo las básicas como personajes, objetos, escenas, o elementos interactuables; sino que además, encontramos características como poder realizar paralajes en fondos de escenas, que además pueden moverse a lo largo de la escena, posibilidad de añadir música y efectos de sonido, uso de timers, y muchas otras características. No obstante, este editor tiene algunos problemas, como que, por ejemplo, la cámara no sigue al personaje, o no tiene un buen editor de conversaciones, pese a que estas, si que tienen soporte para ser traducidas y localizadas fácilmente. Como detalle adicional de este editor, y característica de las más importantes, es que, es multiplataforma, y no solo se puede ejecutar en Windows, OSX y Linux, sino que además, le da al usuario la posibilidad de generar su juego para estas plataformas, en un paquete individual, con todos los recursos incluidos dentro del mismo.
+\subsubsection{Open SLUDGE}
+\label{opensludge}
+
+Otro de los editores de aventuras gráficas más conocidos es Open SLUDGE. Este editor tiene una enorme lista de características disponibles, entre las cuales encontramos no sólo las básicas como personajes, objetos, escenas, o elementos interactuables; sino que además, encontramos características como poder realizar paralajes en fondos de escenas, que además pueden moverse a lo largo de la escena, posibilidad de añadir música y efectos de sonido, uso de timers, y muchas otras características.
+
+No obstante, este editor tiene algunos problemas, como que, por ejemplo, la cámara no sigue al personaje, o no tiene un buen editor de conversaciones, pese a que estas, si que tienen soporte para ser traducidas y localizadas fácilmente. Otro problema de este editor está en que la comunidad de usuarios que lo conforman, y el equipo de desarrollo del editor es bastante escueta. Si bien es cierto que aunque esta comunidad sea pequeña, los usuarios que la conforman ceden recursos de muchos tipos para añadir funcionalidad adicional o mejorar la calidad gráfica del editor.
+
+Como detalle adicional de este editor, y característica de las más importantes, es que, es multiplataforma, y no solo se puede ejecutar en Windows, OSX y Linux, sino que además, le da al usuario la posibilidad de generar su juego para estas plataformas, en un paquete individual, con todos los recursos incluidos dentro del mismo.
 
 \begin{figure}[htb]
 	\includegraphics[height=2.5in]{figures/sludge.png}
@@ -198,6 +245,9 @@ Otro de los editores de aventuras gráficas más conocidos es Open SLUDGE. Este 
 \end{figure}
 
 En la figura \ref{sludgefigure} se observa como Open SLUDGE se ejecuta en OSX. Las ventanas que se muestran son, por ejemplo, la superior derecha, una previsualización de una escena, con los elementos que hay en ella, y el área dentro de la cual el personaje puede moverse. También, se observa, en el fóndo, un diálogo que está siendo traducido del Inglés al Alemán.
+
+\subsubsection{WinterMute Engine}
+\label{wintermute}
 
 Por último encontramos WinterMute Engine. Este pack de herramientas, cuya primera versión data de enero de 2003, para crear aventuras Point and Click, está caracterizado por ser capaz de crear aventuras gráficas 2D, 2.5D (Personajes en 2 dimensiones, y entornos en 3D, y viceversa), y aventuras generadas completamente en 3D. Al igual que SLUDGE, tiene características estándar como personajes y paralaje en escenas, aunque, frente a este, añade características como editores de interfaz, o soporte a accesibilidad, como poder hacer Text-To-Speech. Sin embargo, una de las características más llamativas de este editor, es la posilibidad de poder generar aventuras gráficas y que estas se ejecuten en iOS, pudiendo instalarlas en un iPad o iPhone. Finalmente decir que el proyecto se distribuye bajo licencia MIT.
 
@@ -208,6 +258,31 @@ Por último encontramos WinterMute Engine. Este pack de herramientas, cuya prime
 \end{figure}
 
 en la figura \ref{wmengine} se muestra una vista del editor WinterMute Engine. La columna central muestra un explorador de archivos que conforman el proyecto, con imágenes y sprites, junto a scripts o otro tipo de archivos. La columna de la izquierda permite configurar el proyecto, y editar características del juego como la resolución del mismo. Y finalmente, la coluna de la derecha es una previsualización del archivo seleccionado.
+
+\subsection{eAdventure Android y Mokap}
+\label{eandroidmokap}
+
+Creado por Javier Torrente e Iván Martínez-Ortiz, y con última versión datada el 30 de enero de 2014, encontramos el proyecto eAdventure Android, el cual tiene dos propósitos. El primero es el de permitir al usuario ejecutar juegos de eAdventure en Android, y el segundo es el de explotar los sensores del dispositivo, como el GPS para la ubicación, y la cámara para lectura de códigos QR. Este proyecto tuvo problemas de continuidad ya que uno de los desarrolladores dejó el equipo y, debido a la dificultad para continuar el proyecto sin su aportación, se decidió que el proyecto evolucionase en otro proyecto llamado Mokap.
+
+\begin{figure}[htb]
+	\includegraphics[height=2.5in]{figures/eandroid.png}
+	\caption[eAdventure Android - Lupa]{El videojuego Fire Protocol mostrando la habilidad de hacer Zoom con una lupa e identificar elementos.}
+	\label{eandroidlupa}
+\end{figure}
+
+El proyecto eAdventure Android añadía características que facilitaban el uso de juegos de eAdventure en entornos táctiles, como la capacidad de identificar elementos mediante el uso de una lupa que, si sobrepasaba algún elemento interactuable en la escena, muestra al usuario información acerca de dicho elemento. Esta característica se puede encontrar en la figura \ref{eandroidlupa}. Además de esta característica, eAdventure android tiene una forma diferente de mostrar el menú, ya que este puede ser difícil de tocar con los dedos en una pantalla pequeña. esto se puede encontrar en la figur a\label{eandroidmenu}.
+
+\begin{figure}[htb]
+	\includegraphics[height=2.5in]{figures/eandroid-menu.png}
+	\caption[eAdventure Android - Menu]{El videojuego Chocolate Factory mostrando el menú contextual.}
+	\label{eandroidmenu}
+\end{figure}
+
+Esta funcionalidad de emulador de eAdventure en Android, es la que se consigue obtener mediante la creación del emulador standalone de uAdventure, capaz de importar y ejecutar cualquier juego; pudiendo ser generado dicho emulador para cualquier plataforma, permitiendo ejecutar los juegos sin problemas de compatibilidad ni necesidad de instalar la Maquina Virtual Java. Dado que eAdventure Android ya no tiene actualizaciones, ni soporte, uAdventure tomará el control de estas necesidades de ahora en adelante.
+
+Por otra parte, no existe un editor que permita generar juegos que utilicen la localización mediante GPS, ni la lectura de códigos QR, por lo que, en uAdventure, como trabajo futuro, está pendiente añadir dichas características, y un editor que facilite la creación de videojuegos que los utilicen. 
+
+Con la llegada del TFG de Antonio Calvo Morata y Dan Cristian Rotaru, Mokap, eAdventure Android se abandonó para centrar el esfuerzo en el desarrollo de esta herramienta de autoría permitía generar videojuegos sencillos, utilizando recursos de un repositorio, desde Android. 
 
 \section{Metodología de desarrollo}
 \label{metodologiadedesarrollo}
