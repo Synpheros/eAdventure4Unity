@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using LibTessDotNet;
 
 public class ActiveAreaMB : MonoBehaviour, Interactuable {
 
@@ -10,9 +11,13 @@ public class ActiveAreaMB : MonoBehaviour, Interactuable {
 		set { aad = value; }
 	}
 
+	public static Vector3 Vec3toVector3(Vec3 _v){
+		return new Vector3(_v.X,_v.Y,_v.Z);
+	}
+
 	// Use this for initialization
 	void Start () {
-        //adaptate ();
+        adaptate ();
 	}
 	
 	// Update is called once per frame
@@ -121,23 +126,57 @@ public class ActiveAreaMB : MonoBehaviour, Interactuable {
 
     private void adaptate(){
         if (!this.aad.isRectangular() && this.aad.getInfluenceArea () != null) {
+			this.transform.localScale = new Vector3 (1, 1, 1);
+
             Mesh mesh = new Mesh ();
             List<Vector3> vertices = new List<Vector3> ();
+			List<Vector2> vertices2 = new List<Vector2> ();
+			Tess tess = new LibTessDotNet.Tess();
+
+			ContourVertex[] contour = new ContourVertex[aad.getPoints().Count];
+			int i = 0;
+
+			float minx = float.MaxValue, miny = float.MaxValue, maxx = 0, maxy = 0;
+			foreach (Vector2 v in this.aad.getPoints()) {
+				if (v.x < minx)
+					minx = v.x;
+
+				if (v.x > maxx)
+					maxx = v.x;
+
+				if (v.y < miny)
+					miny = v.y;
+
+				if (v.y > maxy)
+					maxy = v.y;
+			}
+
+			minx = (minx + (maxx - minx) / 2 ) / 10;
+			miny = 60 - (miny + (maxy - miny) / 2 ) / 10;
 
             foreach (Vector2 v in this.aad.getPoints()) {
-                vertices.Add (new Vector3 (v.x / 100f, v.y / 100f, this.transform.position.z));
+				contour[i].Position = new LibTessDotNet.Vec3 { X = v.x / 10f - minx, Y = 60 - v.y / 10f - miny, Z = this.transform.position.z };
+				i++;
             }
+
+			tess.AddContour(contour, LibTessDotNet.ContourOrientation.CounterClockwise);
+			tess.Tessellate(WindingRule.EvenOdd, LibTessDotNet.ElementType.Polygons,3);
+
+			Debug.Log("Output triangles:");
+			List<int> triangles = new List<int> ();
+			int numTriangles = tess.ElementCount;
+			for (i = 0; i < numTriangles; i++){
+				vertices.Add(Vec3toVector3(tess.Vertices[tess.Elements[i * 3]].Position));
+				vertices.Add(Vec3toVector3(tess.Vertices[tess.Elements[i * 3 + 1]].Position));
+				vertices.Add(Vec3toVector3(tess.Vertices[tess.Elements[i * 3 + 2]].Position));
+				triangles.AddRange(new int[] { i * 3, i * 3+1, i * 3+2 });
+			}
 
             mesh.SetVertices (vertices);
-
-            List<int> triangles = new List<int> ();
-            for (int i = 2; i < aad.getPoints ().Count; i++) {
-                triangles.AddRange(new int[] { 0, i - 1, i });
-            }
-
             mesh.SetTriangles (triangles,0);
 
-            this.GetComponent<MeshFilter> ().mesh = mesh;
+			this.GetComponent<MeshFilter> ().sharedMesh = mesh;
+			this.GetComponent<MeshCollider> ().sharedMesh = mesh;
         }
     }
 }
