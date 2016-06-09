@@ -33,13 +33,18 @@ public class ExitMB : MonoBehaviour, Interactuable {
 	}
 
 	void OnMouseEnter(){
-		Game.Instance.setCursor ("over");
-		//GetComponent<Renderer> ().material.color = new Color (1f, 0f, 0f, 0.2f);
+		showHand(true);
 	}
-	
+
 	void OnMouseExit() {
-		Game.Instance.setCursor ("default");
-		//GetComponent<Renderer> ().material.color = new Color (1f, 0f, 0f, 0f);
+		showHand(false);
+	}
+
+	public void showHand(bool show){
+		if (show)
+			Game.Instance.setCursor ("over");
+		else 
+			Game.Instance.setCursor ("default");
 	}
 
     public InteractuableResult Interacted (RaycastHit hit = new RaycastHit()){

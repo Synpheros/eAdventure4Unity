@@ -23,7 +23,7 @@ public class eFrame {
 	}
 }
 
-public class eAnim {
+public class eAnim : Resource {
 	public List<eFrame> frames;
 	public XmlDocument xmld;
 

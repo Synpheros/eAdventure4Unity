@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Text.RegularExpressions;
 
-public class Texture2DHolder {
+public class Texture2DHolder : Resource {
 
 	public Texture2D LoadTexture() {
 		Texture2D tex = new Texture2D (1, 1);
@@ -18,14 +18,6 @@ public class Texture2DHolder {
 			
 			break;
 		case ResourceManager.LoadingType.SYSTEM_IO:
-			/*byte[] fileData;
-		
-			if (System.IO.File.Exists (filePath)) {
-				fileData = System.IO.File.ReadAllBytes (filePath);
-				tex = new Texture2D (2, 2);
-				tex.LoadImage (fileData); //..this will auto-resize the texture dimensions.
-			}*/
-
 			tex = new Texture2D(2, 2,TextureFormat.BGRA32,false);
 			tex.LoadImage(fileData);
 			this.fileData = null;

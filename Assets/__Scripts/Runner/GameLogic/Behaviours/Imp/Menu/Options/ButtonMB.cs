@@ -69,6 +69,8 @@ public class ButtonMB : MonoBehaviour, Interactuable {
             GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (resource.getAssetPath ("buttonOver"));
         else
             GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (resource.getAssetPath (DescriptorData.HIGHLIGHTED_BUTTON));
+
+		showHand (true);
     }
 
     void OnMouseExit() {
@@ -78,7 +80,16 @@ public class ButtonMB : MonoBehaviour, Interactuable {
             GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (resource.getAssetPath ("buttonNormal"));
         else
             GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (resource.getAssetPath (DescriptorData.NORMAL_BUTTON));
+
+		showHand (false);
     }
+
+	public void showHand(bool show){
+		if (show)
+			Game.Instance.setCursor ("over");
+		else 
+			Game.Instance.setCursor ("default");
+	}
 
     public InteractuableResult Interacted (RaycastHit hit = new RaycastHit()){
         Game.Instance.Execute(new EffectHolder(action.getEffects()));

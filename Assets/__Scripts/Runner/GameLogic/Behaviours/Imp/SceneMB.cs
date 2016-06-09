@@ -161,15 +161,10 @@ public class SceneMB : MonoBehaviour, Interactuable{
         }
     }
 	
-	public GameObject Exit_Prefab;
-	public GameObject ActiveArea_Prefab;
-	public GameObject Character_Prefab;
-	public GameObject Object_Prefab;
-	public GameObject Atrezzo_Prefab;
-    public GameObject Player_Prefab;
-	
-    private GeneralScene sd;
+	public GameObject Exit_Prefab, ActiveArea_Prefab, Character_Prefab, Object_Prefab, Atrezzo_Prefab, Player_Prefab;
+	private Transform Exits, ActiveAreas, Characters, Objects, Atrezzos, Player;
 
+    private GeneralScene sd;
     public GeneralScene sceneData{
 		get { return sd; }
 		set { sd = value; }
@@ -183,6 +178,13 @@ public class SceneMB : MonoBehaviour, Interactuable{
 	// Use this for initialization
 	void Start () {
         this.gameObject.name = sd.getId ();
+		this.Exits = this.transform.FindChild ("Exits");
+		this.ActiveAreas = this.transform.FindChild ("ActiveAreas");
+		this.Characters = this.transform.FindChild ("Characters");
+		this.Objects = this.transform.FindChild ("Objects");
+		this.Atrezzos = this.transform.FindChild ("Atrezzos");
+		this.Player = this.transform.FindChild ("Player");
+
 		renderScene ();
 	}
 
@@ -227,113 +229,53 @@ public class SceneMB : MonoBehaviour, Interactuable{
             StartCoroutine (loadMovie ());
             this.transform.FindChild ("Background").localPosition = new Vector3 (40, 30, 20);
             break;
-        case GeneralScene.GeneralSceneSceneType.SCENE: 
-            Scene rsd = (Scene)sd;
-            foreach (ResourcesUni sr in rsd.getResources()) {
-                if (ConditionChecker.check (sr.getConditions ())) {
-                    Texture2DHolder th = new Texture2DHolder (sr.getAssetPath (Scene.RESOURCE_TYPE_BACKGROUND));
-                    Texture2D tmp = th.Texture;
+		case GeneralScene.GeneralSceneSceneType.SCENE: 
+			Scene rsd = (Scene)sd;
+			foreach (ResourcesUni sr in rsd.getResources()) {
+				if (ConditionChecker.check (sr.getConditions ())) {
+					Texture2DHolder th = new Texture2DHolder (sr.getAssetPath (Scene.RESOURCE_TYPE_BACKGROUND));
+					Texture2D tmp = th.Texture;
 
-                    Transform background = this.transform.FindChild ("Background");
-                    background.GetComponent<Renderer> ().material.mainTexture = tmp;
-                    float scale = (tmp.width / (tmp.height / 600f)) / 800f;
+					Transform background = this.transform.FindChild ("Background");
+					background.GetComponent<Renderer> ().material.mainTexture = tmp;
+					float scale = (tmp.width / (tmp.height / 600f)) / 800f;
 
-                    this.transform.position = new Vector3 (40, 30, 20);
-                    background.localPosition = new Vector3 (((80 * scale) - 80) / 2f, 0, 20);
-                    background.transform.localScale = new Vector3 (scale * 80, 60, 1);
-                    break;
-                }
-            }
-			
-            Transform characters = this.transform.FindChild ("Characters");
-            foreach (Transform child in characters) {
-                GameObject.Destroy (child.gameObject);
-            }
-			
-            foreach (ElementReference cr in rsd.getCharacterReferences()) {
-                if (ConditionChecker.check (cr.getConditions ())) {
-                    GameObject ret = GameObject.Instantiate (Character_Prefab);
-                    Transform trans = ret.GetComponent<Transform> ();
-                    ret.GetComponent<CharacterMB> ().context = cr;
-                    ret.GetComponent<CharacterMB> ().charData = Game.Instance.getCharacter (cr.getTargetId ());
-                    trans.SetParent (characters);
-                }
-            }
-			
-            Transform objects = this.transform.FindChild ("Objects");
-            foreach (Transform child in objects) {
-                GameObject.Destroy (child.gameObject);
-            }
-			
-            List<ElementReference> items = rsd.getItemReferences ();
+					this.transform.position = new Vector3 (40, 30, 20);
+					background.localPosition = new Vector3 (((80 * scale) - 80) / 2f, 0, 20);
+					background.transform.localScale = new Vector3 (scale * 80, 60, 1);
+					break;
+				}
+			}
 
-            ElementReference tmpElement;
-            foreach (ElementReference ir in rsd.getItemReferences()) {
-                if (ConditionChecker.check (ir.getConditions ())) {
-                    if (!contexts.ContainsKey (ir)) {
-                        tmpElement = new ElementReference (ir.getTargetId (), ir.getX (), ir.getY ());
-                        tmpElement.setScale (ir.getScale ());
-                        contexts.Add (ir, tmpElement);
-                    }
-                    
-                    GameObject ret = GameObject.Instantiate (Object_Prefab);
-                    Transform trans = ret.GetComponent<Transform> ();
-                    ret.GetComponent<ObjectMB> ().context = contexts[ir];
-                    ret.GetComponent<ObjectMB> ().objData = Game.Instance.getObject (ir.getTargetId ());
-                    trans.SetParent (objects);
-                }
-            }
-			
-            Transform atrezzos = this.transform.FindChild ("Atrezzos");
-            foreach (Transform child in atrezzos) {
-                GameObject.Destroy (child.gameObject);
-            }
-			
-            foreach (ElementReference ir in rsd.getAtrezzoReferences()) {
-                if (ConditionChecker.check (ir.getConditions ())) {
-                    GameObject ret = GameObject.Instantiate (Atrezzo_Prefab);
-                    Transform trans = ret.GetComponent<Transform> ();
-                    ret.GetComponent<AtrezzoMB> ().context = ir;
-                    ret.GetComponent<AtrezzoMB> ().atrData = Game.Instance.getAtrezzo (ir.getTargetId ());
-                    trans.SetParent (atrezzos);
-                }
-            }
-			
-            Transform activeareas = this.transform.FindChild ("ActiveAreas");
-            foreach (Transform child in activeareas) {
-                GameObject.Destroy (child.gameObject);
-            }
+			//###################### CHARACTERS ######################
+			deleteChilds (Characters);
+			foreach (ElementReference context in rsd.getCharacterReferences())
+				instanceElement<NPC> (context);
 
-            foreach (ActiveArea ad in rsd.getActiveAreas()) {
-                if (ConditionChecker.check (ad.getConditions ())) {
-                    GameObject ret = GameObject.Instantiate (ActiveArea_Prefab);
-                    Transform trans = ret.GetComponent<Transform> ();
-                    ret.GetComponent<ActiveAreaMB> ().aaData = ad;
-                    trans.localScale = new Vector3 (ad.getWidth () / 10f, ad.getHeight () / 10f, 1);
-                    Vector2 tmppos = new Vector2 (ad.getX (), ad.getY ()) / 10 + (new Vector2 (trans.localScale.x, trans.localScale.y)) / 2;
-					
-                    trans.localPosition = new Vector2 (tmppos.x, 60 - tmppos.y);
-                    trans.SetParent (activeareas);
-                }
-            }
+			//###################### OBJECTS ######################
+			deleteChilds (Objects);
+			foreach (ElementReference context in rsd.getItemReferences())
+				instanceElement<Item> (context);
 
-            Transform exits = this.transform.FindChild ("Exits");
-            foreach (Transform child in exits) {
-                GameObject.Destroy (child.gameObject);
-            }
+			//###################### ATREZZOS ######################
+			deleteChilds (Atrezzos);
+			foreach (ElementReference context in rsd.getAtrezzoReferences())
+				instanceElement<Atrezzo> (context);
 			
-            foreach (Exit ed in rsd.getExits()) {
-                if (ed.isHasNotEffects() || ConditionChecker.check (ed.getConditions ())) {
-                    GameObject ret = GameObject.Instantiate (Exit_Prefab);
-                    Transform trans = ret.GetComponent<Transform> ();
-                    ret.GetComponent<ExitMB> ().exitData = ed;
-                    trans.localScale = new Vector3 (ed.getWidth () / 10f, ed.getHeight () / 10f, 1);
-                    Vector2 tmppos = new Vector2 (ed.getX (), ed.getY ()) / 10 + (new Vector2 (trans.localScale.x, trans.localScale.y)) / 2;
-					
-                    trans.localPosition = new Vector2 (tmppos.x, 60 - tmppos.y);
-                    trans.SetParent (exits);
-                }
-            }
+			//###################### ACTIVEAREAS ######################
+			deleteChilds (ActiveAreas);
+
+            foreach (ActiveArea ad in rsd.getActiveAreas())
+                if (ConditionChecker.check (ad.getConditions ()))
+					instanceRectangle<ActiveArea> (ad);
+
+			//###################### EXITS ######################
+			deleteChilds (Exits);
+
+			foreach (Exit exit in rsd.getExits())
+				if (exit.isHasNotEffects() || ConditionChecker.check (exit.getConditions ()))
+					instanceRectangle<Exit> (exit);
+			
 
             if (!Game.Instance.isFirstPerson ()) {
                 lines = new List<LineHandler> ();
@@ -353,9 +295,9 @@ public class SceneMB : MonoBehaviour, Interactuable{
                 /*GameObject.Destroy(this.transform.FindChild ("Player"));*/
 
                 player = GameObject.Instantiate (Player_Prefab).GetComponent<PlayerMB>();
-                player.transform.parent = characters;
-                player.playerData = Game.Instance.getPlayer ();
-                player.context = player_context;
+                player.transform.parent = Characters;
+				player.Element = Game.Instance.getPlayer ();
+				player.Context = player_context;
             }
 
 			break;
@@ -371,6 +313,91 @@ public class SceneMB : MonoBehaviour, Interactuable{
 			}
 			break;
 		}
+	}
+
+	private void deleteChilds(Transform parent){
+		if(parent!=null)
+		foreach (Transform child in parent) {
+			GameObject.Destroy (child.gameObject);
+		}
+	}
+
+	private void instanceElement<T>(ElementReference context) where T : Element {
+		if (!ConditionChecker.check (context.getConditions ()))
+			return;
+
+		if (!contexts.ContainsKey (context)) {
+			ElementReference new_context = new ElementReference (context.getTargetId (), context.getX (), context.getY ());
+			new_context.setScale (context.getScale ());
+			contexts.Add (context, new_context);
+		}
+
+		context = contexts [context];
+
+		GameObject base_prefab;
+		Transform parent;
+		Element element;
+		switch (typeof(T).ToString ()) {
+		case "Atrezzo":
+			base_prefab = Atrezzo_Prefab;
+			parent = Atrezzos;
+			element = Game.Instance.getAtrezzo (context.getTargetId ());
+			break;
+		case "NPC":
+			base_prefab = Character_Prefab;
+			parent = Characters;
+			element = Game.Instance.getCharacter (context.getTargetId ());
+			break;
+		case "Item":
+			base_prefab = Object_Prefab;
+			parent = Objects;
+			element = Game.Instance.getObject (context.getTargetId ());
+			break;
+		default:
+			return;
+		}
+
+		GameObject ret = GameObject.Instantiate (base_prefab);
+		Transform trans = ret.GetComponent<Transform> ();
+		ret.GetComponent<Representable> ().Context = context;
+		ret.GetComponent<Representable> ().Element = element;
+		trans.SetParent (parent);
+	}
+
+	private void instanceRectangle<T>(Rectangle context) where T : Rectangle {
+		if (context == null)
+			return;
+		
+		GameObject base_prefab;
+		Transform parent;
+		System.Type base_type;
+
+		switch (typeof(T).ToString ()) {
+		case "ActiveArea":
+			base_prefab = ActiveArea_Prefab;
+			parent = ActiveAreas;
+			break;
+		case "Exit":
+			base_prefab = Exit_Prefab;
+			parent = Exits;
+			base_type = typeof(Exit);
+			break;
+		default:
+			return;
+		}
+
+		GameObject ret = GameObject.Instantiate (base_prefab);
+		Transform trans = ret.GetComponent<Transform> ();
+		if(parent == ActiveAreas)
+			ret.GetComponent<ActiveAreaMB> ().aaData = (ActiveArea) context;
+		else if(parent == Exits)
+			ret.GetComponent<ExitMB> ().exitData = (Exit) context;
+		
+		trans.localScale = new Vector3 (context.getWidth () / 10f, context.getHeight () / 10f, 1);
+		Vector2 tmppos = new Vector2 (context.getX (), context.getY ()) / 10 + (new Vector2 (trans.localScale.x, trans.localScale.y)) / 2;
+
+		trans.localPosition = new Vector2 (tmppos.x, 60 - tmppos.y);
+		trans.SetParent (ActiveAreas);
 	}
 
     private void updateNeighbours(){
@@ -582,7 +609,8 @@ public class SceneMB : MonoBehaviour, Interactuable{
 
     }
 
-
+	public void showHand(bool show){
+	}
 	
     public InteractuableResult Interacted (RaycastHit hit = default(RaycastHit)){
 		bool forcewait = false;

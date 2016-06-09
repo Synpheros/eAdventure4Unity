@@ -190,4 +190,6 @@ public class EffectHolder : Secuence, Interactuable {
         } else
             return InteractuableResult.DOES_SOMETHING;
     }
+
+	public void showHand (bool show){}
 }

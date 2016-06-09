@@ -15,28 +15,23 @@ public class ActiveAreaMB : MonoBehaviour, Interactuable {
 		return new Vector3(_v.X,_v.Y,_v.Z);
 	}
 
-	// Use this for initialization
 	void Start () {
         adaptate ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-	
 	}
 
 	void OnMouseEnter(){
-		//GetComponent<Renderer> ().material.color = new Color (0f, 1f, 0f, 0.2f);
         showHand(true);
 	}
 	
 	void OnMouseExit() {
-		//GetComponent<Renderer> ().material.color = new Color (1f, 0f, 0f, 0f);
         showHand(false);
 	}
 
     bool interactable = false;
-    void showHand(bool show){
+    public void showHand(bool show){
         if (show && !interactable) {
             Game.Instance.setCursor ("over");
             interactable = true;

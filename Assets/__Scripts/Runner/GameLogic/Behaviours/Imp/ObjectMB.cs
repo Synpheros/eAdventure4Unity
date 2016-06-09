@@ -2,19 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ObjectMB : MonoBehaviour, Interactuable, Movable {
+public class ObjectMB : Representable, Interactuable {
 	
-    private Item od;
-    public Item objData{
-		get { return od; }
-		set { od = value; }
-	}
-    public ElementReference context;
+	bool interactable = false;
+	bool dragging = false;
+	Action drag;
 
 	public int DifferentActions{
 		get { 
 			int tmp = 0;
-            foreach(Action a in od.getActions()){
+			foreach(Action a in Element.getActions()){
                 if(ConditionChecker.check(a.getConditions())){
 					tmp++;
 				}
@@ -23,32 +20,13 @@ public class ObjectMB : MonoBehaviour, Interactuable, Movable {
 		}
 	}
 	
-    private ResourcesUni current_resource;
+    
 	
 	void Start () {
-        foreach(ResourcesUni cr in od.getResources()){
-            if (ConditionChecker.check(cr.getConditions())) {
-                current_resource = cr;
-                string path = cr.getAssetPath (Item.RESOURCE_TYPE_IMAGE);
-                Texture2D th = ResourceManager.Instance.getImage (path);
-
-                this.GetComponent<Renderer> ().material.mainTexture = th;
-                this.transform.localScale = new Vector3(th.width/10,th.height/10,1) * context.getScale();
-                break;
-            }
-        }
-
-        this.gameObject.name = od.getId();
-		
-        Vector2 tmppos = new Vector2(context.getX(),context.getY()) / 10 + (new Vector2(0,-transform.localScale.y))/2;
-        transform.localPosition = new Vector3(tmppos.x,60-tmppos.y,-context.getLayer());
-
-		hasOverSprite = current_resource.getAssetPath (Item.RESOURCE_TYPE_IMAGEOVER) != null;
+		base.Start ();
+		base.setTexture(Item.RESOURCE_TYPE_IMAGE);
 	}
-	
-    bool dragging = false;
-	bool checkingTransparency = false;
-    Action drag;
+
 	void Update () {
         if (dragging) {
             Vector2 pos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
@@ -71,49 +49,31 @@ public class ObjectMB : MonoBehaviour, Interactuable, Movable {
                 }
             }
         }
-
-		if (checkingTransparency) {
-			RaycastHit hit;
-			Physics.Raycast ( Camera.main.ScreenPointToRay (Input.mousePosition), out hit);
-
-			if (((Texture2D) GetComponent<Renderer>().material.mainTexture).GetPixelBilinear (hit.textureCoord.x, hit.textureCoord.y).a > 0f)
-				showHand (true);
-			else
-				showHand (false);
-		}
 	}
 
-	bool interactable = false;
-	bool hasOverSprite = false;
-	void showHand(bool show){
+
+	public void showHand(bool show){
 		if (show && !interactable) {
 			Game.Instance.setCursor ("over");
-			if(hasOverSprite)
-				GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (current_resource.getAssetPath(Item.RESOURCE_TYPE_IMAGEOVER));
+			if (base.hasOverSprite ()) {
+				base.setTexture (Item.RESOURCE_TYPE_IMAGEOVER);
+			}
 			interactable = true;
 		} else if (!show && interactable) {
 			Game.Instance.setCursor ("default");
-			GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (current_resource.getAssetPath(Item.RESOURCE_TYPE_IMAGE));
+			base.setTexture(Item.RESOURCE_TYPE_IMAGE);
 			interactable = false;
 		}
-	}
-
-	void OnMouseEnter(){
-		checkingTransparency = true;
-	}
-
-	void OnMouseExit() {
-		checkingTransparency = false;
 	}
 
     public InteractuableResult Interacted (RaycastHit hit = new RaycastHit()){
         InteractuableResult ret = InteractuableResult.IGNORES;
 
 		if (interactable) {
-			if (od.isReturnsWhenDragged ()) {
-				switch (od.getBehaviour ()) {
+			if (Element.isReturnsWhenDragged ()) {
+				switch (((Item)Element).getBehaviour ()) {
 				case Item.BehaviourType.FIRST_ACTION:
-					foreach (Action a in od.getActions()) {
+					foreach (Action a in Element.getActions()) {
 						if (ConditionChecker.check (a.getConditions ())) {
 							Game.Instance.Execute (new EffectHolder (a.getEffects ()));
 							break;
@@ -123,7 +83,7 @@ public class ObjectMB : MonoBehaviour, Interactuable, Movable {
 					break;
 				case Item.BehaviourType.NORMAL:
 					List<Action> available = new List<Action> ();
-					foreach (Action a in od.getActions()) {
+					foreach (Action a in Element.getActions()) {
 						if (ConditionChecker.check (a.getConditions ())) {
 							bool addaction = true;
 							foreach (Action a2 in available) {
@@ -156,7 +116,7 @@ public class ObjectMB : MonoBehaviour, Interactuable, Movable {
 					if (addexamine) {
 						Action ex = new Action (Action.EXAMINE);
 						Effects exeff = new Effects ();
-						exeff.add (new SpeakPlayerEffect (od.getDescription (0).getDetailedDescription ()));
+						exeff.add (new SpeakPlayerEffect (Element.getDescription (0).getDetailedDescription ()));
 						ex.setEffects (exeff);
 						available.Add (ex);
 					}
@@ -174,7 +134,7 @@ public class ObjectMB : MonoBehaviour, Interactuable, Movable {
 				}
 			} else {
 				if (drag == null) {
-					foreach (Action action in objData.getActions()) {
+					foreach (Action action in Element.getActions()) {
 						if (action.getType () == Action.DRAG_TO) {
 							drag = action;
 							break;
@@ -189,10 +149,5 @@ public class ObjectMB : MonoBehaviour, Interactuable, Movable {
 		}
 
         return ret;
-    }
-
-    public void Move(Vector2 position){
-        this.transform.localPosition = new Vector3(position.x,position.y,this.transform.localPosition.z);
-        this.context.setPosition ((int) position.x * 10, (int) (60 - position.y) * 10);
     }
 }
