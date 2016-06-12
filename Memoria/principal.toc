@@ -1,7 +1,7 @@
 \select@language {spanish}
 \contentsline {chapter}{\IeC {\'I}ndice}{\es@scroman {i}}{section*.1}
-\contentsline {chapter}{Agradecimientos}{\es@scroman {ii}}{section*.3}
-\contentsline {chapter}{Dedicatoria}{\es@scroman {iii}}{section*.4}
+\contentsline {chapter}{Agradecimientos}{\es@scroman {iii}}{section*.3}
+\contentsline {chapter}{Dedicatoria}{\es@scroman {iv}}{section*.4}
 \contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Los videojuego educativos y el E-Learning}{2}{section.1.1}
 \contentsline {section}{\numberline {1.2}El Objeto de Trabajo}{3}{section.1.2}
@@ -28,7 +28,11 @@
 \contentsline {section}{\numberline {4.2}Detalles de la implementaci\IeC {\'o}n}{30}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Sobre la clase Game}{31}{subsection.4.2.1}
 \contentsline {section}{\numberline {4.3}Sobre las Clases de Datos}{33}{section.4.3}
-\contentsline {chapter}{\numberline {5}Segunda Iteraci\IeC {\'o}n}{35}{chapter.5}
-\contentsline {chapter}{Bibliography}{36}{chapter*.10}
-\contentsline {chapter}{\numberline {A}Title for This Appendix}{37}{appendix.Alph1}
-\contentsline {chapter}{\numberline {B}Title for This Appendix}{38}{appendix.Alph2}
+\contentsline {section}{\numberline {4.4}Sobre las Clases de Comportamiento}{36}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Detalles de la clase Character}{37}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Detalles de la clase eObject, Exit y ActiveArea}{38}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Detalles espec\IeC {\'\i }ficos de Scene}{38}{subsection.4.4.3}
+\contentsline {chapter}{\numberline {5}Segunda Iteraci\IeC {\'o}n}{40}{chapter.5}
+\contentsline {chapter}{Bibliography}{41}{chapter*.10}
+\contentsline {chapter}{\numberline {A}Title for This Appendix}{42}{appendix.Alph1}
+\contentsline {chapter}{\numberline {B}Title for This Appendix}{43}{appendix.Alph2}

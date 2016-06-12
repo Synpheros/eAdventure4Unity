@@ -108,3 +108,70 @@ La mayor parte de clases de datos contienen:
 	\item Algunas clases de datos, además de Recursos y Condiciones, también tienen Efectos que se realizan al interactuar con ellas, o un listado de Acciones que se muestra como un menú contextual al interactuar con ellas.
 \end{itemize}
 
+Particularmente, existen algunas anomalías en las clases de datos, como son las clases que implementan la interfaz \textit{SceneData} la cual contiene, además de Recursos como todas las demás, gran variedad de objetos \textit{ItemReference}, los cuales contienen una referencia a un elemento de la escena (ya sea un personaje, objeto o una salida) y la contextualización del mismo, es decir, su posición en ese momento, las condiciones que tienen que darse para que ese elemento aparezca o no, etc.
+
+La creación de dicha interfaz fué necesaria debido a que existen multitud de tipos de escenas. En este caso se han implementado 2 tipos de escenas que eran necesarias para el videojuego \textit{Checklist}, las \textit{RScene}, abreviando \textit{Regular Scene}, que son escenas normales sobre las que jugar, donde se representan personajes, objetos, salidas, áreas activas; y las \textit{Slidescene}, que son escenas con una sucesión de imágenes en su interior a modo de \textit{Slides} como si de una presentación se tratase.
+
+Finalmente comentar que, algunas clases de datos como los \textit{ObjectData} o los \textit{ActiveAreaData} tienen un elemento llamado \textit{InfluenceArea} el cual no se ha implementado, y que permite que un objeto o un active área sea mucho más grande que su area de interacción, la cual está formada por una sucesión de puntos que generan al final un polígono. Esto permite que pueda haber un objeto con formas irregulares e interactuar con él sólo en las zonas de real contacto con la imagen. Por lo que todas nuestras áreas de influencia serán rectangulares.
+
+Esta Área de Influencia, sin embargo, en la siguiente iteración del proyecto sí que ha sido implementada, mediante la utilización de librerías de triangulación de polígonos irregulares de cualquier tipo, y la transformación de dichos polígonos en Mallas tridimensionales. La explicación de dicha transformación será realizada en la siguiente iteración.
+
+Finalmente, la clase eAnim tiene una peculiaridad, y es que en versiones antiguas de eAdventure, las animaciones se generaban a partir de secuencias de imágenes en la carpeta animations, carpeta utilizada para el almacenamiento de las imágenes que forman las animaciones.
+
+Es decir, existen animaciones formadas de la siguiente manera: “anim\_01.png”, “anim\_02.png” y estas están especificadas en el fichero de especificación del juego de eAdventure como “/animaciones/anim”. Esto supone dos problemas. El primero consiste en identificar cuál es el formato del fichero de imagen, por lo que existe una lista de tipos disponibles y se intenta encontrar un archivo que satisfaga tanto el nombre de la animación, como el formato correspondiente. Y en segundo lugar, no se sabe cuántos archivos hay, lo que hace que debas iterar hasta que no encuentres fichero.
+
+Por otra parte, el nuevo formato de animaciones está definido en ficheros XML llamados “.eaa” que son mucho más sencillos de recorrer y contienen más información acerca de cada fotograma de la animación.
+
+\section{Sobre las Clases de Comportamiento}
+
+De manera similar al apartado anterior, se explicará el funcionamiento de la mayor parte de clases de comportamiento, puntualizando detalles acerca de algunas de dichas clases en concreto, como \textit{Character} o \textit{eObject}, que tienen comportamientos aislados como la gestión de fotogramas o la necesidad de cambiar cuando el usuario va a interactuar con ellos.
+
+\begin{figure}[htb]
+	\includegraphics[height=3in]{figures/it1/behaviourclasses.png}
+	\caption[Clases de Comportamiento - Prototipo 1]{Vista de carpeta de las clases de comportamiento implementadas en la primera iteración, junto a sus Prefabs.}
+	\label{dataclassesit1}
+\end{figure}
+
+Las clases de comportamiento son todas herederas de \textit{MonoBehabiour} por lo que se asignan a objetos dentro de la escena, y luego estos objetos se guardan en forma de \textit{Prefabs}, cada una a uno individualmente. Estos \textit{Prefabs} suelen ser muy sencillos, en su mayoría constituidos únicamente por un \textit{Quad}\footnote{Un Quad es una malla tridimensional compuesta por un plano, una de las mallas más simples.}, al cual se le cambia la textura con \textit{this.GetComponent<Renderer>().material.mainTexture}, y posteriormente, mediante la información de dicha textura, se aplican modificaciones escalando el Quad. 
+
+Todas estas clases de comportamiento son la representación de algún elemento de la escena, y por ello tienen en su interior los siguientes elementos:
+
+\begin{itemize}
+	\item En primer lugar una clase de datos asignada que será el “Guión” de nuestra clase para enrolarse. Es decir: una clase \textit{Character} contendrá dentro una clase \textit{CharacterData}, o una clase \textit{eObject} (la letra e era necesaria porque la clase \textit{Object} ya existe en el espacio de nombres, y proviene de juntar eAdventure con \textit{Object}), contiene una clase \textit{ObjectData}.
+	
+	\item En segundo lugar, aunque no todas la tienen, una \textit{ItemReference}, que utilizan para contextualizarse. Un \textit{character} no sería capaz de conocer su posición dentro de la escena si no tuviera un \textit{ItemReference} para poder contextualizar, y tampoco sabría si ese es su momento de aparecer en la escena, o si no debe aparecer más.
+	
+	\item Por último contienen aquellas funciones que son necesarias para su correcto funcionamiento.
+\end{itemize}
+
+\subsection{Detalles de la clase Character}
+
+La clase \textit{Character} contiene una serie de comportamientos necesarios y características específicas que hacen que sea diferente a las demás, pues tiene animación y ha de ir cambiando el fotograma que la representa con el paso del tiempo, por lo que en su función de comienzo de la ejecución, \textit{Start()}, selecciona la animación que cumple todas las condiciones, y establece el primer fotograma, y en su función de actualización del estado, \textit{Update()}, va cambiando su fotograma con la funcion \textit{ChangeFrame()}.
+
+Esta función \textit{ChangeFrame()} accede al \textit{renderer}\footnote{El renderer, en Unity3D, es la componente de los objetos que tienen representación en la escena, que define cómo se representan en la misma, con características como los materiales que las conforman, las texturas, las mallas tridimensionales, y otros elementos.} y cambia su textura además de actualizar determinadas variables de control, que establecen cuando deberá realizarse el próximo cambio de fotograma, o el fotograma que se está representando actualmente.
+
+\subsection{Detalles de la clase eObject, Exit y ActiveArea}
+
+Estas tres clases tienen la peculiaridad de que deben ser reactivas a interacción por parte del jugador, y mostrar algún cambio en su representación cada vez que el jugador pase el puntero del ratón por encima de ellas. Esto se implementó utilizando las funciones que facilita la clase \textit{MonoBehaviour}, I y \textit{OnMouseExit()} y que reciben el evento del puntero cuando este entra en su área de reacción y cuando sale de la misma.
+
+Cada una de las tres clases que son reactivas a este evento realiza una acción diferente, donde, el \textit{eObject} cambia su imagen y, por otra parte, \textit{Exit} y \textit{ActiveArea}, acceden a su material para cambiar su color, volviéndose de color rojo la representación de \textit{Exit}, y de color verde la representación de una \textit{ActiveArea}.
+
+Adicionalmente, la clase \textit{Exit} tiene una función \textit{exit()} que se encarga de ejecutar todos los efectos que conllevan la salida de la escena, así como de mandar el renderizado de la nueva escena.
+
+Esta clase \textit{Exit}, en esta versión del intérprete, no funcionaba correctamente, pues una salida puede contener un \textit{not-effect}, es decir, un efecto que se debe de ejecutar si se intenta salir de la escena cuando las condiciones no lo permiten. Esto implica que, la salida debe de gestionar su propia representación, y la Escena debe delegar esta funcionalidad en la salida.
+
+Por otra parte, y como ya se mencionó en un apartado anterior, las \textit{ActiveAreas} contienen una funcionalidad adicional en la última versión del intérprete, ya que estas se adaptan a un Área de Influencia, que modifica su contorno y forma, adaptándose a la forma de un polígono irregular definido por un listado de puntos en el fichero de especificación del juego.
+
+\subsection{Detalles específicos de Scene}
+
+La clase Scene supone un reto más complejo de abordar, en comparación con todas las demás clases de comportamiento, pues su clase de datos puede ser de diferentes tipos dependiendo de qué clase implementa la interfaz. Es decir, una \textit{Scene} puede ser a su vez una \textit{VideoScene}, una \textit{CutScene}, una \textit{SlideScene}, o cualquier otro tipo de escena que exista. Cada una de estas escenas tiene comportamientos individuales, pero para la gestión de los mismos, surgen una serie de problemas de implementación.
+
+Cambiar las componentes de un Prefab en ejecución no es una práctica recomendada en Unity3D, además de que existen problemas a la hora de realizar una herencia de la clase MonoBehaviour en una subclase, y extender esta subclase en más clases aún, pues siempre se deben invocar desde la clase hija, los métodos implementados de la clase MonoBehabiour en la clase padre. Es decir, una clase hija debe ejecutar, por ejemplo el metodo \textit{base.Start()}, antes de continuar con la ejecución de su código.
+
+La implementación de la escena, por lo tanto, se realizó mediante una bifurcación en los comportamientos utilizando como elemento bifurcador el tipo de escena que la escena está almacenando para su representación. En esencia, se programan delimitadores con \textit{Switch(sceneData.type)}, para ejecutar una labor determinada en función del tipo de escena que se desee.
+
+Esto le permite a una escena normal, Renderizar todos los personajes de la escena, o, a una \textit{SlideScene}, establecer su fondo y animarse cuando el jugador realice una interacción para cambiar de diapositiva.
+
+Asimismo, las escenas tienen una función Interacted que hace que las escenas en sí mismas puedan ser interactivas cuando no contienen ningún elemento como las Slidescenes que han de cambiar al hacer click, o como, por ejemplo las VideoScenes (que no se han implementado), que tienen una secuencia en su interior y debe ejecutarse al interactuar.
+
+Esta función \textit{Interacted} será refactorizada en la última versión, generando al interfaz \textit{Interactuable}, que permite ejecutar la función \textit{Interacted}, y otras funciones, sobre los objetos que tengan que ser reactivos a interacción, para poder así delegar esta funcionalidad en las clases interactuadas, en lugar de extraer la funcionalidad y ejecutarla en el bucle principal de juego.

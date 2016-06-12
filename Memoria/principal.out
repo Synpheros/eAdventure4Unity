@@ -26,7 +26,11 @@
 \BOOKMARK [1][-]{section.4.2}{Detalles de la implementaci\363n}{chapter.4}% 26
 \BOOKMARK [2][-]{subsection.4.2.1}{Sobre la clase Game}{section.4.2}% 27
 \BOOKMARK [1][-]{section.4.3}{Sobre las Clases de Datos}{chapter.4}% 28
-\BOOKMARK [0][-]{chapter.5}{Segunda Iteraci\363n}{}% 29
-\BOOKMARK [0][-]{chapter*.10}{Bibliography}{}% 30
-\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 31
-\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 32
+\BOOKMARK [1][-]{section.4.4}{Sobre las Clases de Comportamiento}{chapter.4}% 29
+\BOOKMARK [2][-]{subsection.4.4.1}{Detalles de la clase Character}{section.4.4}% 30
+\BOOKMARK [2][-]{subsection.4.4.2}{Detalles de la clase eObject, Exit y ActiveArea}{section.4.4}% 31
+\BOOKMARK [2][-]{subsection.4.4.3}{Detalles espec\355ficos de Scene}{section.4.4}% 32
+\BOOKMARK [0][-]{chapter.5}{Segunda Iteraci\363n}{}% 33
+\BOOKMARK [0][-]{chapter*.10}{Bibliography}{}% 34
+\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 35
+\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 36
