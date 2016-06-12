@@ -9,6 +9,10 @@ public enum guiState {
 
 public class Game : MonoBehaviour {
 
+	//#################################################################
+	//########################### SINGLETON ###########################
+	//#################################################################
+
     static Game instance;
 
     public static Game Instance {
@@ -128,32 +132,29 @@ public class Game : MonoBehaviour {
     //##########################################################################
     //##########################################################################
 
-	public bool useSystemIO = true;
+	public bool useSystemIO = true, forceScene = false;
+	private GUISkin style;
+	public string gamePath = "c:/Games/", gameName = "Fire", scene_name = "";
+	private string playerName = "Jugador", selected_game, selected_path;
+	int current_chapter = 0;
+	public GameObject Scene_Prefab, Blur_Prefab;
+	private GUIProvider guiprovider;
+	AdventureData data;
+	MenuMB menu;
+	Interactuable next_interaction = null;
+	GameObject current_scene;
+    
+    public GUISkin Style {
+        get { return style; }
+    }
 
 	public ResourceManager.LoadingType getLoadingType(){
 		return (useSystemIO ? ResourceManager.LoadingType.SYSTEM_IO : ResourceManager.LoadingType.RESOURCES_LOAD);
 	}
 
-    private GUISkin style;
-    public GUISkin Style {
-        get { return style; }
-    }
-    private string playerName = "Jugador";
-
-    void Awake(){
-        Game.instance = this;
-        style = Resources.Load("basic") as GUISkin;
-		optionlabel = new GUIStyle(style.label);
-    }
-
 	public string getGameName(){
 		return gameName;
 	}
-
-	public string gamePath = "c:/Games/";
-	public string gameName = "Fire";
-	private string selected_game;
-	private string selected_path;
 
 	public string getSelectedGame(){
 		return selected_game;
@@ -162,17 +163,12 @@ public class Game : MonoBehaviour {
 		return selected_path;
 	}
 
-	public bool forceScene = false;
-	public string scene_name = "";
-	public GameObject Scene_Prefab;
-	public GameObject Blur_Prefab;
-	private GUIProvider guiprovider;
+	void Awake(){
+		Game.instance = this;
+		style = Resources.Load("basic") as GUISkin;
+		optionlabel = new GUIStyle(style.label);
+	}
 
-
-	AdventureData data;
-	MenuMB menu;
-
-	int current_chapter = 0;
 	void Start () {
 		if (Game.GameToLoad != "") {
 			gameName = Game.GameToLoad;
@@ -183,7 +179,6 @@ public class Game : MonoBehaviour {
 		selected_path = gamePath + gameName;
 		selected_game = selected_path + "/";
 
-        //Controller.getInstance ().init ("Games/Fire.eap");
         List<Incidence> incidences = new List<Incidence>();
 
         data = new AdventureData ();
@@ -196,12 +191,6 @@ public class Game : MonoBehaviour {
 			adventure.Parse (selected_game + "descriptor.xml");
 			break;
 		}
-        
-
-		/*Texture2DHolder holder = new Texture2DHolder (data.getChapters () [0].getScenes () [0].getResources () [0].getAssetPath (Scene.RESOURCE_TYPE_BACKGROUND));
-
-		if (!holder.Loaded ())
-			Debug.Log ("no se ha cargado");*/
 
         if(data.getCursors().Count == 0) loadDefaultCursors ();
 
@@ -214,11 +203,8 @@ public class Game : MonoBehaviour {
 
         TimerController.Instance.Timers = getTimers ();
         TimerController.Instance.Run ();
-
-
 	}
-	
-    Interactuable next_interaction = null;
+
     void Update () {
         if (Input.GetMouseButtonDown (0)) {
             if (next_interaction != null && guistate != guiState.ANSWERS_MENU) {
@@ -243,14 +229,6 @@ public class Game : MonoBehaviour {
         } else if (Input.GetMouseButtonDown (1)) {
             MenuMB.Instance.hide ();
         }
-
-		if (getTalker) {
-			this.guitalkerObject = GameObject.Find(guitalker);
-			if (this.guitalkerObject != null) {
-				getTalker = false;
-				talk (guitext, guitalker);
-			}
-		}
     }
 
     private bool InteractWith(Interactuable interacted){
@@ -309,7 +287,6 @@ public class Game : MonoBehaviour {
     //########################### RENDERING ###########################
     //#################################################################
 
-    GameObject current_scene;
     public GameObject renderScene(string scene_id, int transition_time = 0, int transition_type = 0){
         MenuMB.Instance.hide (true);
         if (current_scene != null) {
@@ -371,9 +348,7 @@ public class Game : MonoBehaviour {
     //#################################################################
     //#################################################################
 
-    //private SceneElement actionshower;
     public void showActions (List<Action> actions, Vector2 position/*, SceneElement shower = null*/){
-        //this.actionshower = shower;
         Vector3 pos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
         MenuMB.Instance.transform.position = new Vector3 (pos.x, pos.y, -30);;
         MenuMB.Instance.setActions(actions);
@@ -393,100 +368,11 @@ public class Game : MonoBehaviour {
 
 	bool getTalker = false;
     public void talk(string text, string character){
-        if (character == null || character == Player.IDENTIFIER){
-			this.guitalker = "Player";
-            this.guitext = text.Replace("[]","["+playerName+"]");
-            this.guistate = guiState.TALK_PLAYER;
-			Vector2 position;
-
-			if (isFirstPerson ()) {
-				GUIManager.Instance.ShowBubble (
-					new BubbleData (
-						guitext
-					, new Vector2 (40, 60)
-					, new Vector2 (40, 45)
-					, Color.white
-					, Color.blue
-					, Color.white
-					, Color.blue
-					)
-				);
-			} else {
-				this.guitalkerObject = null;
-				this.guitalkerObject = GameObject.Find (guitalker);
-				if (this.guitalkerObject == null) {
-					getTalker = true;
-					return;
-				}
-
-				NPC cha = data.getChapters () [current_chapter].getPlayer ();
-
-				BubbleData bubble = generateBubble (cha);
-
-				position = this.guitalkerObject.transform.localPosition;
-
-				position.y += this.guitalkerObject.transform.localScale.y/2;
-
-				bubble.Destiny = position;
-				bubble.Origin = new Vector2 (position.x, position.y - 10f);
-				GUIManager.Instance.ShowBubble (bubble);
-			}
-        }else {
-            this.guitext = text;
-            this.guitalker = character;
-			this.guitalkerObject = null;
-            this.guistate = guiState.TALK_CHARACTER;
-			Vector2 position;
-
-			if (this.guitalkerObject == null) {
-				this.guitalkerObject = GameObject.Find (guitalker);
-				if (this.guitalkerObject == null) {
-					getTalker = true;
-					return;
-				}
-			}
-
-			NPC cha = data.getChapters () [current_chapter].getCharacter (guitalker);
-
-			BubbleData bubble = generateBubble (cha);
-
-			position = this.guitalkerObject.transform.localPosition;
-
-			/*if(position.x <= rectwith/2)
-				position.x = rectwith/2;
-			else if(position.x >= (Screen.width - rectwith/2) )
-				position.x = (Screen.width - rectwith/2);*/
-
-			position.y += this.guitalkerObject.GetComponent<CharacterMB> ().transform.localScale.y/2;
-
-			bubble.Destiny = position;
-			bubble.Origin = new Vector2 (position.x, position.y - 10f);
-			GUIManager.Instance.ShowBubble (bubble);
-        }
+		GUIManager.Instance.Talk (text, character);
     }
-
-	private BubbleData generateBubble(NPC cha){
-		BubbleData bubble = new BubbleData (guitext, new Vector2 (40, 60), new Vector2 (40, 45));
-
-		Color textColor, textOutline, background, border;
-		ColorUtility.TryParseHtmlString (cha.getTextFrontColor (), out textColor);
-		ColorUtility.TryParseHtmlString (cha.getTextBorderColor (), out textOutline);
-		ColorUtility.TryParseHtmlString (cha.getBubbleBkgColor (), out background);
-		ColorUtility.TryParseHtmlString (cha.getBubbleBorderColor (), out border);
-
-		bubble.TextColor = textColor;
-		bubble.TextOutlineColor = textOutline;
-		bubble.BaseColor = background;
-		bubble.OutlineColor = border;
-
-		return bubble;
-	}
 
     private Vector2 clicked_on;
     private guiState guistate = guiState.NOTHING;
-    private string guitext;
-    private string guitalker;
-    private GameObject guitalkerObject;
     private List<Action> guiactions;
     private ConversationNodeHolder guioptions;
 
@@ -499,114 +385,33 @@ public class Game : MonoBehaviour {
         style.button.fontSize = Mathf.RoundToInt(guiscale * 20);
         style.label.fontSize = Mathf.RoundToInt(guiscale * 20);
 		optionlabel.fontSize = Mathf.RoundToInt (guiscale * 36);
-        //style.label.fontSize = Mathf.RoundToInt(guiscale * 20);
         style.GetStyle("talk_player").fontSize = Mathf.RoundToInt(guiscale * 20);
 
         float rectwith = guiscale * 330;
 
         switch (guistate) {
-		case guiState.TALK_PLAYER:
-            /*GUILayout.BeginArea (new Rect ((Screen.width/2)-rectwith/2, 50, rectwith, 400));
-            GUILayout.BeginHorizontal ();
-            GUILayout.Box (guitext,style.GetStyle("talk_player"));
-            GUILayout.EndHorizontal ();
-            GUILayout.EndArea ();*/
-            break;
-        case guiState.TALK_CHARACTER:
-			/*GUIStyle current = new GUIStyle(style.box);
-                    if (this.guitalkerObject != null) {
-                        position = Camera.current.WorldToScreenPoint (this.guitalkerObject.transform.position);
-                        Color tmp = Color.black;
-                        NPC cha = data.getChapters () [current_chapter].getCharacter (guitalker);
-
-
-                        ColorUtility.TryParseHtmlString(
-                            cha.getTextFrontColor()
-                            ,out tmp);
-                        
-                        current.normal.textColor = tmp;
-                        current.normal.background = BorderGenerator.generateFor (cha);
-                    }else
-                        position = new Vector2(Screen.width/2,100);
-
-                    if(position.x <= rectwith/2)
-                        position.x = rectwith/2;
-                    else if(position.x >= (Screen.width - rectwith/2) )
-                        position.x = (Screen.width - rectwith/2);
-
-                    GUILayout.BeginArea (
-                        new Rect (position.x-rectwith/2,
-                            Screen.height 
-                            - position.y 
-                            - (this.guitalkerObject.GetComponent<CharacterMB>().getHeight())*guiscale/2 
-                            - current.CalcHeight(new GUIContent(guitext),rectwith), rectwith, 400)
-                    );
-                    GUILayout.BeginHorizontal ();
-                    GUILayout.Box (guitext,current);
-                    GUILayout.EndHorizontal ();
-                    GUILayout.EndArea ();*/
-            break;
 		case guiState.ANSWERS_MENU:
 			GUILayout.BeginArea (new Rect (Screen.width * 0.1f, Screen.height * 0.1f, Screen.width * 0.8f, Screen.height * 0.8f));
 			GUILayout.BeginVertical ();
 			OptionConversationNode options = (OptionConversationNode)guioptions.getNode ();
 
-			GUILayout.Label (guitext, optionlabel);
-            for(int i = 0; i < options.getLineCount(); i++){
-                ConversationLine ono = options.getLine (i);
-                if(ConditionChecker.check(options.getLineConditions(i)))
-                    if(GUILayout.Button ((string) ono.getText(),style.button)){
-						GameObject.Destroy (blur);
-                        guioptions.clicked(i);
-						Tracker.T ().Choice (guitext, ono.getText());
-						Tracker.T ().RequestFlush ();
-                        Interacted();
-                    };
-            }
-            GUILayout.EndVertical ();
-            GUILayout.EndArea ();
-            break;
-        case guiState.LOADING_GAME:
-            break;
-        case guiState.NOTHING:
-            /*if(loader_state == loaderState.LOADING){
-                GUILayout.BeginArea (new Rect (Screen.width*0.1f, Screen.height*0.1f, Screen.width*0.8f, Screen.height*0.8f));
-                GUILayout.BeginVertical ();
-                GUILayout.Label ("Cargando",style.label);
-
-                if(totals != null){
-                    GUILayout.Box ("Personajes: " + this.characters.Count + " de " + totals["Characters"],style.box);
-                    GUILayout.Box ("Objetos: " + this.objects.Count + " de " + totals["Objects"],style.box);
-                    GUILayout.Box ("Objetos de Atrezzo: " + this.atrezzos.Count + " de " + totals["Atrezzos"],style.box);
-                    GUILayout.Box ("Estados Globales: " + this.global_states.Count + " de " + totals["Global-States"],style.box);
-                    GUILayout.Box ("Grafos de Conversacion: " + this.graph_conversations.Count + " de " + totals["Graph-conversations"],style.box);
-                    GUILayout.Box ("Macros: " + this.macros.Count + " de " + totals["Macros"],style.box);
-
-                    GUILayout.Box ("Escenas: " + this.scenes.Count + " de " + totals["Scene"],style.box);
-                }
-
-
-                GUILayout.EndVertical ();
-                GUILayout.EndArea ();
-            }*/
-            break;
-        case guiState.GAME_SELECTION:
-            /*GUILayout.BeginArea (new Rect (Screen.width*0.1f, Screen.height*0.1f, Screen.width*0.8f, Screen.height*0.8f));
-            GUILayout.BeginVertical ();
-            string[] games = Directory.GetDirectories("Games/");
-
-            GUILayout.Label("eAdventure Loader v0.1",style.label);
-            foreach(string game in games){
-                if(GUILayout.Button (game.Split('/')[1],style.button)){
-                    this.selected_game = game + "/";
-                    //this.startLoad();
-                };
-            }
-            GUILayout.EndVertical ();
-            GUILayout.EndArea ();
-            break;*/
+			GUILayout.Label (GUIManager.Instance.Last, optionlabel);
+			for (int i = 0; i < options.getLineCount (); i++) {
+				ConversationLine ono = options.getLine (i);
+				if (ConditionChecker.check (options.getLineConditions (i)))
+				if (GUILayout.Button ((string)ono.getText (), style.button)) {
+					GameObject.Destroy (blur);
+					guioptions.clicked (i);
+					Tracker.T ().Choice (GUIManager.Instance.Last, ono.getText ());
+					Tracker.T ().RequestFlush ();
+					Interacted ();
+				}
+				;
+			}
+			GUILayout.EndVertical ();
+			GUILayout.EndArea ();
+			break;
         default: break;
-
         }
     }
 }

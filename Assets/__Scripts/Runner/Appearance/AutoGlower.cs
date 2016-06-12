@@ -12,6 +12,8 @@ public class AutoGlower : MonoBehaviour {
 	Material shader;
 	void Start () {
 		shader = this.GetComponent<Renderer> ().material;
+		if(style == GlowingStyle.FLASH)
+			shader.SetColor ("_Color", new Color(1,1,1,1));
 	}
 	
 

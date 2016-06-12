@@ -28,6 +28,10 @@ public sealed class ResourceManager{
 	//################# IMPLEMENTATION #################
 	//##################################################
 
+	private class MovieHolder{
+		public MovieTexture movie;
+	}
+
 	LoadingType type = LoadingType.SYSTEM_IO;
 
     private Dictionary<string,Texture2DHolder> images;
@@ -83,12 +87,43 @@ public sealed class ResourceManager{
 		}
 	}
 
-	/*public void convertVideo(string path, string video){
-		Zi
-		FFMpegConverter converter = new FFMpegConverter ();
+	public MovieTexture getVideo(string uri){
+		MovieHolder holder = new MovieHolder ();
 
-		converter.ConvertMedia (path, video, Format.ogg);
-	}*/
+		Game.Instance.StartCoroutine (loadMovie (uri,holder));
+
+		while (!movieLoaded (holder)) {
+		}
+
+		return holder.movie;
+	}
+
+	IEnumerator loadMovie(string uri, MovieHolder holder){
+		string url_prefix = "file:///";
+		string videoname = uri;
+		string dir = "";
+		if (System.IO.File.Exists (Game.Instance.getSelectedGame() + videoname.Split ('.') [0] + ".ogv"))
+			dir = url_prefix + Game.Instance.getSelectedGame() + videoname.Split ('.') [0] + ".ogv";
+		else
+			dir = url_prefix + Game.Instance.getSelectedGame() + videoname;
+
+		WWW www = new WWW (dir);
+		yield return www;
+		if (www.error != null) {
+			Debug.Log ("Error: Can't laod movie! - " + www.error);
+			yield break;
+
+		} else {
+			MovieTexture video = www.movie as MovieTexture;
+			Debug.Log("Movie loaded");
+			Debug.Log(www.movie);
+			holder.movie = video;
+		}
+	}
+
+	bool movieLoaded(MovieHolder holder){
+		return holder.movie == null;
+	}
 
 	public bool extracted = false;
 	public void extractFile(string file){

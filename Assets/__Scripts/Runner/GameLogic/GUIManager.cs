@@ -2,15 +2,22 @@
 using System.Collections;
 
 public class GUIManager : MonoBehaviour {
+	
 	private static GUIManager instance;
+	private Vector2 DEFORMATION = new Vector2 (40, 30);
+	public GameObject Bubble_Prefab;
+	GameObject bubble;
+	private bool get_talker = false;
+	private string talker_to_find, last_text;
+
 	public static GUIManager Instance {
 		get { return instance; }
 	}
 
-	private Vector2 DEFORMATION = new Vector2 (40, 30);
-	public GameObject Bubble_Prefab;
+	public string Last {
+		get { return last_text; }
+	}
 
-	GameObject bubble;
 	void Awake(){
 		instance = this;
 	}
@@ -20,15 +27,50 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	void Update () {
-		/*if (Input.GetMouseButtonDown (0)) {
-			BubbleData b = new BubbleData ("Hola, ¿cómo estás Gorka?", new Vector2 (0, 0), new Vector2 (40f, 30f));
-			ShowBubble (b);
-		}*/
+		if (get_talker) {
+			if (GameObject.Find(talker_to_find) != null) {
+				get_talker = false;
+				Talk (last_text, talker_to_find);
+			}
+		}
+	}
+
+	public void Talk(string text, string talker_name = null){
+		last_text = text;
+		if (talker_name == null || talker_name == Player.IDENTIFIER) {
+			text = text.Replace ("[]", "[" + Player.IDENTIFIER + "]");
+			Vector2 position;
+			NPC player = Game.Instance.getPlayer ();
+			BubbleData bubble;
+
+			if (Game.Instance.isFirstPerson ()) {
+				bubble = generateBubble (player, text);
+			} else {
+				GameObject talker_object = getTalker (talker_name);
+				if (talker_object == null)
+					return;
+				bubble = generateBubble (player, text, talker_object);
+			}
+
+			GUIManager.Instance.ShowBubble (bubble);
+		}else {
+			Vector2 position;
+			GameObject talker_object = getTalker (talker_name);
+			if (talker_object == null)
+				return;
+			
+			NPC cha = Game.Instance.getCharacter(talker_name);
+			BubbleData bubble = generateBubble (cha, text, talker_object);
+			GUIManager.Instance.ShowBubble (bubble);
+		}
 	}
 
 	public void ShowBubble(BubbleData data){
 		data.origin = sceneVector2guiVector(data.origin);
 		data.destiny = sceneVector2guiVector(data.destiny);
+
+		//correctBoundaries (data);
+
 		if (bubble != null) {
 			bubble.GetComponent<Bubble> ().destroy ();
 		}
@@ -42,14 +84,35 @@ public class GUIManager : MonoBehaviour {
 			this.bubble.GetComponent<Bubble> ().destroy ();
 	}
 
+	public BubbleData generateBubble(NPC cha, string text, GameObject talker = null){
+		BubbleData bubble = new BubbleData (text, new Vector2 (40, 60), new Vector2 (40, 45));
+
+		Color textColor, textOutline, background, border;
+		ColorUtility.TryParseHtmlString (cha.getTextFrontColor (), out textColor);
+		ColorUtility.TryParseHtmlString (cha.getTextBorderColor (), out textOutline);
+		ColorUtility.TryParseHtmlString (cha.getBubbleBkgColor (), out background);
+		ColorUtility.TryParseHtmlString (cha.getBubbleBorderColor (), out border);
+
+		bubble.TextColor = textColor;
+		bubble.TextOutlineColor = textOutline;
+		bubble.BaseColor = background;
+		bubble.OutlineColor = border;
+
+		if (talker != null) {
+			Vector2 position = talker.transform.localPosition;
+			position.y += talker.GetComponent<CharacterMB> ().transform.localScale.y / 2;
+
+			bubble.Destiny = position;
+			bubble.Origin = new Vector2 (position.x, position.y - 10f);
+		} else {
+			bubble.Origin = new Vector2 (40, 60);
+			bubble.Destiny = new Vector2 (40, 45);
+		}
+
+		return bubble;
+	}
 
 	private Vector2 sceneVector2guiVector(Vector2 v){
-		/* OLD METHOD
-		 * float width = (Screen.height / 600) * 800;
-		 * float y = ((v.y / 60f) * Screen.height) - Screen.height/2;
-		 * float x = ((v.x / 80f) * width) - width/2;
-		*/
-
 		float w = Screen.width, h = Screen.height,
 			relation = w / h,
 			height = 800 / relation, 
@@ -61,6 +124,19 @@ public class GUIManager : MonoBehaviour {
 		float y = (v.y * 10 * scale);
 
 		return new Vector2 (x, y);
+	}
 
+	private void correctBoundaries(BubbleData bubble){
+		if(bubble.destiny.x <= 125f) bubble.destiny.x = 125f;
+		else if(bubble.destiny.x >= (800f - 125f)) bubble.destiny.x = (800f - 125f);
+	}
+
+	private GameObject getTalker(string talker){
+		GameObject ret = GameObject.Find (talker);
+
+		if (ret == null) 
+			get_talker = true;
+		
+		return ret;
 	}
 }
