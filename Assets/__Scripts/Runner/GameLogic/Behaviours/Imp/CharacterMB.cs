@@ -28,16 +28,14 @@ public class CharacterMB : Representable, Interactuable {
 		base.Update ();
 	}
 
-    bool interactable = false;
-    public void showHand(bool show){
-        if (show && !interactable) {
-            Game.Instance.setCursor ("over");
-            interactable = true;
-        } else if (!show && interactable) {
-            Game.Instance.setCursor ("default");
-            interactable = false;
-        }
-    }
+	bool interactable = false;
+	public bool canBeInteracted(){
+		return interactable;
+	}
+
+	public void setInteractuable(bool state){
+		this.interactable = state;
+	}
 
     public InteractuableResult Interacted (RaycastHit hit = default(RaycastHit)){
         InteractuableResult res = InteractuableResult.IGNORES;

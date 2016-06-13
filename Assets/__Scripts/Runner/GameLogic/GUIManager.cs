@@ -9,6 +9,9 @@ public class GUIManager : MonoBehaviour {
 	GameObject bubble;
 	private bool get_talker = false;
 	private string talker_to_find, last_text;
+	private GUIProvider guiprovider;
+	private AdventureData data;
+	private string current_cursor = "";
 
 	public static GUIManager Instance {
 		get { return instance; }
@@ -18,12 +21,16 @@ public class GUIManager : MonoBehaviour {
 		get { return last_text; }
 	}
 
+	public GUIProvider Provider{
+		get { return guiprovider; }
+	}
+
 	void Awake(){
 		instance = this;
 	}
 
 	void Start () {
-	
+		guiprovider = new GUIProvider (Game.Instance.GameState.Data);
 	}
 
 	void Update () {
@@ -35,15 +42,29 @@ public class GUIManager : MonoBehaviour {
 		}
 	}
 
+	public void setCursor(string cursor){
+		if (cursor != current_cursor) {
+			Cursor.SetCursor (guiprovider.getCursor (cursor), new Vector2 (0f, 0f), CursorMode.Auto);
+			current_cursor = cursor;
+		}
+	}
+		
+	public void showHand(bool show){
+		if (show) 
+			setCursor ("over");
+		else
+			setCursor ("default");
+	}
+
 	public void Talk(string text, string talker_name = null){
 		last_text = text;
 		if (talker_name == null || talker_name == Player.IDENTIFIER) {
 			text = text.Replace ("[]", "[" + Player.IDENTIFIER + "]");
 			Vector2 position;
-			NPC player = Game.Instance.getPlayer ();
+			NPC player = Game.Instance.GameState.getPlayer ();
 			BubbleData bubble;
 
-			if (Game.Instance.isFirstPerson ()) {
+			if (Game.Instance.GameState.isFirstPerson ()) {
 				bubble = generateBubble (player, text);
 			} else {
 				GameObject talker_object = getTalker (talker_name);
@@ -59,7 +80,7 @@ public class GUIManager : MonoBehaviour {
 			if (talker_object == null)
 				return;
 			
-			NPC cha = Game.Instance.getCharacter(talker_name);
+			NPC cha = Game.Instance.GameState.getCharacter(talker_name);
 			BubbleData bubble = generateBubble (cha, text, talker_object);
 			GUIManager.Instance.ShowBubble (bubble);
 		}

@@ -23,23 +23,23 @@ public class ActiveAreaMB : MonoBehaviour, Interactuable {
 	}
 
 	void OnMouseEnter(){
-        showHand(true);
+		GUIManager.Instance.showHand(true);
+		interactable = true;
 	}
 	
 	void OnMouseExit() {
-        showHand(false);
+		GUIManager.Instance.showHand(false);
+		interactable = false;
 	}
 
     bool interactable = false;
-    public void showHand(bool show){
-        if (show && !interactable) {
-            Game.Instance.setCursor ("over");
-            interactable = true;
-        } else if (!show && interactable) {
-            Game.Instance.setCursor ("default");
-            interactable = false;
-        }
-    }
+	public bool canBeInteracted(){
+		return interactable;
+	}
+
+	public void setInteractuable(bool state){
+		this.interactable = state;
+	}
 
     public InteractuableResult Interacted (RaycastHit hit = new RaycastHit()){
         InteractuableResult ret = InteractuableResult.IGNORES;

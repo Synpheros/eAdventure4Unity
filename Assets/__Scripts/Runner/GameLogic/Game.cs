@@ -25,128 +25,27 @@ public class Game : MonoBehaviour {
 		set{ gameToLoad = value; }
 	}
 
-    //###########################################################################
-    //########################### GAME STATE HANDLING ###########################
-    //###########################################################################
-
-    private Dictionary<string,int> flags = new Dictionary<string, int>();
-    private Dictionary<string,int> variables = new Dictionary<string, int>();
-
-    public int checkFlag(string flag){
-        int ret = FlagCondition.FLAG_INACTIVE;
-        if(flags.ContainsKey(flag)){
-            ret = flags [flag];
-        }
-        return ret;
-    }
-
-    public void setFlag(string name, int state){
-        if(flags.ContainsKey(name)){
-            flags [name] = state;
-        }else{
-            flags.Add (name, state);
-        }
-
-        //Debug.Log ("Flag '" + name + " puesta a " + state);
-		Tracker.T ().Var (name, (state == FlagCondition.FLAG_ACTIVE ? 1 : 0));
-		Tracker.T ().RequestFlush ();
-
-        TimerController.Instance.checkTimers();
-        this.reRenderScene ();
-    }
-
-    public int getVariable(string var){
-        int ret = 0;
-        if(variables.ContainsKey(var)){
-            ret = variables [var];
-        }
-        return ret;
-    }
-
-    public void setVariable(string name, int value){
-        if(variables.ContainsKey(name)){
-            variables [name] = value;
-        }else{
-            variables.Add (name, value);
-        }
-
-		Tracker.T ().Var (name, value);
-		Tracker.T ().RequestFlush ();
-
-        this.reRenderScene ();
-    }
-
-    public int checkGlobalState(string global_state){
-        int ret = GlobalStateCondition.GS_SATISFIED;
-        GlobalState gs = data.getChapters () [current_chapter].getGlobalState (global_state);
-        if(gs != null){
-            ret = ConditionChecker.check (gs);
-        }
-        return ret;
-    }
-
-    public string getCurrentScene(){
-        return current_scene.GetComponent<SceneMB>().sceneData.getId();
-    }
-
-    public Macro getMacro(string id){
-        return data.getChapters () [current_chapter].getMacro (id);
-    }
-
-    public Conversation getConversation(string id){
-        return data.getChapters () [current_chapter].getConversation (id);
-    }
-
-    public List<Timer> getTimers(){
-        return data.getChapters () [current_chapter].getTimers ();
-    }
-
-    public ResourcesUni getButton(Action action){
-        /*CustomButton ret = null;
-        foreach (CustomButton b in data.getButtons ()) {
-            if (b.getAction () == name && b.getType() == type) {
-                ret = b;
-                break;
-            } 
-        }*/
-
-        return guiprovider.getButton (action);
-    }
-
-    public Player getPlayer(){
-        return data.getChapters () [current_chapter].getPlayer ();
-    }
-
-    public bool isFirstPerson(){
-        return data.getPlayerMode () == DescriptorData.MODE_PLAYER_1STPERSON;
-    }
-
-    public void Move(string id, Vector2 position, int time = 0){
-        GameObject go = GameObject.Find (id);
-        Movable m = go.GetComponent<Movable> ();
-        if (m != null)
-            m.Move (position);
-    }
-
-    //##########################################################################
-    //##########################################################################
-    //##########################################################################
-
+	//#####################################################################
+	//########################### MONOBEHAVIOUR ###########################
+	//#####################################################################
+    
 	public bool useSystemIO = true, forceScene = false;
 	private GUISkin style;
 	public string gamePath = "c:/Games/", gameName = "Fire", scene_name = "";
 	private string playerName = "Jugador", selected_game, selected_path;
-	int current_chapter = 0;
 	public GameObject Scene_Prefab, Blur_Prefab;
-	private GUIProvider guiprovider;
-	AdventureData data;
 	MenuMB menu;
 	Interactuable next_interaction = null;
 	GameObject current_scene;
+	GameState game_state;
     
     public GUISkin Style {
         get { return style; }
     }
+
+	public GameState GameState {
+		get { return game_state; }
+	}
 
 	public ResourceManager.LoadingType getLoadingType(){
 		return (useSystemIO ? ResourceManager.LoadingType.SYSTEM_IO : ResourceManager.LoadingType.RESOURCES_LOAD);
@@ -167,9 +66,7 @@ public class Game : MonoBehaviour {
 		Game.instance = this;
 		style = Resources.Load("basic") as GUISkin;
 		optionlabel = new GUIStyle(style.label);
-	}
 
-	void Start () {
 		if (Game.GameToLoad != "") {
 			gameName = Game.GameToLoad;
 			gamePath = ResourceManager.Instance.getCurrentDirectory () + System.IO.Path.DirectorySeparatorChar + "Games" + System.IO.Path.DirectorySeparatorChar;
@@ -179,29 +76,31 @@ public class Game : MonoBehaviour {
 		selected_path = gamePath + gameName;
 		selected_game = selected_path + "/";
 
-        List<Incidence> incidences = new List<Incidence>();
+		List<Incidence> incidences = new List<Incidence>();
 
-        data = new AdventureData ();
-        AdventureHandler_ adventure = new AdventureHandler_ (data);
+		AdventureData data = new AdventureData ();
+		AdventureHandler_ adventure = new AdventureHandler_ (data);
 		switch (getLoadingType ()) {
 		case ResourceManager.LoadingType.RESOURCES_LOAD:
-			adventure.Parse (gameName +  "/descriptor");
+			adventure.Parse (gameName + "/descriptor");
+			ResourceManager.Instance.Path = gameName;
 			break;
 		case ResourceManager.LoadingType.SYSTEM_IO:
 			adventure.Parse (selected_game + "descriptor.xml");
+			ResourceManager.Instance.Path = selected_game;
 			break;
 		}
 
-        if(data.getCursors().Count == 0) loadDefaultCursors ();
+		game_state = new GameState(data);
+	}
 
-        guiprovider = new GUIProvider (data);
-
+	void Start () {
         if(!forceScene)
-            renderScene (data.getChapters()[current_chapter].getInitialGeneralScene().getId());
+			renderScene (GameState.getInitialScene().getId());
         else
             renderScene(scene_name);
 
-        TimerController.Instance.Timers = getTimers ();
+        TimerController.Instance.Timers = GameState.getTimers ();
         TimerController.Instance.Run ();
 	}
 
@@ -270,19 +169,6 @@ public class Game : MonoBehaviour {
         return next_interaction != null;
     }
 
-    public NPC getCharacter(string name){
-        return data.getChapters () [current_chapter].getCharacter (name);
-    }
-
-    public Item getObject(string name){
-        return data.getChapters () [current_chapter].getItem (name);
-    }
-
-    public Atrezzo getAtrezzo(string name){
-        Chapter c =  data.getChapters () [current_chapter];
-        return c.getAtrezzo (name);
-    }
-
     //#################################################################
     //########################### RENDERING ###########################
     //#################################################################
@@ -296,12 +182,14 @@ public class Game : MonoBehaviour {
         GameObject ret = null;
         ret = GameObject.Instantiate (Scene_Prefab);
         ret.GetComponent<Transform> ().localPosition = new Vector2(0f,0f);
-        ret.GetComponent<SceneMB> ().sceneData = data.getChapters () [current_chapter].getGeneralScene (scene_id);
+		ret.GetComponent<SceneMB> ().sceneData = GameState.getGeneralScene (scene_id);
 
 		Tracker.T ().Screen (scene_id);
 		Tracker.T ().RequestFlush ();
 
         current_scene = ret;
+		GameState.CurrentScene = scene_id;
+
         return ret;
     }
 
@@ -311,37 +199,10 @@ public class Game : MonoBehaviour {
     }
 
     public void renderLastScene(){
-        foreach (GeneralScene scene in data.getChapters()[current_chapter].getGeneralScenes()) {
-            if (scene.getType () == GeneralScene.GeneralSceneSceneType.SLIDESCENE && ((Slidescene)scene).getNext () == Slidescene.ENDCHAPTER) {
-                renderScene (scene.getId ());
-                break;
-            }
-        }
-    }
+		GeneralScene scene = GameState.getLastScene ();
 
-
-    Dictionary<string,Texture2D> cursores = new Dictionary<string, Texture2D>();
-    public void setCursor(string cursor){
-        if(!cursores.ContainsKey(cursor)){
-            string path = data.getCursorPath(cursor);
-            if (path != null) {
-                Texture2DHolder th = new Texture2DHolder (path);
-                cursores.Add (cursor, th.Texture);
-            } else {
-                if(!cursores.ContainsKey("default"))
-                    cursores.Add ("default", new Texture2DHolder(data.getCursorPath("default")).Texture);
-                cursores.Add (cursor, cursores ["default"]);
-            }
-        }
-
-        Cursor.SetCursor (cursores[cursor], new Vector2 (0f, 0f), CursorMode.Auto);
-    }
-
-    private void loadDefaultCursors(){
-        cursores.Add("default",ResourceManager.Instance.getImage ("gui/cursors/default.png"));
-        cursores.Add("over",ResourceManager.Instance.getImage ("gui/cursors/over.png"));
-        cursores.Add("exit",ResourceManager.Instance.getImage ("gui/cursors/exit.png"));
-        cursores.Add("action",ResourceManager.Instance.getImage ("gui/cursors/action.png"));
+		if(scene!=null)
+			renderScene (scene.getId ());
     }
 
     //#################################################################

@@ -7,6 +7,7 @@ public enum InteractuableResult{
 
 public interface Interactuable{
     InteractuableResult Interacted (RaycastHit hit = new RaycastHit());
-	void showHand (bool handstate);
+	bool canBeInteracted();
+	void setInteractuable(bool state);
 }
 

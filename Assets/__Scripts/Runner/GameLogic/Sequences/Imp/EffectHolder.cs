@@ -32,10 +32,10 @@ public class EffectHolderNode{
                 if (is_valid) {
                     switch (effect.getType ()) {
                     case EffectType.ACTIVATE:
-                        Game.Instance.setFlag (((ActivateEffect)effect).getTargetId (), FlagCondition.FLAG_ACTIVE);
+                        Game.Instance.GameState.setFlag (((ActivateEffect)effect).getTargetId (), FlagCondition.FLAG_ACTIVE);
                         break;
                     case EffectType.DEACTIVATE:
-                        Game.Instance.setFlag (((DeactivateEffect)effect).getTargetId (), FlagCondition.FLAG_INACTIVE);
+						Game.Instance.GameState.setFlag (((DeactivateEffect)effect).getTargetId (), FlagCondition.FLAG_INACTIVE);
                         break;
                     case EffectType.SPEAK_PLAYER:
                         Game.Instance.talk (((SpeakPlayerEffect)effect).getLine (), null);
@@ -56,7 +56,7 @@ public class EffectHolderNode{
                             forcewait = ((SceneMB)aditional_info ["scene"]).Interacted () == InteractuableResult.REQUIRES_MORE_INTERACTION;
                         } else {
                             aditional_info = new Dictionary<string, object> ();
-                            aditional_info.Add ("lastscene", Game.Instance.getCurrentScene ());
+							aditional_info.Add ("lastscene", Game.Instance.GameState.CurrentScene);
                             aditional_info.Add ("scene", Game.Instance.renderScene (tce.getTargetId ()).GetComponent<SceneMB> ());
                             forcewait = true; 
                         }
@@ -76,7 +76,7 @@ public class EffectHolderNode{
                         runs_once = false;
                         if (times_runed == 0) {
                             TriggerConversationEffect tcoe = (TriggerConversationEffect)effect;
-                            this.aditional_info.Add ("conversation", new GraphConversationHolder (Game.Instance.getConversation (tcoe.getTargetId ())));
+							this.aditional_info.Add ("conversation", new GraphConversationHolder (Game.Instance.GameState.getConversation (tcoe.getTargetId ())));
                         }
                         forcewait = ((GraphConversationHolder)this.aditional_info ["conversation"]).execute ();
                         break;
@@ -106,27 +106,27 @@ public class EffectHolderNode{
                         break;
                     case EffectType.SET_VALUE: 
                         SetValueEffect sve = (SetValueEffect)effect;
-                        Game.Instance.setVariable (sve.getTargetId (), sve.getValue ()); 
+						Game.Instance.GameState.setVariable (sve.getTargetId (), sve.getValue ()); 
                         break;
                     case EffectType.INCREMENT_VAR:
                         IncrementVarEffect ive = (IncrementVarEffect)effect;
-                        Game.Instance.setVariable (ive.getTargetId (), Game.Instance.getVariable (ive.getTargetId ()) + ive.getIncrement ()); 
+						Game.Instance.GameState.setVariable (ive.getTargetId (), Game.Instance.GameState.getVariable (ive.getTargetId ()) + ive.getIncrement ()); 
                         break;
                     case EffectType.DECREMENT_VAR:
                         DecrementVarEffect dve = (DecrementVarEffect)effect;
-                        Game.Instance.setVariable (dve.getTargetId (), Game.Instance.getVariable (dve.getTargetId ()) - dve.getDecrement ()); 
+						Game.Instance.GameState.setVariable (dve.getTargetId (), Game.Instance.GameState.getVariable (dve.getTargetId ()) - dve.getDecrement ()); 
                         break;
                     case EffectType.MACRO_REF: 
                         runs_once = false;
                         if (times_runed == 0) {
                             MacroReferenceEffect mre = (MacroReferenceEffect)effect;
-                            this.aditional_info.Add ("macro", new EffectHolder (Game.Instance.getMacro (mre.getTargetId ())));
+							this.aditional_info.Add ("macro", new EffectHolder (Game.Instance.GameState.getMacro (mre.getTargetId ())));
                         }
                         forcewait = ((EffectHolder)this.aditional_info ["macro"]).execute ();
                         break;
                     case EffectType.MOVE_OBJECT:
                         MoveObjectEffect moe = (MoveObjectEffect)effect;
-                        Game.Instance.Move (moe.getTargetId (), new Vector2 (moe.getX (), 600 - moe.getY ()) / 10f);
+						Game.Instance.GameState.Move (moe.getTargetId (), new Vector2 (moe.getX (), 600 - moe.getY ()) / 10f);
                         break;
                     }
                 }
@@ -191,5 +191,10 @@ public class EffectHolder : Secuence, Interactuable {
             return InteractuableResult.DOES_SOMETHING;
     }
 
-	public void showHand (bool show){}
+	public bool canBeInteracted(){
+		return true;
+	}
+
+	public void setInteractuable(bool state){
+	}
 }

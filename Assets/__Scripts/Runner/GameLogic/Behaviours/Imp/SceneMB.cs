@@ -6,6 +6,7 @@ public class SceneMB : MonoBehaviour, Interactuable{
 	
 	public GameObject Exit_Prefab, ActiveArea_Prefab, Character_Prefab, Object_Prefab, Atrezzo_Prefab, Player_Prefab;
 	private Transform Exits, ActiveAreas, Characters, Objects, Atrezzos, Player;
+	private bool interactuable = false;
 
     private GeneralScene sd;
     public GeneralScene sceneData{
@@ -72,10 +73,11 @@ public class SceneMB : MonoBehaviour, Interactuable{
         switch (sd.getType()) {
 		case GeneralScene.GeneralSceneSceneType.VIDEOSCENE:
 			movie = ResourceManager.Instance.getVideo (((Videoscene)sd).getResources () [0].getAssetPath (Videoscene.RESOURCE_TYPE_VIDEO));
-			Debug.Log("back into scene");
+			Debug.Log ("back into scene");
 			setMovie ();
 			playMovie ();
 			this.transform.FindChild ("Background").localPosition = new Vector3 (40, 30, 20);
+			interactuable = true;
             break;
 		case GeneralScene.GeneralSceneSceneType.SCENE: 
 			
@@ -84,8 +86,7 @@ public class SceneMB : MonoBehaviour, Interactuable{
 			Scene rsd = (Scene)sd;
 			foreach (ResourcesUni sr in rsd.getResources()) {
 				if (ConditionChecker.check (sr.getConditions ())) {
-					Texture2DHolder th = new Texture2DHolder (sr.getAssetPath (Scene.RESOURCE_TYPE_BACKGROUND));
-					Texture2D tmp = th.Texture;
+					Texture2D tmp = ResourceManager.Instance.getImage(sr.getAssetPath (Scene.RESOURCE_TYPE_BACKGROUND));
 
 					Transform background = this.transform.FindChild ("Background");
 					background.GetComponent<Renderer> ().material.mainTexture = tmp;
@@ -128,7 +129,7 @@ public class SceneMB : MonoBehaviour, Interactuable{
 					instanceRectangle<Exit> (exit);
 			
 
-            if (!Game.Instance.isFirstPerson ()) {
+			if (!Game.Instance.GameState.isFirstPerson ()) {
 				trajectory = new TrajectoryHandler (rsd.getTrajectory ());
                 if (player_context == null) {
                     //Vector2 pos = LineHandler.nodeToVector2 (lines [lines.Count-1].end);
@@ -140,7 +141,7 @@ public class SceneMB : MonoBehaviour, Interactuable{
 
                 player = GameObject.Instantiate (Player_Prefab).GetComponent<PlayerMB>();
                 player.transform.parent = Characters;
-				player.Element = Game.Instance.getPlayer ();
+				player.Element = Game.Instance.GameState.getPlayer ();
 				player.Context = player_context;
             }
 
@@ -149,7 +150,7 @@ public class SceneMB : MonoBehaviour, Interactuable{
             Slidescene ssd = (Slidescene) sd;
             foreach(ResourcesUni r in ssd.getResources()){
                 if(ConditionChecker.check(r.getConditions())){
-                    this.slides = new eAnim (r.getAssetPath (Slidescene.RESOURCE_TYPE_SLIDES));
+					this.slides = ResourceManager.Instance.getAnimation(r.getAssetPath (Slidescene.RESOURCE_TYPE_SLIDES));
                     this.transform.FindChild("Background").GetComponent<Renderer> ().material.mainTexture = this.slides.frames[0].Image;
 					this.transform.position = new Vector3 (40, 30, 20);
 					break;
@@ -185,17 +186,17 @@ public class SceneMB : MonoBehaviour, Interactuable{
 		case "Atrezzo":
 			base_prefab = Atrezzo_Prefab;
 			parent = Atrezzos;
-			element = Game.Instance.getAtrezzo (context.getTargetId ());
+			element = Game.Instance.GameState.getAtrezzo (context.getTargetId ());
 			break;
 		case "NPC":
 			base_prefab = Character_Prefab;
 			parent = Characters;
-			element = Game.Instance.getCharacter (context.getTargetId ());
+			element = Game.Instance.GameState.getCharacter (context.getTargetId ());
 			break;
 		case "Item":
 			base_prefab = Object_Prefab;
 			parent = Objects;
-			element = Game.Instance.getObject (context.getTargetId ());
+			element = Game.Instance.GameState.getObject (context.getTargetId ());
 			break;
 		default:
 			return;
@@ -242,22 +243,30 @@ public class SceneMB : MonoBehaviour, Interactuable{
 		trans.SetParent (ActiveAreas);
 	}
 
-	public void showHand(bool show){
+	public bool canBeInteracted(){
+		return interactuable;
+	}
+
+	public void setInteractuable(bool state){
+		this.interactuable = state;
 	}
 	
     public InteractuableResult Interacted (RaycastHit hit = default(RaycastHit)){
-		bool forcewait = false;
         Effects e;
+
+		InteractuableResult res = InteractuableResult.IGNORES;
+
 		switch (sceneData.getType ()) {
-        case GeneralScene.GeneralSceneSceneType.SCENE:
-            if(!Game.Instance.isFirstPerson())
-				PlayerMB.Instance.move(trajectory.route (PlayerMB.Instance.getPosition(), trajectory.closestPoint (Camera.main.ScreenToWorldPoint (Input.mousePosition))));
+		case GeneralScene.GeneralSceneSceneType.SCENE:
+			if (!Game.Instance.GameState.isFirstPerson ()) {
+				PlayerMB.Instance.move (trajectory.route (PlayerMB.Instance.getPosition (), trajectory.closestPoint (Camera.main.ScreenToWorldPoint (Input.mousePosition))));
+			}
             break;
         case GeneralScene.GeneralSceneSceneType.SLIDESCENE:
             if(current_slide+1 < this.slides.frames.Count){
 				current_slide++;
                 this.transform.FindChild("Background").GetComponent<Renderer> ().material.mainTexture = this.slides.frames[current_slide].Image;
-				forcewait = true;
+				res = InteractuableResult.REQUIRES_MORE_INTERACTION;
 			}else{
                 switch(((Slidescene)sceneData).getNext ()){
                     case Slidescene.NEWSCENE:
@@ -289,7 +298,7 @@ public class SceneMB : MonoBehaviour, Interactuable{
             break;
 		}
 
-        return forcewait ? InteractuableResult.REQUIRES_MORE_INTERACTION : InteractuableResult.IGNORES ;
+		return res;
 	}
 
     private void colorChilds(Color color){

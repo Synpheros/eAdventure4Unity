@@ -23,7 +23,7 @@ public class ExitMB : MonoBehaviour, Interactuable {
 		//Game.Instance.hideMenu ();
         if (ConditionChecker.check (ed.getConditions ())) {
             Game.Instance.Execute (new EffectHolder (ed.getEffects ()));
-            Game.Instance.setCursor ("default");
+			GUIManager.Instance.setCursor ("default");
             Game.Instance.renderScene (ed.getNextSceneId (), ed.getTransitionTime (), ed.getTransitionType ());
 
             if (ed.getPostEffects () != null)
@@ -33,18 +33,22 @@ public class ExitMB : MonoBehaviour, Interactuable {
 	}
 
 	void OnMouseEnter(){
-		showHand(true);
+		GUIManager.Instance.showHand(true);
+		interactable = true;
 	}
 
 	void OnMouseExit() {
-		showHand(false);
+		GUIManager.Instance.showHand(false);
+		interactable = false;
 	}
 
-	public void showHand(bool show){
-		if (show)
-			Game.Instance.setCursor ("over");
-		else 
-			Game.Instance.setCursor ("default");
+	bool interactable = false;
+	public bool canBeInteracted(){
+		return interactable;
+	}
+
+	public void setInteractuable(bool state){
+		this.interactable = state;
 	}
 
     public InteractuableResult Interacted (RaycastHit hit = new RaycastHit()){

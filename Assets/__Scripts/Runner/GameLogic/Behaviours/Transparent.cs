@@ -15,10 +15,13 @@ public class Transparent : MonoBehaviour {
 			RaycastHit hit;
 			Physics.Raycast ( Camera.main.ScreenPointToRay (Input.mousePosition), out hit);
 
-			if (((Texture2D) GetComponent<Renderer>().material.mainTexture).GetPixelBilinear (hit.textureCoord.x, hit.textureCoord.y).a > 0f)
-				interactuable.showHand (true);
-			else
-				interactuable.showHand (false);
+			if (((Texture2D)GetComponent<Renderer> ().material.mainTexture).GetPixelBilinear (hit.textureCoord.x, hit.textureCoord.y).a > 0f) {
+				interactuable.setInteractuable (true);
+				GUIManager.Instance.showHand (true);
+			} else {
+				interactuable.setInteractuable (false);
+				GUIManager.Instance.showHand (false);
+			}
 		}
 	}
 
@@ -28,6 +31,7 @@ public class Transparent : MonoBehaviour {
 
 	void OnMouseExit() {
 		checkingTransparency = false;
-		interactuable.showHand (false);
+		interactuable.setInteractuable (false);
+		GUIManager.Instance.showHand (false);
 	}
 }

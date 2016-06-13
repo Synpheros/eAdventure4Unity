@@ -42,7 +42,7 @@ public class ButtonMB : MonoBehaviour, Interactuable {
             resource.addAsset (DescriptorData.NORMAL_BUTTON, button.getPath());
             resource.addAsset (DescriptorData.HIGHLIGHTED_BUTTON, highlighted.getPath());*/
 
-            resource = Game.Instance.getButton (this.action);
+			resource = GUIManager.Instance.Provider.getButton (this.action);
 
             name = ConstantNames.L ["ES"].Actions [action.getType ()];
         }
@@ -70,7 +70,7 @@ public class ButtonMB : MonoBehaviour, Interactuable {
         else
             GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (resource.getAssetPath (DescriptorData.HIGHLIGHTED_BUTTON));
 
-		showHand (true);
+		GUIManager.Instance.showHand (true);
     }
 
     void OnMouseExit() {
@@ -81,14 +81,16 @@ public class ButtonMB : MonoBehaviour, Interactuable {
         else
             GetComponent<Renderer> ().material.mainTexture = ResourceManager.Instance.getImage (resource.getAssetPath (DescriptorData.NORMAL_BUTTON));
 
-		showHand (false);
+		GUIManager.Instance.showHand (false);
     }
 
-	public void showHand(bool show){
-		if (show)
-			Game.Instance.setCursor ("over");
-		else 
-			Game.Instance.setCursor ("default");
+	bool interactable = false;
+	public bool canBeInteracted(){
+		return interactable;
+	}
+
+	public void setInteractuable(bool state){
+		this.interactable = state;
 	}
 
     public InteractuableResult Interacted (RaycastHit hit = new RaycastHit()){

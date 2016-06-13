@@ -111,13 +111,16 @@ public class GUIProvider{
     int guitype;
 
     Dictionary<int,ResourcesUni> buttons;
+	Dictionary<string,Texture2D> cursores;
+	AdventureData data;
 
     public GUIProvider(AdventureData data){
-        this.guitype = data.getGUIType ();
-
+		this.guitype = data.getGUIType ();
+		this.data = data;
 
         ResourcesUni auxResource;
         buttons = new Dictionary<int, ResourcesUni> ();
+		cursores = new Dictionary<string, Texture2D>();
 
         //We add a resource for each button parsed in descriptor file
         foreach (CustomButton cb in data.getButtons()) {
@@ -156,6 +159,8 @@ public class GUIProvider{
             }
         }
 
+		if(data.getCursors().Count == 0)
+			loadDefaultCursors ();
     }
 
     public ResourcesUni getButton (Action action){
@@ -176,9 +181,27 @@ public class GUIProvider{
         else
             return null;
     }
+		
+	public Texture2D getCursor(string cursor){
+		if(!cursores.ContainsKey(cursor)){
+			string path = data.getCursorPath(cursor);
+			if (path != null) {
+				cursores.Add (cursor,ResourceManager.Instance.getImage(path));
+			} else {
+				if(!cursores.ContainsKey("default"))
+					cursores.Add ("default", ResourceManager.Instance.getImage(data.getCursorPath("default")));
+				cursores.Add (cursor, cursores ["default"]);
+			}
+		}
 
-    /*ResourcesUni getCursor (Action action);
-    ResourcesUni getCursor (int action);
-    ResourcesUni getCursor (string name);*/
+		return cursores [cursor];
+	}
+
+	private void loadDefaultCursors(){
+		cursores.Add("default",ResourceManager.Instance.getImage ("gui/cursors/default.png"));
+		cursores.Add("over",ResourceManager.Instance.getImage ("gui/cursors/over.png"));
+		cursores.Add("exit",ResourceManager.Instance.getImage ("gui/cursors/exit.png"));
+		cursores.Add("action",ResourceManager.Instance.getImage ("gui/cursors/action.png"));
+	}
 }
 

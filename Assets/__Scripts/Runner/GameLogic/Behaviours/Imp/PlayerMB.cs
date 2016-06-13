@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerMB : Representable, Interactuable {
+public class PlayerMB : Representable {
 
     static PlayerMB instance;
 	Vector2 start_pos, end_pos;
@@ -39,9 +39,6 @@ public class PlayerMB : Representable, Interactuable {
         }
     }
 
-    public void showHand(bool show){
-    }
-
     bool moving = false;
     Queue<KeyValuePair<Vector2,float>> moves = new Queue<KeyValuePair<Vector2,float>>();
 
@@ -65,12 +62,5 @@ public class PlayerMB : Representable, Interactuable {
 
         speed = player_speed * (50 / Vector2.Distance (start_pos, end_pos));
     }
-
-    public InteractuableResult Interacted (RaycastHit hit = default(RaycastHit)){
-        InteractuableResult res = InteractuableResult.IGNORES;
-
-        return res;
-    }
-
 
 }

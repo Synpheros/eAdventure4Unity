@@ -5,13 +5,8 @@ using System.Text.RegularExpressions;
 using System.Xml;
 
 public class eFrame {
-	private Texture2DHolder image;
+	private Texture2D image;
 	public Texture2D Image {
-		get { return image.Texture; }
-		set { image.Texture = value; }
-	}
-
-	public Texture2DHolder Holder {
 		get { return image; }
 		set { image = value; }
 	}
@@ -26,12 +21,14 @@ public class eFrame {
 public class eAnim : Resource {
 	public List<eFrame> frames;
 	public XmlDocument xmld;
+	private ResourceManager.LoadingType type;
+	string path;
 
-	public eAnim(string eaaFile){
+	public eAnim(string path, ResourceManager.LoadingType type){
 		frames = new List<eFrame> ();
-        string path = eaaFile;
+
 		Regex pattern = new Regex("[óñ]");
-		path = pattern.Replace(path, "+¦");
+		this.path = pattern.Replace(path, "+¦");
 
 		string[] splitted = path.Split ('.');
 		if (splitted [splitted.Length - 1] == "eaa") {
@@ -39,11 +36,9 @@ public class eAnim : Resource {
 
 			switch (ResourceManager.Instance.getLoadingType ()) {
 			case ResourceManager.LoadingType.SYSTEM_IO:
-				path = Game.Instance.getSelectedGame() + path;
 				eaaText = System.IO.File.ReadAllText (path);
 				break;
 			case ResourceManager.LoadingType.RESOURCES_LOAD:
-				path = Game.Instance.getGameName () + path;
 				TextAsset ta = Resources.Load (path) as TextAsset;
 				if(ta!=null)
 					eaaText = ta.text;
@@ -51,7 +46,7 @@ public class eAnim : Resource {
 			}
 			parseEea (eaaText);
 		} else
-			createOldMethod (path);
+			createOldMethod ();
 
 
 	}
@@ -70,7 +65,7 @@ public class eAnim : Resource {
 			
 				string ruta = node.GetAttribute ("uri");
 
-				tmp.Holder = new Texture2DHolder (ruta);
+				tmp.Image = ResourceManager.Instance.getImage(ruta);
 
 				frames.Add (tmp);
 			} else if (node.Name == "transition") {
@@ -82,35 +77,35 @@ public class eAnim : Resource {
 
 
 	private static string[] extensions = {".png",".jpg",".jpeg"};
-	private void createOldMethod(string name){
+	private void createOldMethod(){
 		xmld = new XmlDocument ();
 		Texture2DHolder auxHolder;
 		eFrame tmp;
 		int num = 1;
 		string ruta = "";
 
-		switch (Game.Instance.getLoadingType ()) {
+		switch (type) {
 		case ResourceManager.LoadingType.RESOURCES_LOAD:
-			ruta = name + "_" + intToStr (num);
-			auxHolder = new Texture2DHolder (ruta);
+			ruta = path + "_" + intToStr (num);
+			auxHolder = new Texture2DHolder (ruta,this.type);
 
 			while(auxHolder.Loaded()){
 				tmp = new eFrame ();
 				tmp.Duration = 500;
-				tmp.Holder = auxHolder;
+				tmp.Image = auxHolder.Texture;
 				frames.Add(tmp);
 
 				num++;
-				ruta = name + "_" + intToStr (num);
-				auxHolder = new Texture2DHolder(ruta);
+				ruta = path + "_" + intToStr (num);
+				auxHolder = new Texture2DHolder(ruta, this.type);
 			}
 			break;
 		case ResourceManager.LoadingType.SYSTEM_IO:
-			ruta = Game.Instance.getSelectedGame() + name + "_" + intToStr (num);
+			ruta = path + "_" + intToStr (num);
 			string working_extension = "";
 			
 			foreach (string extension in extensions) {
-				auxHolder = new Texture2DHolder (ruta);
+				auxHolder = new Texture2DHolder (ruta, this.type);
 				if (System.IO.File.Exists (ruta + extension)) {
 					working_extension = extension;
 					break;
@@ -121,10 +116,10 @@ public class eAnim : Resource {
 			while (System.IO.File.Exists (ruta)) {
 				tmp = new eFrame ();
 				tmp.Duration = 500;
-				tmp.Holder = new Texture2DHolder (ruta);
+				tmp.Image = new Texture2DHolder (ruta, this.type).Texture;
 				frames.Add (tmp);
 				num++;
-				ruta = name + "_" + intToStr (num) + working_extension;
+				ruta = path + "_" + intToStr (num) + working_extension;
 			}
 			break;
 		}

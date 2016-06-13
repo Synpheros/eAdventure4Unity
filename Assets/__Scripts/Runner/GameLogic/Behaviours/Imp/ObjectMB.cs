@@ -50,20 +50,20 @@ public class ObjectMB : Representable, Interactuable {
             }
         }
 	}
+		
+	public bool canBeInteracted(){
+		return interactable;
+	}
 
+	public void setInteractuable(bool state){
+		this.interactable = state;
 
-	public void showHand(bool show){
-		if (show && !interactable) {
-			Game.Instance.setCursor ("over");
+		if (state) {
 			if (base.hasOverSprite ()) {
 				base.setTexture (Item.RESOURCE_TYPE_IMAGEOVER);
 			}
-			interactable = true;
-		} else if (!show && interactable) {
-			Game.Instance.setCursor ("default");
+		}else
 			base.setTexture(Item.RESOURCE_TYPE_IMAGE);
-			interactable = false;
-		}
 	}
 
     public InteractuableResult Interacted (RaycastHit hit = new RaycastHit()){

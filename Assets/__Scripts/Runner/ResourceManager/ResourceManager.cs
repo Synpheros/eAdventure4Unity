@@ -32,10 +32,38 @@ public sealed class ResourceManager{
 		public MovieTexture movie;
 	}
 
+	private string path = "";
+	private string name = "";
 	LoadingType type = LoadingType.SYSTEM_IO;
-
     private Dictionary<string,Texture2DHolder> images;
 	private Dictionary<string,eAnim> animations;
+
+	public string Path{
+		get { 
+			string ret = "";
+
+			switch (type) {
+			case LoadingType.SYSTEM_IO:
+				ret = path;
+				break;
+			case LoadingType.RESOURCES_LOAD:
+				ret = name;
+				break;
+			}
+
+			return ret;
+		}
+		set {
+			switch (type) {
+			case LoadingType.SYSTEM_IO:
+				path = value;
+				break;
+			case LoadingType.RESOURCES_LOAD:
+				name = value + "/";
+				break;
+			}
+		}
+	}
 
     private ResourceManager (){
         this.images = new Dictionary<string, Texture2DHolder> ();
@@ -45,27 +73,13 @@ public sealed class ResourceManager{
 			type = Game.Instance.getLoadingType ();
 		} else
 			type = LoadingType.SYSTEM_IO;
-       
-        //TODO:
-        //support for sounds and videos
     }
-
-	public LoadingType getLoadingType(){
-		return type;
-	}
-
-	public string getSelectedGame(){
-		if (Game.Instance != null)
-			return Game.Instance.getSelectedGame ();
-		else
-			return "";
-	}
 
     public Texture2D getImage(string uri){
         if (images.ContainsKey (uri))
             return images [uri].Texture;
         else {
-            Texture2DHolder holder = new Texture2DHolder (uri);
+			Texture2DHolder holder = new Texture2DHolder (Path + uri, type);
             if (holder.Loaded ()) {
                 images.Add (uri, holder);
                 return holder.Texture;
@@ -74,11 +88,15 @@ public sealed class ResourceManager{
         }
     }
 
+	public LoadingType getLoadingType(){
+		return type;
+	}
+
 	public eAnim getAnimation(string uri){
 		if (animations.ContainsKey (uri))
 			return animations [uri];
 		else {
-			eAnim animation = new eAnim (uri);
+			eAnim animation = new eAnim (Path + uri, type);
 			if (animation.Loaded ()) {
 				animations.Add (uri, animation);
 				return animation;

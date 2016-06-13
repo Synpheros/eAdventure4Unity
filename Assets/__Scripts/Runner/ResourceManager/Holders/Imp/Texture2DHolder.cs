@@ -7,6 +7,7 @@ public class Texture2DHolder : Resource {
 	string path;
 	private Texture2D tex;
 	bool loaded = false;
+	ResourceManager.LoadingType type;
 
 	public Texture2D Texture {
 		get { 
@@ -27,18 +28,16 @@ public class Texture2DHolder : Resource {
 		this.fileData = data;
 	}
 
-	public Texture2DHolder(string path){
+	public Texture2DHolder(string path, ResourceManager.LoadingType type){
         loaded = true;
-		switch (ResourceManager.Instance.getLoadingType ()) {
+		this.type = type;
+		switch (type) {
 		case ResourceManager.LoadingType.RESOURCES_LOAD:
-			this.path = Game.Instance.getGameName () + "/" + path;
+			this.path = path;
 			tex = LoadTexture ();
 			break;
 		case ResourceManager.LoadingType.SYSTEM_IO:
 			this.path = path;
-			if (!path.Contains (ResourceManager.Instance.getSelectedGame()))
-				this.path = ResourceManager.Instance.getSelectedGame() + path;
-
 			this.fileData = LoadBytes (this.path);
 
 			if (this.fileData == null) {
@@ -66,7 +65,7 @@ public class Texture2DHolder : Resource {
 
 	private Texture2D LoadTexture() {
 		Texture2D tex = new Texture2D (1, 1);
-		switch(ResourceManager.Instance.getLoadingType()){
+		switch(type){
 		case ResourceManager.LoadingType.RESOURCES_LOAD:
 			tex = Resources.Load (this.path.Split('.')[0]) as Texture2D;
 
