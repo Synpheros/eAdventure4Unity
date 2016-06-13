@@ -17,20 +17,24 @@
 \BOOKMARK [2][-]{subsection.1.3.3}{eAdventure Android y Mokap}{section.1.3}% 17
 \BOOKMARK [1][-]{section.1.4}{Metodolog\355a de desarrollo}{chapter.1}% 18
 \BOOKMARK [0][-]{chapter.2}{Comenzando con el Proyecto}{}% 19
-\BOOKMARK [0][-]{chapter.3}{Primera versi\363n del int\351rprete}{}% 20
-\BOOKMARK [0][-]{chapter.4}{Primera Iteraci\363n: Prototipo inicial}{}% 21
-\BOOKMARK [1][-]{section.4.1}{Arquitectura del Proyecto}{chapter.4}% 22
-\BOOKMARK [2][-]{subsection.4.1.1}{Controlador Principal de Juego}{section.4.1}% 23
-\BOOKMARK [2][-]{subsection.4.1.2}{Clases de Datos}{section.4.1}% 24
-\BOOKMARK [2][-]{subsection.4.1.3}{Clases de Comportamiento}{section.4.1}% 25
-\BOOKMARK [1][-]{section.4.2}{Detalles de la implementaci\363n}{chapter.4}% 26
-\BOOKMARK [2][-]{subsection.4.2.1}{Sobre la clase Game}{section.4.2}% 27
-\BOOKMARK [1][-]{section.4.3}{Sobre las Clases de Datos}{chapter.4}% 28
-\BOOKMARK [1][-]{section.4.4}{Sobre las Clases de Comportamiento}{chapter.4}% 29
-\BOOKMARK [2][-]{subsection.4.4.1}{Detalles de la clase Character}{section.4.4}% 30
-\BOOKMARK [2][-]{subsection.4.4.2}{Detalles de la clase eObject, Exit y ActiveArea}{section.4.4}% 31
-\BOOKMARK [2][-]{subsection.4.4.3}{Detalles espec\355ficos de Scene}{section.4.4}% 32
-\BOOKMARK [0][-]{chapter.5}{Segunda Iteraci\363n}{}% 33
-\BOOKMARK [0][-]{chapter*.10}{Bibliography}{}% 34
-\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 35
-\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 36
+\BOOKMARK [0][-]{chapter.3}{Primera Iteraci\363n: Prototipo inicial}{}% 20
+\BOOKMARK [1][-]{section.3.1}{Arquitectura del Proyecto}{chapter.3}% 21
+\BOOKMARK [2][-]{subsection.3.1.1}{Controlador Principal de Juego}{section.3.1}% 22
+\BOOKMARK [2][-]{subsection.3.1.2}{Clases de Datos}{section.3.1}% 23
+\BOOKMARK [2][-]{subsection.3.1.3}{Clases de Comportamiento}{section.3.1}% 24
+\BOOKMARK [1][-]{section.3.2}{Detalles de la implementaci\363n}{chapter.3}% 25
+\BOOKMARK [2][-]{subsection.3.2.1}{Sobre la clase Game}{section.3.2}% 26
+\BOOKMARK [1][-]{section.3.3}{Sobre las Clases de Datos}{chapter.3}% 27
+\BOOKMARK [1][-]{section.3.4}{Sobre las Clases de Comportamiento}{chapter.3}% 28
+\BOOKMARK [2][-]{subsection.3.4.1}{Detalles de la clase Character}{section.3.4}% 29
+\BOOKMARK [2][-]{subsection.3.4.2}{Detalles de la clase eObject, Exit y ActiveArea}{section.3.4}% 30
+\BOOKMARK [2][-]{subsection.3.4.3}{Detalles espec\355ficos de Scene}{section.3.4}% 31
+\BOOKMARK [1][-]{section.3.5}{Sobre las Clases de Utilidad}{chapter.3}% 32
+\BOOKMARK [2][-]{subsection.3.5.1}{La clase Texture2DHolder}{section.3.5}% 33
+\BOOKMARK [2][-]{subsection.3.5.2}{La interfaz Sequence: Effect, Conversation y Condition}{section.3.5}% 34
+\BOOKMARK [2][-]{subsection.3.5.3}{La clase Action}{section.3.5}% 35
+\BOOKMARK [1][-]{section.3.6}{Acerca de los elementos de Adaptaci\363n}{chapter.3}% 36
+\BOOKMARK [0][-]{chapter.4}{Segunda Iteraci\363n}{}% 37
+\BOOKMARK [0][-]{chapter*.12}{Bibliography}{}% 38
+\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 39
+\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 40
