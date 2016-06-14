@@ -64,6 +64,7 @@ Después de comenzar con la implementación del \textit{SecuenceManager}, y cons
 En una sección posterior se detallan en profundidad los detalles de la implementación de las clases Conversation y Effect, dos clases que implementan la interfaz Secuence, y que permiten ser ejecutadas por si mismas.
 
 \subsection{Sobre la clase Game}
+\label{gameit1}
 
 La clase Game es el Controlador principal del juego, y por ello realiza todas las funciones anteriormente descritas.
 
@@ -88,7 +89,7 @@ Esta explicación cierra, por encima, todos los elementos importantes de la impl
 
 Esta clase es una de las clases que ha sufrido una mayor evolución en la segunda iteración, ya que, pese a que sigue controlando la interacción por parte del usuario, ya no realiza la lógica de dicha interacción en el bucle \textit{Update()}, sino que, simplemente delega en los diferentes elementos interactuados para que sean ellos los que realicen la lógica de su interacción. Asimismo, la gestión de la interfaz ha sido delegada en la clase \textit{GUIManager}, con un nuevo y rediseñado sistema de burbujas.
 
-\section{Sobre las Clases de Datos}
+\subsection{Sobre las Clases de Datos}
 
 Existen multitud de clases de datos dentro del código del programa, aunque todas se parecen bastante entre sí, por lo que se explicarán la mayoría de ellas en conjunto.
 
@@ -123,7 +124,7 @@ Es decir, existen animaciones formadas de la siguiente manera: “anim\_01.png�
 
 Por otra parte, el nuevo formato de animaciones está definido en ficheros XML llamados “.eaa” que son mucho más sencillos de recorrer y contienen más información acerca de cada fotograma de la animación.
 
-\section{Sobre las Clases de Comportamiento}
+\subsection{Sobre las Clases de Comportamiento}
 
 De manera similar al apartado anterior, se explicará el funcionamiento de la mayor parte de clases de comportamiento, puntualizando detalles acerca de algunas de dichas clases en concreto, como \textit{Character} o \textit{eObject}, que tienen comportamientos aislados como la gestión de fotogramas o la necesidad de cambiar cuando el usuario va a interactuar con ellos.
 
@@ -145,13 +146,13 @@ Todas estas clases de comportamiento son la representación de algún elemento d
 	\item Por último contienen aquellas funciones que son necesarias para su correcto funcionamiento.
 \end{itemize}
 
-\subsection{Detalles de la clase Character}
+\subsubsection{Detalles de la clase Character}
 
 La clase \textit{Character} contiene una serie de comportamientos necesarios y características específicas que hacen que sea diferente a las demás, pues tiene animación y ha de ir cambiando el fotograma que la representa con el paso del tiempo, por lo que en su función de comienzo de la ejecución, \textit{Start()}, selecciona la animación que cumple todas las condiciones, y establece el primer fotograma, y en su función de actualización del estado, \textit{Update()}, va cambiando su fotograma con la funcion \textit{ChangeFrame()}.
 
 Esta función \textit{ChangeFrame()} accede al \textit{renderer}\footnote{El renderer, en Unity3D, es la componente de los objetos que tienen representación en la escena, que define cómo se representan en la misma, con características como los materiales que las conforman, las texturas, las mallas tridimensionales, y otros elementos.} y cambia su textura además de actualizar determinadas variables de control, que establecen cuando deberá realizarse el próximo cambio de fotograma, o el fotograma que se está representando actualmente.
 
-\subsection{Detalles de la clase eObject, Exit y ActiveArea}
+\subsubsection{Detalles de la clase eObject, Exit y ActiveArea}
 
 Estas tres clases tienen la peculiaridad de que deben ser reactivas a interacción por parte del jugador, y mostrar algún cambio en su representación cada vez que el jugador pase el puntero del ratón por encima de ellas. Esto se implementó utilizando las funciones que facilita la clase \textit{MonoBehaviour}, I y \textit{OnMouseExit()} y que reciben el evento del puntero cuando este entra en su área de reacción y cuando sale de la misma.
 
@@ -163,7 +164,7 @@ Esta clase \textit{Exit}, en esta versión del intérprete, no funcionaba correc
 
 Por otra parte, y como ya se mencionó en un apartado anterior, las \textit{ActiveAreas} contienen una funcionalidad adicional en la última versión del intérprete, ya que estas se adaptan a un Área de Influencia, que modifica su contorno y forma, adaptándose a la forma de un polígono irregular definido por un listado de puntos en el fichero de especificación del juego.
 
-\subsection{Detalles específicos de Scene}
+\subsubsection{Detalles específicos de Scene}
 
 La clase Scene supone un reto más complejo de abordar, en comparación con todas las demás clases de comportamiento, pues su clase de datos puede ser de diferentes tipos dependiendo de qué clase implementa la interfaz. Es decir, una \textit{Scene} puede ser a su vez una \textit{VideoScene}, una \textit{CutScene}, una \textit{SlideScene}, o cualquier otro tipo de escena que exista. Cada una de estas escenas tiene comportamientos individuales, pero para la gestión de los mismos, surgen una serie de problemas de implementación.
 
@@ -178,6 +179,7 @@ Asimismo, las escenas tienen una función Interacted que hace que las escenas en
 Esta función \textit{Interacted} será refactorizada en la última versión, generando al interfaz \textit{Interactuable}, que permite ejecutar la función \textit{Interacted}, y otras funciones, sobre los objetos que tengan que ser reactivos a interacción, para poder así delegar esta funcionalidad en las clases interactuadas, en lugar de extraer la funcionalidad y ejecutarla en el bucle principal de juego.
 
 \section{Sobre las Clases de Utilidad}
+\label{utilit1}
 
 Debido a la necesidad de generar determinadas clases que contengan funcionalidad que no debería estar ubicada en ninguna clase en concreto, la necesidad de que existan clases que no son comportamientos ni datos, o debido a la necesidad de refactorizar y rediseñar código que surgen las clases de utilidad. Clases que son utilizadas por multitud de clases en muchos contextos.
 

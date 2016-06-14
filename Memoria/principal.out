@@ -24,17 +24,16 @@
 \BOOKMARK [2][-]{subsection.3.1.3}{Clases de Comportamiento}{section.3.1}% 24
 \BOOKMARK [1][-]{section.3.2}{Detalles de la implementaci\363n}{chapter.3}% 25
 \BOOKMARK [2][-]{subsection.3.2.1}{Sobre la clase Game}{section.3.2}% 26
-\BOOKMARK [1][-]{section.3.3}{Sobre las Clases de Datos}{chapter.3}% 27
-\BOOKMARK [1][-]{section.3.4}{Sobre las Clases de Comportamiento}{chapter.3}% 28
-\BOOKMARK [2][-]{subsection.3.4.1}{Detalles de la clase Character}{section.3.4}% 29
-\BOOKMARK [2][-]{subsection.3.4.2}{Detalles de la clase eObject, Exit y ActiveArea}{section.3.4}% 30
-\BOOKMARK [2][-]{subsection.3.4.3}{Detalles espec\355ficos de Scene}{section.3.4}% 31
-\BOOKMARK [1][-]{section.3.5}{Sobre las Clases de Utilidad}{chapter.3}% 32
-\BOOKMARK [2][-]{subsection.3.5.1}{La clase Texture2DHolder}{section.3.5}% 33
-\BOOKMARK [2][-]{subsection.3.5.2}{La interfaz Sequence: Effect, Conversation y Condition}{section.3.5}% 34
-\BOOKMARK [2][-]{subsection.3.5.3}{La clase Action}{section.3.5}% 35
-\BOOKMARK [1][-]{section.3.6}{Acerca de los elementos de Adaptaci\363n}{chapter.3}% 36
-\BOOKMARK [0][-]{chapter.4}{Segunda Iteraci\363n}{}% 37
-\BOOKMARK [0][-]{chapter*.12}{Bibliography}{}% 38
-\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 39
-\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 40
+\BOOKMARK [2][-]{subsection.3.2.2}{Sobre las Clases de Datos}{section.3.2}% 27
+\BOOKMARK [2][-]{subsection.3.2.3}{Sobre las Clases de Comportamiento}{section.3.2}% 28
+\BOOKMARK [1][-]{section.3.3}{Sobre las Clases de Utilidad}{chapter.3}% 29
+\BOOKMARK [2][-]{subsection.3.3.1}{La clase Texture2DHolder}{section.3.3}% 30
+\BOOKMARK [2][-]{subsection.3.3.2}{La interfaz Sequence: Effect, Conversation y Condition}{section.3.3}% 31
+\BOOKMARK [2][-]{subsection.3.3.3}{La clase Action}{section.3.3}% 32
+\BOOKMARK [1][-]{section.3.4}{Acerca de los elementos de Adaptaci\363n}{chapter.3}% 33
+\BOOKMARK [0][-]{chapter.4}{Segunda Iteraci\363n}{}% 34
+\BOOKMARK [1][-]{section.4.1}{Arquitectura del Proyecto}{chapter.4}% 35
+\BOOKMARK [2][-]{subsection.4.1.1}{El nucleo de Ejecuci\363n: Runner}{section.4.1}% 36
+\BOOKMARK [0][-]{chapter*.15}{Bibliography}{}% 37
+\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 38
+\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 39
