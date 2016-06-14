@@ -33,7 +33,8 @@
 \BOOKMARK [1][-]{section.3.4}{Acerca de los elementos de Adaptaci\363n}{chapter.3}% 33
 \BOOKMARK [0][-]{chapter.4}{Segunda Iteraci\363n}{}% 34
 \BOOKMARK [1][-]{section.4.1}{Arquitectura del Proyecto}{chapter.4}% 35
-\BOOKMARK [2][-]{subsection.4.1.1}{El nucleo de Ejecuci\363n: Runner}{section.4.1}% 36
-\BOOKMARK [0][-]{chapter*.15}{Bibliography}{}% 37
-\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 38
-\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 39
+\BOOKMARK [1][-]{section.4.2}{El nucleo de Ejecuci\363n: Runner}{chapter.4}% 36
+\BOOKMARK [2][-]{subsection.4.2.1}{El gestor de interfaz: GUIManager}{section.4.2}% 37
+\BOOKMARK [0][-]{chapter*.15}{Bibliography}{}% 38
+\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 39
+\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 40

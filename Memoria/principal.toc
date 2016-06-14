@@ -40,7 +40,8 @@
 \contentsline {section}{\numberline {3.4}Acerca de los elementos de Adaptaci\IeC {\'o}n}{43}{section.3.4}
 \contentsline {chapter}{\numberline {4}Segunda Iteraci\IeC {\'o}n}{45}{chapter.4}
 \contentsline {section}{\numberline {4.1}Arquitectura del Proyecto}{45}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}El nucleo de Ejecuci\IeC {\'o}n: Runner}{48}{subsection.4.1.1}
-\contentsline {chapter}{Bibliography}{51}{chapter*.15}
-\contentsline {chapter}{\numberline {A}Title for This Appendix}{52}{appendix.Alph1}
-\contentsline {chapter}{\numberline {B}Title for This Appendix}{53}{appendix.Alph2}
+\contentsline {section}{\numberline {4.2}El nucleo de Ejecuci\IeC {\'o}n: Runner}{48}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}El gestor de interfaz: GUIManager}{50}{subsection.4.2.1}
+\contentsline {chapter}{Bibliography}{52}{chapter*.15}
+\contentsline {chapter}{\numberline {A}Title for This Appendix}{53}{appendix.Alph1}
+\contentsline {chapter}{\numberline {B}Title for This Appendix}{54}{appendix.Alph2}

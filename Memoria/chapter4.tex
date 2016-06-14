@@ -25,7 +25,7 @@ En esta arquitectura encontramos tres paquetes importantes que engloban la funci
 
 \newpage
 
-\subsection{El nucleo de Ejecución: Runner}
+\section{El nucleo de Ejecución: Runner}
 
 El núcleo de ejecución, también conocido como \textit{Runner}, está dividido en 3 subpaquetes, \textit{Apearance}, encargado de mejorar la representación visual, \textit{ResourceManager}, encargado de realizar la carga transparente de recursos, y \textit{GameLogic}, el cual podría considerarse el núcleo en si mismo, de lógica del juego. Estos tres paquetes surgen de la generalización de elementos que se encontraban, o bien en la antigua clase \textit{Game}, explicada en la sección \ref{gameit1}, o bien en alguna de las clases de utilidad, explicadas en la sección \ref{utilit1}.
 
@@ -47,11 +47,24 @@ Estas 5 clases son:
 La representación de las clases que se explican en esta sección está disponible en la figura \ref{runnerbigit2}, junto a todas sus funciones. En este diagrama no están representados todos los elementos, pero si aquellos que han surgido de la evolución de las clases que se especificaron al comienzo de la sección. Este diagrama es bastante específico, pues contiene datos acerca de todas las funciones disponibles en cada uno de los elementos.
 
 \begin{figure}[h]
-	\centerline{\includegraphics[height=7in]{figures/it2/GameLogicBigOnes.png}}
+	\centerline{\includegraphics[height=6in]{figures/it2/GameLogicBigOnes.png}}
 	\caption[GameLogic Grandes Gestores - Versión Final]{Diagrama de clases de los grandes gestores que controlan y proveen contenido para la ejecución del juego.}
 	\label{runnerbigit2}
 \end{figure}
 
 \newpage
 
+\subsection{El gestor de interfaz: GUIManager}
+
+Como se explica en la sección superior a esta subsección, existe una clase gestora que se encarga de manejar la interfaz en su totalidad de forma transparente. Facilita una serie de funciones que permiten, de forma sencilla, mostrar burbujas de diálogo, cambiar el cursor, mostrar un menú contextual de acciones, o un menú de opciones.
+
+Esta inferfaz surge de la reducción de contenido de \textit{Game}, que antes realizaba estas tareas, y fue relevada de su función debido a que dicha clase comenzaba a tener una dimensión demasiado elevada. La figura \ref{guimanagerit2} muestra el diagrama de clases de la clase \textit{GUIManager} junto al paquete \textit{Apearance} y el paquete \textit{GUIProvider} que contiene todo lo necesario para acceder al \textit{ResourceManager} de forma automática y transparente, así como la carga de recursos por defecto y la gestión de nombres a constantes y viceversa.
+
+\begin{figure}[h]
+	\centerline{\includegraphics[height=6in]{figures/it2/GUIManager.png}}
+	\caption[GameLogic Grandes Gestores - Versión Final]{Diagrama de clases de los grandes gestores que controlan y proveen contenido para la ejecución del juego.}
+	\label{guimanagerit2}
+\end{figure}
+
+\newpage
 
