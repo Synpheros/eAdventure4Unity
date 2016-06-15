@@ -118,7 +118,7 @@ public abstract class Representable : MonoBehaviour, Movable {
 		Adaptate ();
 	}
 
-	public void nextFrame(){
+	private void nextFrame(){
 		current_time = 0;
 		setFrame (current_frame + 1);
 	}

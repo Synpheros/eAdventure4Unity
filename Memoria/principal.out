@@ -34,7 +34,9 @@
 \BOOKMARK [0][-]{chapter.4}{Segunda Iteraci\363n}{}% 34
 \BOOKMARK [1][-]{section.4.1}{Arquitectura del Proyecto}{chapter.4}% 35
 \BOOKMARK [1][-]{section.4.2}{El nucleo de Ejecuci\363n: Runner}{chapter.4}% 36
-\BOOKMARK [2][-]{subsection.4.2.1}{El gestor de interfaz: GUIManager}{section.4.2}% 37
-\BOOKMARK [0][-]{chapter*.20}{Bibliography}{}% 38
-\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 39
-\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 40
+\BOOKMARK [2][-]{subsection.4.2.1}{El estado del juego: GameState}{section.4.2}% 37
+\BOOKMARK [2][-]{subsection.4.2.2}{El Controlador del Juego: Game}{section.4.2}% 38
+\BOOKMARK [2][-]{subsection.4.2.3}{El gestor de interfaz: GUIManager}{section.4.2}% 39
+\BOOKMARK [0][-]{chapter*.21}{Bibliography}{}% 40
+\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 41
+\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 42

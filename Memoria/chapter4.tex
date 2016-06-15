@@ -56,6 +56,37 @@ La representación de las clases que se explican en esta sección está disponib
 
 \newpage
 
+\subsection{El estado del juego: GameState}
+
+Antes de explicar la clase \textit{Game}, es importante explicar la clase que realiza de nexo de unión entre eAdventure y uAdventure, pues esta tiene dos tareas principales: controlar el estado del juego, sus variables, las \textit{Flags} que definen hitos; y la tarea de facilitar el acceso a elementos del juego como los personajes que hay en el capítulo que está siendo jugado en ese momento, como la escena inicial o final de dicho capítulo.
+
+En esencia \textit{GameState} provee un acceso transparente a la especificación del juego en ese momento. Si le pides un personaje, te va a dar la representación de ese personaje en el capítulo que estés jugando. Es importante la relación de asociación direccional que se ve en la figura \ref{gamestateit2} entre \textit{Game} y \textit{GameState}, pues la clase controladora del juego necesita un estado del juego para funcionar, y sin ella, el juego no puede ejecutarse.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=4in]{figures/it2/GameState.png}}
+	\caption[GameState - Versión Final]{Diagrama de clases de GameState, junto a Game, ConditionChecker y AdventureData}
+	\label{gamestateit2}
+\end{figure}
+
+\subsubsection{El validador de Condiciones: ConditionChecker}
+
+Adicionalmente, se muestra en la figura \ref{gamestateit2} a una pequeña clase estática llamada \textit{ConditionChecker}, que se encarga de facilitar la validación de condiciones y estados globales de eAdventure, estas condiciones pueden estar compuestas por multitud de comprobaciones de \textit{Flags} o Variables dentro del \textit{GameState}, por lo que este validador facilita y simplifica mucho el acceso a \textit{GameState}.
+
+\subsection{El Controlador del Juego: Game}
+
+La clase \textit{Game}, ha evolucionado de la clase explicada en la sección \ref{gameit1}. Como se ha mencionado multitud de veces a lo largo de la sección \ref{arquitecturait2}, esta clase \textit{Game} ha evolucionado para delegar comportamientos en los 5 grandes gestores. Sin embargo, la funcionalidad que \textit{Game} aporta en el ciclo de vida y ejecución del juego sigue siendo de vital importancia.
+
+Esta clase \textit{Game} ahora se encarga de 3 tareas: iniciar la carga y poner en funcionamiento el juego una vez esté cargado; controlar la interacción del usuario con los elementos del juego, así como con efectos y conversaciones; y ser la puerta de enlace que permite elegir qué escena se va a representar. No obstante estas tres tareas son vitales, pues en esencia, un juego sólo se puede jugar si se trata esta funcionalidad.
+
+Como la clase \textit{Game} es la puerta de enlace que transforma de una clase \textit{AventureData} a algo jugable, junto a la explicación de \textit{Game}, como subapartados, se presentarán los comportamientos encargados de enrolarse como los diferentes elementos que forman las escenas de eAdventure.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=4in]{figures/it2/Game.png}}
+	\caption[Game - Versión Final]{Diagrama de clases de Game, con todo el nucleo de representación}
+	\label{gamestateit2}
+\end{figure}
+
+
 \subsection{El gestor de interfaz: GUIManager}
 
 Como se explica en la sección superior a esta subsección, existe una clase gestora que se encarga de manejar la interfaz en su totalidad de forma transparente. Facilita una serie de funciones que permiten, de forma sencilla, mostrar burbujas de diálogo, cambiar el cursor, mostrar un menú contextual de acciones, o un menú de opciones.
