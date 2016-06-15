@@ -41,7 +41,12 @@
 \contentsline {chapter}{\numberline {4}Segunda Iteraci\IeC {\'o}n}{45}{chapter.4}
 \contentsline {section}{\numberline {4.1}Arquitectura del Proyecto}{45}{section.4.1}
 \contentsline {section}{\numberline {4.2}El nucleo de Ejecuci\IeC {\'o}n: Runner}{48}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}El gestor de interfaz: GUIManager}{50}{subsection.4.2.1}
-\contentsline {chapter}{Bibliography}{52}{chapter*.15}
-\contentsline {chapter}{\numberline {A}Title for This Appendix}{53}{appendix.Alph1}
-\contentsline {chapter}{\numberline {B}Title for This Appendix}{54}{appendix.Alph2}
+\contentsline {subsection}{\numberline {4.2.1}El gestor de interfaz: GUIManager}{51}{subsection.4.2.1}
+\contentsline {subsubsection}{Proveedor de recursos de GUI: GUIProvider}{54}{section*.15}
+\contentsline {subsubsection}{Las burbujas de di\IeC {\'a}logo: Bubble}{55}{section*.16}
+\contentsline {subsubsection}{Elementos de mejora visual: Apearance}{57}{section*.17}
+\contentsline {subsubsection}{El men\IeC {\'u} contextual de acciones: Menu}{59}{section*.18}
+\contentsline {subsubsection}{El men\IeC {\'u} contextual de acciones: Menu}{61}{section*.19}
+\contentsline {chapter}{Bibliography}{62}{chapter*.20}
+\contentsline {chapter}{\numberline {A}Title for This Appendix}{63}{appendix.Alph1}
+\contentsline {chapter}{\numberline {B}Title for This Appendix}{64}{appendix.Alph2}
