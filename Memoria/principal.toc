@@ -44,12 +44,20 @@
 \contentsline {subsection}{\numberline {4.2.1}El estado del juego: GameState}{51}{subsection.4.2.1}
 \contentsline {subsubsection}{El validador de Condiciones: ConditionChecker}{52}{section*.15}
 \contentsline {subsection}{\numberline {4.2.2}El Controlador del Juego: Game}{52}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}El gestor de interfaz: GUIManager}{52}{subsection.4.2.3}
-\contentsline {subsubsection}{Proveedor de recursos de GUI: GUIProvider}{56}{section*.16}
-\contentsline {subsubsection}{Las burbujas de di\IeC {\'a}logo: Bubble}{57}{section*.17}
-\contentsline {subsubsection}{Elementos de mejora visual: Apearance}{59}{section*.18}
-\contentsline {subsubsection}{El men\IeC {\'u} contextual de acciones: Menu}{61}{section*.19}
-\contentsline {subsubsection}{El men\IeC {\'u} contextual de acciones: Menu}{63}{section*.20}
-\contentsline {chapter}{Bibliography}{64}{chapter*.21}
-\contentsline {chapter}{\numberline {A}Title for This Appendix}{65}{appendix.Alph1}
-\contentsline {chapter}{\numberline {B}Title for This Appendix}{66}{appendix.Alph2}
+\contentsline {subsubsection}{Representable, Interactuable, Movable y Transparent}{54}{section*.16}
+\contentsline {subsection}{\numberline {4.2.3}La escena y sus elementos}{56}{subsection.4.2.3}
+\contentsline {subsubsection}{Detalles de la escena: SceneMB}{56}{section*.17}
+\contentsline {subsubsection}{Los objetos del juego: ObjectMB}{57}{section*.18}
+\contentsline {subsubsection}{Las deformables ActiveAreasMB}{58}{section*.19}
+\contentsline {subsubsection}{Las clases vivas: PlayerMB y CharacterMB}{59}{section*.20}
+\contentsline {subsection}{\numberline {4.2.4}Las secuencias: Effect y GraphConversation}{60}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}El controlador de los temporizadores: TimerController}{61}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}El gestor de interfaz: GUIManager}{61}{subsection.4.2.6}
+\contentsline {subsubsection}{Proveedor de recursos de GUI: GUIProvider}{65}{section*.21}
+\contentsline {subsubsection}{Las burbujas de di\IeC {\'a}logo: Bubble}{66}{section*.22}
+\contentsline {subsubsection}{Elementos de mejora visual: Apearance}{68}{section*.23}
+\contentsline {subsubsection}{El men\IeC {\'u} contextual de acciones: Menu}{70}{section*.24}
+\contentsline {subsubsection}{El men\IeC {\'u} contextual de acciones: Menu}{72}{section*.25}
+\contentsline {chapter}{Bibliography}{73}{chapter*.26}
+\contentsline {chapter}{\numberline {A}Title for This Appendix}{74}{appendix.Alph1}
+\contentsline {chapter}{\numberline {B}Title for This Appendix}{75}{appendix.Alph2}

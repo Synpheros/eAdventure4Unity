@@ -90,13 +90,14 @@ Esta explicación cierra, por encima, todos los elementos importantes de la impl
 Esta clase es una de las clases que ha sufrido una mayor evolución en la segunda iteración, ya que, pese a que sigue controlando la interacción por parte del usuario, ya no realiza la lógica de dicha interacción en el bucle \textit{Update()}, sino que, simplemente delega en los diferentes elementos interactuados para que sean ellos los que realicen la lógica de su interacción. Asimismo, la gestión de la interfaz ha sido delegada en la clase \textit{GUIManager}, con un nuevo y rediseñado sistema de burbujas.
 
 \subsection{Sobre las Clases de Datos}
+\label{dataclassesit1}
 
 Existen multitud de clases de datos dentro del código del programa, aunque todas se parecen bastante entre sí, por lo que se explicarán la mayoría de ellas en conjunto.
 
 \begin{figure}[htb]
 	\includegraphics[height=2.5in]{figures/it1/dataclasses.png}
 	\caption[Clases de Datos - Prototipo 1]{Vista de carpeta de las clases de datos implementadas en la primera iteración.}
-	\label{dataclassesit1}
+	\label{dataclassesfigit1}
 \end{figure}
 
 Estas clases se auto-generan analizando un \textit{XmlElement} que reciben en su constructor, y por lo general no aportan funcionalidad, salvo excepciones como la función \textit{Check()} que implementan la mayor parte de recursos para verificar si se cumplen todas las condiciones para que dicho recurso pueda ser utilizado.
@@ -125,13 +126,14 @@ Es decir, existen animaciones formadas de la siguiente manera: “anim\_01.png�
 Por otra parte, el nuevo formato de animaciones está definido en ficheros XML llamados “.eaa” que son mucho más sencillos de recorrer y contienen más información acerca de cada fotograma de la animación.
 
 \subsection{Sobre las Clases de Comportamiento}
+\label{behavioursit1}
 
 De manera similar al apartado anterior, se explicará el funcionamiento de la mayor parte de clases de comportamiento, puntualizando detalles acerca de algunas de dichas clases en concreto, como \textit{Character} o \textit{eObject}, que tienen comportamientos aislados como la gestión de fotogramas o la necesidad de cambiar cuando el usuario va a interactuar con ellos.
 
 \begin{figure}[htb]
 	\includegraphics[height=3in]{figures/it1/behaviourclasses.png}
 	\caption[Clases de Comportamiento - Prototipo 1]{Vista de carpeta de las clases de comportamiento implementadas en la primera iteración, junto a sus Prefabs.}
-	\label{dataclassesit1}
+	\label{behaviourclassesit1}
 \end{figure}
 
 Las clases de comportamiento son todas herederas de \textit{MonoBehabiour} por lo que se asignan a objetos dentro de la escena, y luego estos objetos se guardan en forma de \textit{Prefabs}, cada una a uno individualmente. Estos \textit{Prefabs} suelen ser muy sencillos, en su mayoría constituidos únicamente por un \textit{Quad}\footnote{Un Quad es una malla tridimensional compuesta por un plano, una de las mallas más simples.}, al cual se le cambia la textura con \textit{this.GetComponent<Renderer>().material.mainTexture}, y posteriormente, mediante la información de dicha textura, se aplican modificaciones escalando el Quad. 
@@ -153,6 +155,7 @@ La clase \textit{Character} contiene una serie de comportamientos necesarios y c
 Esta función \textit{ChangeFrame()} accede al \textit{renderer}\footnote{El renderer, en Unity3D, es la componente de los objetos que tienen representación en la escena, que define cómo se representan en la misma, con características como los materiales que las conforman, las texturas, las mallas tridimensionales, y otros elementos.} y cambia su textura además de actualizar determinadas variables de control, que establecen cuando deberá realizarse el próximo cambio de fotograma, o el fotograma que se está representando actualmente.
 
 \subsubsection{Detalles de la clase eObject, Exit y ActiveArea}
+\label{objectexitactiveareait1}
 
 Estas tres clases tienen la peculiaridad de que deben ser reactivas a interacción por parte del jugador, y mostrar algún cambio en su representación cada vez que el jugador pase el puntero del ratón por encima de ellas. Esto se implementó utilizando las funciones que facilita la clase \textit{MonoBehaviour}, I y \textit{OnMouseExit()} y que reciben el evento del puntero cuando este entra en su área de reacción y cuando sale de la misma.
 

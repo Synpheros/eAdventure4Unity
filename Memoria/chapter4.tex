@@ -73,6 +73,7 @@ En esencia \textit{GameState} provee un acceso transparente a la especificación
 Adicionalmente, se muestra en la figura \ref{gamestateit2} a una pequeña clase estática llamada \textit{ConditionChecker}, que se encarga de facilitar la validación de condiciones y estados globales de eAdventure, estas condiciones pueden estar compuestas por multitud de comprobaciones de \textit{Flags} o Variables dentro del \textit{GameState}, por lo que este validador facilita y simplifica mucho el acceso a \textit{GameState}.
 
 \subsection{El Controlador del Juego: Game}
+\label{gamesectionit2}
 
 La clase \textit{Game}, ha evolucionado de la clase explicada en la sección \ref{gameit1}. Como se ha mencionado multitud de veces a lo largo de la sección \ref{arquitecturait2}, esta clase \textit{Game} ha evolucionado para delegar comportamientos en los 5 grandes gestores. Sin embargo, la funcionalidad que \textit{Game} aporta en el ciclo de vida y ejecución del juego sigue siendo de vital importancia.
 
@@ -80,12 +81,146 @@ Esta clase \textit{Game} ahora se encarga de 3 tareas: iniciar la carga y poner 
 
 Como la clase \textit{Game} es la puerta de enlace que transforma de una clase \textit{AventureData} a algo jugable, junto a la explicación de \textit{Game}, como subapartados, se presentarán los comportamientos encargados de enrolarse como los diferentes elementos que forman las escenas de eAdventure.
 
+Uno de los cambios más notorios en todo el núcleo de representación es la desaparición de las Clases de Datos explicadas en la sección \ref{dataclassesit1}. Esto es debido a la incorporación del modelo de datos original portado directamente de eAdventure.
+
+En la figura \ref{gameit2} se muestra un diagrama de clases que explica las relaciones de las clases que participan en esta representación del juego. Aunque \textit{SceneMB} tenga una relación de dependencia con \textit{Game}, la escena únicamente necesita acceder a \textit{GameState}, para obtener las especificaciones de los elementos que va a instanciar. \textit{SceneMB} a su vez mantiene relación de dependencia con \textit{PlayerMB}, \textit{CharacterMB}, \textit{ObjectMB}, etc... debido a que \textit{SceneMB} instancia todas estas clases como hijas suyas.
+
+
 \begin{figure}[h!]
-	\centerline{\includegraphics[height=4in]{figures/it2/Game.png}}
+	\centerline{\includegraphics[height=7.2in]{figures/it2/Game.png}}
 	\caption[Game - Versión Final]{Diagrama de clases de Game, con todo el nucleo de representación}
-	\label{gamestateit2}
+	\label{gameit2}
 \end{figure}
 
+\subsubsection{Representable, Interactuable, Movable y Transparent}
+
+Este grupo está compuesto por dos clases y dos interfaces, y permiten a la implementación de los comportamientos facilitar la definición de lo que pueden y no pueden hacer. Las dos interfaces son Interactuable y Movable. Tras esto encontramos Representable como clase abstracta que ayuda a la representación de todos los elementos que utilizan recursos, facilita la relación con el \textit{ResourceManager}, y, al extender la clase \textit{MonoBehaviour}, permite a todos los elementos que la extienden ser componentes a su vez. Por ultimo tenemos la clase \textit{Transparent} que, facilita la interacción con elementos que, por motivos de representación en su imagen, no ocupan toda la imagen, teniendo transparencia.
+
+En primer lugar, hablando de \textit{Interactuable}, es la interfaz que permite a \textit{Game} la interacción entre el usuario y los elementos de la escena. \textit{Game}, cuando detecta una pulsación de ratón, lanza un rayo desde dicha posición, en dirección en la que mira la cámara, obtiene una lista de objetos, y, si implementan la interfaz \textit{Interactuable}, les notifica que se ha realizado una interacción con ellos. Estos tienen tres opciones que responder: que no van a hacer nada con la interacción, que hacen algo con ella, o que hacen algo y además esperan más por parte del usuario. En el momento en que \textit{Game} detecta alguna que hace algo, deja de notificar a los demás.
+
+En segundo lugar, hablando de \textit{Movable} es una interfaz sencilla que deben implementar todos aquellos elementos que deseen moverse. Y que únicamente tiene un método \textit{Move()}
+
+En tercer lugar, hablando de \textit{Representable}, encontramos la clase abstracta más compleja, pues permite a los elementos anteriormente citados representarse. Por si misma no realiza ninguna tarea, necesita que la clase que la extienda le indique lo que necesita. Por ejemplo, un objeto de Atrezzo, en su función \textit{Start()} realiza lo siguiente:
+
+\begin{lstlisting}
+void Start()
+{
+	base.Start ();
+	base.setTexture(Atrezzo.RESOURCE_TYPE_IMAGE);
+	base.Positionate ();
+}
+\end{lstlisting}
+
+Además de esto, \textit{Representable}, se encarga de transformar esa línea de especificación de recurso \textit{Atrezzo.RESOURCE\_TYPE\_IMAGE} en una \textit{Texture2D} mediante el uso del \textit{ResourceManager}. Asimismo, esta clase \textit{Representable} tiene también facilidades para el uso de animaciones y su actualización en fotogramas.
+
+Finalmente, hablando de la clase \textit{Transparent} es una componente que se añade a los objetos de la escena, y tiene una relación de dependencia con ellos, ya que, sin esta clase, nunca se habilitarían dichos objetos para permitir la interacción con ellos. En \textit{Transparent} se analizan los píxeles de la textura activa en \textit{Representable}, y, si el píxel sobre el cual se tiene el ratón no es transparente, es decir, su componente \textit{Alpha} de color es mayor que 0, se accede a \textit{Interactuable} y se establece como que se puede realizar interacción con dicho elemento.
+
+Estos cuatro elementos de los que se componen los objetos de la escena están representados en la figura \ref{behavioursit2}, con sus relaciones.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=4in]{figures/it2/Behaviours.png}}
+	\caption[Representable, Interactuable, Movable y Transparent - Versión Final]{Diagrama de clases de Representable, Interactuable, Movable y Transparent}
+	\label{behavioursit2}
+\end{figure}
+
+\newpage
+
+\subsection{La escena y sus elementos}
+
+La escena de eAdventure, además de poder ser de multitud de tipos diferentes, está llena de elementos, algunos de ellos que están "vivos", otros que permiten interacción, y otros que únicamente son elementos que mejoran la representación visual. En conjunto, todos estos elementos permiten representar lo que se desee dentro de un escenario. Los elementos que se presentan en esta sección evolucionan de los explicados en la sección \ref{behavioursit1}.
+
+En esta sección se remarcan las diferencias entre las clases de comportamiento presentadas en la sección \ref{behavioursit1} y las actuales, especificando cómo han evolucionado estas. En esencia, su funcionalidad se ha mantenido, o delegado en otras clases, así como han ganado funcionalidad extraída de la clase \textit{Game}. Esto es debido a que siguen siendo los mismos elementos que conforman la escena.
+
+Otro detalle es, para diferenciar más fácilmente entre las clases del modelo de datos y los comportamientos, se les han añadido las siglas MB de \textit{MonoBehaviour}, que identifican que son comportamientos y no clases de datos.
+
+\subsubsection{Detalles de la escena: SceneMB}
+
+La escena ha sido refactorizada y ampliada para incluir más funcionalidad y facilitar el uso de otra. Detalles de esto se puede encontrar en la figura \ref{gameit2}.
+
+En primer lugar, ahora la escena da soporte a vídeos, aunque estos vídeos han de estar en formato OGV\footnote{El formato OGV es el contenedor de archivo de vídeo que utiliza el códec libre de video Theora.}. Se ha realizado una investigación para determinar si es posible realizar una conversión del formato de los vídeos y su explicación se encuentra en la sección dedicada a la tercera iteración del proyecto.
+
+En segundo lugar, la escena ha simplificado la instanciación de sus elementos, e implementa dos métodos para dicha tarea, los cuales son:
+
+\begin{lstlisting}
+private void instanceElement<T>(ElementReference context) where T : Element
+private void instanceRectangle<T>(Rectangle context) where T : Rectangle
+\end{lstlisting}
+
+Estas funciones, pese a ser funciones tipadas, tienen la peculiaridad de delimitar el tipo de clases que admiten. Esto se consigue utilizando \textit{where T : Interface}.
+
+En tercer lugar, como ahora el juego tiene soporte a juegos en tercera persona, en los que el jugador forma parte de la escena, esta ahora puede contener trayectorias para que el jugador se pueda mover sobre ellas. El cálculo de estas trayectorias fue una de las tareas más complejas de implementar, y se explica en la sección \ref{trajectoryit2}.
+
+Por último, ahora la escena gestiona la interacción que se realice sobre ella, aunque es diferente dependiendo de qué tipo de escena se esté mostrando:
+\begin{itemize}
+	\item \textbf{Scene}: Si la escena es una escena normal, y además el juego es en tercera persona, se busca el punto que sea más cercano a la trayectoria, se calcula una ruta para que el jugador llegue a ese punto, y se le indica al jugador que inicie el movimiento dada dicha ruta.
+	
+	\item \textbf{SlideScene}: Si la escena contiene diapositivas, pasaremos a la siguiente diapositiva. Si por el contrario ya no quedan, se continuará a la escena que la siga, ya sea la anterior o una nueva.
+	
+	\item \textbf{VideoScene}: Si se recibe una interacción, se para el vídeo, y se continúa cargando la siguiente escena igual que en una \textit{SlideScene}.
+\end{itemize}
+
+\subsubsection{Los objetos del juego: ObjectMB}
+
+Con respecto a lo explicado en la sección \ref{objectexitactiveareait1} acerca de la antigua clase \textit{eObject}, esta ha sufrido una evolución. Se ha simplificado mucho gracias al uso de \textit{Representable}, \textit{Interactuable} y \textit{Transparent}. Ahora únicamente reacciona si la componente \textit{Transparent} se lo permite, y gracias a \textit{Representable} y al \textit{ResourceManager} es mucho más sencillo cambiar entre la textura normal y la textura activa, que se debe mostrar cuando el ratón pasa por encima el objeto.
+
+Por otra parte, los objetos implementan una nueva funcionalidad, que les permite ser arrastrados en vez de generar un menú contextual cuando se interactúa con ellos. La especificación de cuándo esto debe suceder se encuentra en la propia especificación del \textit{Item} que se está representando. Se remarca lo descrito en la sección \ref{gamesectionit2} acerca de la desaparición de las clases de datos descritas en la sección \ref{dataclassesit1}, y la sustitución de las mismas por el modelo de datos de eAdventure.
+
+\subsubsection{Las deformables ActiveAreasMB}
+\label{activeareasectionit2}
+
+Como se ha mencionado en secciones anteriores, en la versión final, las \textit{ActiveAreas} adquieren la capacidad de deformarse. Esto se consigue gracias a la utilización del Área de Influencia facilitado en la especificación del \textit{ActiveArea}.
+
+En la función \textit{adaptate()}, una \textit{ActiveArea} se encarga de leer esta \textit{InfluenceArea}, y transformar estos puntos, que se encuentran en coordenadas relativas a la escena, a puntos colocados alrededor del centro de ellos. Tras esto se utiliza la libreria \textit{LibTessDotNet} que genera una lista de triángulos a partir de esos puntos.
+
+Una vez se obtienen los puntos y la lista de triángulos, se genera una nueva malla tridimensional estableciendo los vértices en dicha malla, y los triángulos en forma de referencias a los índices de la lista de vértices. Una vez generada dicha malla, se intercambia la \textit{SharedMesh}\footnote{La SharedMesh es una componente de los objetos tridimensionales de Unity3D que contiene la malla tridimensional que lo representa.} por la nueva malla, consiguiendo como resultado un objeto tridimensional con la forma deseada.
+
+Finalmente, este elemento de la escena, como muchos otros elementos interactivos, tienen una componente \textit{AutoGlower}, la cual se explica en la sección \ref{apearanceseccionit2}, que hace que brillen durante un instante cada intervalo regular de tiempo.
+
+Esto se ve representado en la figura \ref{activeareasit2}. Las figuras blancas son las áreas de influencia que dan forma a dichas areas activas. Estas capturas han sido obtenidas del juego utilizado para formar acerca de los primeros auxilios, desarrollado por Catedu.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=3in]{figures/it2/Apearance/ActiveAreas.png}}
+	\caption[ActiveAreas - Versión Final]{Representación de las ActiveAreas en el videojuego FirstAid}
+	\label{activeareasit2}
+\end{figure}
+
+\subsubsection{Las clases vivas: PlayerMB y CharacterMB}
+\label{playerit2}
+
+De las clases mostradas anteriormente, existen dos clases que implementan la interfaz \textit{Movable}, pues necesitan moverse por la escena. Estas son \textit{CharacterMB} y \textit{PlayerMB}.
+
+En esencia estos dos elementos de la escena son iguales, salvo por la peculiaridad de que \textit{CharacterMB} permite interactúar con el, y realizar acciones que requieran la interacción con ella. Como dicha interacción es trivial, únicamente se explica la parte relacionada con la gestión del movimiento y animaciones.
+
+En primer lugar, cuando en una de estas clases es invocada la función \textit{Move()}, se genera una cola de puntos a los que se debe ir. Tras esto se establece el primer nodo de la cola como nodo destino, y, dependiendo de la dirección hacia la que se deba desplazar para alcanzar dicho nodo, se muestra una animación u otra. Cuando el movimiento se completa y se alcanza el nodo destino, el siguiente nodo de la cola pasa a ser el nodo objetivo, y se realiza el mismo proceso hasta completar la cola de nodos. 
+
+En segundo lugar, cuando una de estas es llamada a hablar, si esta tiene animaciones para el diálogo, se activan mientras la burbuja de diálogo siga activa.
+
+\subsection{Las secuencias: Effect y GraphConversation}
+\label{sequencesit2}
+
+La implementación de las secuencias, visible en la figura \ref{sequencesfigit2}, tanto de efectos, como de conversación cambió mucho desde la primera iteración hasta la segunda iteración. En esencia, se han eliminado las factorías de efectos, pues estas ya no necesitan ser autogeneradas a partir del fichero de especificación en XML, pues el paquete \textit{Loader} del modelo de eAdventure ya se encarga de realizar dicha lectura.
+
+Sin embargo, siguen manteniendo la esencia, y no se ha implementado ningún \textit{SequenceManager} que se encargue de ejecutar las secuencias. En su lugar, siguen siendo autoejecutables, siendo más sencillo de recordar estados si la escena se para en la mitad de su ejecución y a su vez contiene llamadas a secuencias dentro de si mismas.
+
+Mas allá de esto, el esfuerzo se realizó añadiendo la mayor parte de efectos disponibles en eAdventure, y únicamente dejando unos pocos por implementar, y por otra parte, haciendo funcionar los \textit{Holders}, con las clases del modelo de datos de eAdventure.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=3.7in]{figures/it2/Sequences.png}}
+	\caption[Sequences - Versión Final]{Diagrama de clases de las Secuencias, mostrando tanto EffectHolder como GraphConversationHolder}
+	\label{sequencesfigit2}
+\end{figure}
+
+\subsection{El controlador de los temporizadores: TimerController}
+
+El controlador de los temporizadores es una clase nueva que no existía en la anterior iteración. Esta clase comportamiento se añade como componente a la cámara y se encarga, mientras está contando, de controlar los \textit{Timers} que el juego necesita para su ejecución.
+
+Para manejar los temporizadores se ha implementado un enumerado llamado \textit{TimerType} que establece el tipo de temporizador que se está tratando, y una clase llamada \textit{TimerState} que únicamente sirve para almacenar datos acerca de los temporizadores que se encuentran en ejecución.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=4in]{figures/it2/Sequences.png}}
+	\caption[Sequences - Versión Final]{Diagrama de clases de las Secuencias, mostrando tanto EffectHolder como GraphConversationHolder}
+	\label{sequencesfigit2}
+\end{figure}
 
 \subsection{El gestor de interfaz: GUIManager}
 
@@ -154,6 +289,7 @@ El proceso de mostrar una burbuja de diálogo comienza en \textit{GUIManager} y 
 La burbuja, en su función \textit{Start()}, establece su texto en la representación, se prepara para moverse, y se prepara para empezar a mostrarse, pues al principio es transparente. Poco a poco esta se va moviendo y haciéndose visible en su función \textit{FixedUpdate()}, y cuando termina, se queda quieta. Cuando es necesario que la burbuja desaparezca, se ejecuta la función \textit{destroy()} que la hace desaparecer poco a poco, haciéndose más pequeña y transparente.
 
 \subsubsection{Elementos de mejora visual: Apearance}
+\label{apearanceseccionit2}
 
 Existen dos clases que, para mejorar la representación visual del juego, se han desarrollado en el proyecto. Cómo se explicó en el apartado \ref{eandroidmokap} del estado del arte, y visible en la figura \ref{eandroidlupa}, el proyecto eAdventure Android utilizaba mecanismos específicos para ayudar al usuario a encontrar elementos en un entorno táctil. En este proyecto, para ayudar al usuario a encontrar estos elementos, se realiza un brillo de los mismos.
 

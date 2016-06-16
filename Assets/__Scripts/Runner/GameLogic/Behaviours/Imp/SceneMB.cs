@@ -24,8 +24,6 @@ public class SceneMB : MonoBehaviour, Interactuable{
         this.gameObject.name = sd.getId ();
 		renderScene ();
 	}
-
-    Exit exit;
 	
     bool fading = false;
     float total_time = 0f, current_time = 0f;

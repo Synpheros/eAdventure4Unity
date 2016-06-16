@@ -36,7 +36,10 @@
 \BOOKMARK [1][-]{section.4.2}{El nucleo de Ejecuci\363n: Runner}{chapter.4}% 36
 \BOOKMARK [2][-]{subsection.4.2.1}{El estado del juego: GameState}{section.4.2}% 37
 \BOOKMARK [2][-]{subsection.4.2.2}{El Controlador del Juego: Game}{section.4.2}% 38
-\BOOKMARK [2][-]{subsection.4.2.3}{El gestor de interfaz: GUIManager}{section.4.2}% 39
-\BOOKMARK [0][-]{chapter*.21}{Bibliography}{}% 40
-\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 41
-\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 42
+\BOOKMARK [2][-]{subsection.4.2.3}{La escena y sus elementos}{section.4.2}% 39
+\BOOKMARK [2][-]{subsection.4.2.4}{Las secuencias: Effect y GraphConversation}{section.4.2}% 40
+\BOOKMARK [2][-]{subsection.4.2.5}{El controlador de los temporizadores: TimerController}{section.4.2}% 41
+\BOOKMARK [2][-]{subsection.4.2.6}{El gestor de interfaz: GUIManager}{section.4.2}% 42
+\BOOKMARK [0][-]{chapter*.26}{Bibliography}{}% 43
+\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 44
+\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 45
