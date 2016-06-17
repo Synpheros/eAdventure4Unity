@@ -50,14 +50,15 @@
 \contentsline {subsubsection}{Los objetos del juego: ObjectMB}{57}{section*.18}
 \contentsline {subsubsection}{Las deformables ActiveAreasMB}{58}{section*.19}
 \contentsline {subsubsection}{Las clases vivas: PlayerMB y CharacterMB}{59}{section*.20}
-\contentsline {subsection}{\numberline {4.2.4}Las secuencias: Effect y GraphConversation}{60}{subsection.4.2.4}
-\contentsline {subsection}{\numberline {4.2.5}El controlador de los temporizadores: TimerController}{61}{subsection.4.2.5}
-\contentsline {subsection}{\numberline {4.2.6}El gestor de interfaz: GUIManager}{61}{subsection.4.2.6}
-\contentsline {subsubsection}{Proveedor de recursos de GUI: GUIProvider}{65}{section*.21}
-\contentsline {subsubsection}{Las burbujas de di\IeC {\'a}logo: Bubble}{66}{section*.22}
-\contentsline {subsubsection}{Elementos de mejora visual: Apearance}{68}{section*.23}
-\contentsline {subsubsection}{El men\IeC {\'u} contextual de acciones: Menu}{70}{section*.24}
-\contentsline {subsubsection}{El men\IeC {\'u} contextual de acciones: Menu}{72}{section*.25}
-\contentsline {chapter}{Bibliography}{73}{chapter*.26}
-\contentsline {chapter}{\numberline {A}Title for This Appendix}{74}{appendix.Alph1}
-\contentsline {chapter}{\numberline {B}Title for This Appendix}{75}{appendix.Alph2}
+\contentsline {subsubsection}{Las trayectorias: TrayectoryHandler}{60}{section*.21}
+\contentsline {subsection}{\numberline {4.2.4}Las secuencias: Effect y GraphConversation}{61}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}El controlador de los temporizadores: TimerController}{62}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}El gestor de interfaz: GUIManager}{65}{subsection.4.2.6}
+\contentsline {subsubsection}{Proveedor de recursos de GUI: GUIProvider}{68}{section*.22}
+\contentsline {subsubsection}{Las burbujas de di\IeC {\'a}logo: Bubble}{69}{section*.23}
+\contentsline {subsubsection}{Elementos de mejora visual: Apearance}{71}{section*.24}
+\contentsline {subsubsection}{El men\IeC {\'u} contextual de acciones: Menu}{73}{section*.25}
+\contentsline {subsection}{\numberline {4.2.7}El gestor de recursos: ResourceManager}{75}{subsection.4.2.7}
+\contentsline {chapter}{Bibliography}{78}{chapter*.26}
+\contentsline {chapter}{\numberline {A}Title for This Appendix}{79}{appendix.Alph1}
+\contentsline {chapter}{\numberline {B}Title for This Appendix}{80}{appendix.Alph2}

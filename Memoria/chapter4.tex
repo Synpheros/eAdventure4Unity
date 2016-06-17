@@ -195,6 +195,35 @@ En primer lugar, cuando en una de estas clases es invocada la función \textit{M
 
 En segundo lugar, cuando una de estas es llamada a hablar, si esta tiene animaciones para el diálogo, se activan mientras la burbuja de diálogo siga activa.
 
+\subsubsection{Las trayectorias: TrayectoryHandler}
+\label{trajectoryit2}
+
+La gestión de las trayectorias dentro de la escena es una de las labores más complejas de realizar, pues, en general, los algoritmos de búsqueda de rutas suelen ser algoritmos complejos, y la interacción con una trayectoria, que es algo simbólico, una lista de puntos en el espacio, unidos por líneas, es una tarea compleja.
+
+Por ello, para la gestión de trayectorias, se han implementado 3 clases necesarias para funcionalidades concretas:
+
+\begin{enumerate}
+	\item \textbf{TrajectoryHandler}: esta clase es la encargada de proveer el manejo de una \textit{Trajectory} de eAdventure. Se genera a partir de una de estas, y facilita funciones capaces de generar rutas entre puntos que se encuentren en dichas trayectorias.
+	
+	\item \textbf{LineHandler}: esta clase se encarga de la gestión de una Línea de trayectoria. Está compuesta por dos nodos y la línea que los une. Tiene funciones para determinar que líneas son vecinas de esta línea, cuales son los puntos de contacto a partir de otro punto, o si saber si un punto está contenido en dicha línea.
+	
+	\item \textbf{MathFunction}: esta clase, dados dos puntos de una recta, mediante el uso de funciones matemáticas, es capaz de generar un valor Y para una X dada, o un valor X para una Y dada, así como es capaz de generar puntos de contacto a partir de otro punto.
+\end{enumerate}
+
+El tratamiento de trayectorias comienza con la generación de un \textit{TrajectoryHandler}, este analiza dicha trayectoria, y para cada lado de esta genera un \textit{LineHandler}. Una vez que todos han sido generado, se llama a la función \textit{UpdateNeighbors()} que recorre esta lista de líneas y, si dos líneas contienen extremos comunes, se determina que estas son vecinas.
+
+Las líneas, cuando son generadas, utilizan sus dos puntos para generar una \textit{MathFunction} que les ayudará a generar y a determinar puntos que estén en su línea.
+
+Lo complejo del tratamiento de trayectorias llega con el cálculo de rutas. Para ello se ha implementado una variante del algoritmo de Dijkstra para hallar caminos mínimos en grafos no direccionales con coste. La diferencia es que, debido a que en la ruta el nodo inicial y el nodo final no forman parte de la trayectoria en si misma, sino que son nodos nuevos que se generan en tiempo de ejecución, y únicamente se identifica en qué líneas de trayectoria están contenidos dichos puntos.
+
+Tras esto se realiza el algoritmo de marcado de Dijkstra pero únicamente utilizando las líneas, sin los nodos. Y tras esto se ejecuta la función \textit{reach()} que prepara 
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=3.7in]{figures/it2/TrajectoryHandler.png}}
+	\caption[TrajectoryHandler - Versión Final]{Diagrama de clases de las trayectorias, junto a LineHandler y MathFunction}
+	\label{trajectoryfigit2}
+\end{figure}
+
 \subsection{Las secuencias: Effect y GraphConversation}
 \label{sequencesit2}
 
@@ -216,11 +245,21 @@ El controlador de los temporizadores es una clase nueva que no existía en la an
 
 Para manejar los temporizadores se ha implementado un enumerado llamado \textit{TimerType} que establece el tipo de temporizador que se está tratando, y una clase llamada \textit{TimerState} que únicamente sirve para almacenar datos acerca de los temporizadores que se encuentran en ejecución.
 
+Este controlador tiene además la opción de parar su ejecución para que, si el juego se encuentra parado esperando a que el jugador interactúe en una secuencia, no salten temporizadores en mitad de dicha secuencia. 
+
+Para gestionar estos temporizadores se tienen tres listas:  una lista con todos los temporizadores de dicho capítulo, una lista con los temporizadores que están ejecutándose, y por último una cola con los que ya se han completado.
+
+Se aprovecha de la función \textit{Update()} de \textit{MonoBehaviour} para controlar el paso del tiempo en los mismos, así como detectar qué temporizadores cumplen las condiciones para ejecutarse, y cuáles de los que se encuentran en ejecución ya no deberían estar ejecutándose.
+
 \begin{figure}[h!]
-	\centerline{\includegraphics[height=4in]{figures/it2/Sequences.png}}
-	\caption[Sequences - Versión Final]{Diagrama de clases de las Secuencias, mostrando tanto EffectHolder como GraphConversationHolder}
-	\label{sequencesfigit2}
+	\centerline{\includegraphics[height=4in]{figures/it2/TimerController.png}}
+	\caption[TimerController - Versión Final]{Diagrama de clases de TimerController, incluyendo las clases y enumerados para su funcionamiento.}
+	\label{timercontrollerit2}
 \end{figure}
+
+la figura \ref{timercontrollerit2} muestra el diagrama de clases de lo descrito anteriormente. En este diagrama se ve como \textit{Game} establece los \textit{Timers} que deben ser controlados al inicio de cada capítulo, y \textit{TimerController} únicamente los gestiona. Cuando alguno de estos \textit{Timers} se completa, \textit{TimerController} le dice a \textit{Game} que ejecute los efectos de dicho temporizador.
+
+\newpage
 
 \subsection{El gestor de interfaz: GUIManager}
 
@@ -341,5 +380,56 @@ Finalmente, en la figura \ref{menuvisualit2} muestra el menú generado en una si
 	\label{menuvisualit2}
 \end{figure}
 
-\subsubsection{El menú contextual de acciones: Menu}
+\subsection{El gestor de recursos: ResourceManager}
+
+Como se ha comentado varias veces a lo largo de esta sección, para facilitar el acceso a los recursos desde cualquier parte del proyecto, existe un \textit{Singleton} llamado \textit{ResourceManager} que provee de elementos multimedia al que lo solicite.
+
+Este \textit{ResourceManager} es capaz de cargar múltiples tipos de recursos, y para ello utiliza métodos diferentes. Asimismo, existen dos formas de cargar recursos, y las clases que se encargan de acceder al sistema de archivos para cargar los recursos se adaptan a estos tipos.
+
+Estos tipos de carga, o \textit{LoadingType}, son: utilizando el sistema de ficheros del sistema operativo, mediante la librería \textit{System.IO}, teniendo la ventaja de que, una versión ya generada de uAdventure puede cargar cualquier juego que se establezca en un directorio determinado; y por otra parte, utilizando \textit{Resources.Load()}, mediante el sistema de ficheros de Unity, que tiene la ventaja de que estos archivos, una vez que se produce una \textit{Release} del proyecto, están incluidos en un paquete comprimido por Unity, y permiten instalar uAdventure junto al juego en cualquier plataforma sin tener que preocuparse de incluir el juego.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=3.5in]{figures/it2/ResourceManager.png}}
+	\caption[ResourceManager - Versión Final]{Diagrama de clases de ResourceManager junto a los cargadores de recursos.}
+	\label{resourcemanagerit2}
+\end{figure}
+
+con respecto a los tipos de ficheros que se pueden cargar con \textit{ResourceManager},encontramos los siguientes tipos:
+\begin{itemize}
+	\item \textit{Imágenes}: Para la carga de imágenes existe una clase llamada \textit{Texture2DHolder}. Dependiendo del tipo de carga que utilice \textit{ResourceManager}, o bien se carga la textura directamente con \textit{Resources.Load()}, o bien se leen los \textit{bytes} de dicho fichero, para más adelante transformarlos en una \textit{Texture2D}.
+	
+	\item \textit{Animaciones}: Las animaciones que se cargan son las de eAdventure, y están compuestas por una serie de imágenes, esto se hace en la clase \textit{eAnim}, la cual no ha cambiado mucho en su funcionamiento desde lo explicado en la sección \ref{dataclassesit1}. Para añadir soporte a \textit{Resources.Load()} ha sido necesario implementar un método que renombra todos los archivos ".eaa" a ".xml" pues Unity no reconoce dichos archivos como ficheros de texto y no permite cargarlos.
+	
+	\item \textit{Vídeos}: La carga de videos se realiza almacenándolos en una \textit{MovieTexture}. Para la carga de estos desde el sistema de ficheros se utiliza la clase \textit{www}, que permite hacer solicitudes POST y GET, ya sea en local, al sistema de ficheros, o a un servidor. Esta carga requiere la utilización de corrutinas, pues sin ellas el juego se quedaría completamente congelado hasta que el recurso estuviera cargado. Finalmente mencionar que los vídeos únicamente pueden estar en formato ".ogv" bajo el codec OGG Theora.
+	
+	\item \textit{Audio}: De manera similar a los vídeos, se utiliza la clase \textit{www} para su carga, aunque en esta ocasión son almacenados en \textit{AudioClip}.
+	
+	\item \textit{Archivos Zip}: Estos ficheros técnicamente no son cargados en tiempo de ejecución, sino que son extraídos bajo demanda del emulador para importar juegos. Estos juegos deben estar en formato ".jar", y únicamente se extrae de ellos la parte necesaria. Más detalles acerca de este proceso están disponibles en la sección \ref{emulatorit3}.
+\end{itemize}
+
+Acerca de los vídeos, y de la importación de los juegos que se realiza en la tercera iteración del proyecto, se realizó una investigación acerca de la posibilidad de transformar dichos vídeos en el proceso de importación del juego. Los resultados no fueron satisfactorios, pero abrieron varias puertas para abordar este problema.
+
+En primer lugar, se probaron multitud de librerías que facilitaban la conversión de vídeos a sistemas .NET, sin embargo, ya que Unity utiliza una versión reducida del mismo, dichas librerías fallaban en tiempo de ejecución y no completaban la conversión del vídeo. Por otra parte, algunas personas que se han enfrentado al mismo problema, han generado \textit{Wrappers} que utilizan un ejecutable del proyecto de software libre \textit{FFMPEG}, que provee de una serie de utilidades para transformar vídeos fácilmente.
+
+Se intentaron incorporar dichos \textit{Wrappers} en el proyecto, pero ninguno de ellos funcionó. Finalmente se decidió que la alternativa de implementar un \textit{Wrapper} muy sencillo, con únicamente la funcionalidad de transformar a OGV, sería la opción mas viable. en windows, esto se haría de la siguiente manera:
+
+\begin{lstlisting}
+String path = @"f:\temp\data.txt";
+Process foo = new Process();
+foo.StartInfo.FileName = "Notepad.exe";
+foo.StartInfo.Arguments = path;
+foo.Start();
+\end{lstlisting}
+
+También existe una manera de lanzar clases Java directamente desde Unity, pudiendo realizar este proceso también en Android, de la siguiente manera:
+
+\begin{lstlisting}
+using (AndroidJavaClass ext = new AndroidJavaClass ("com.external.class")) 
+{
+	ext.CallStatic ("whatever", Parameter1, Parameter2);
+}
+\end{lstlisting}
+
+Por lo que, como trabajo futuro del proyecto, queda pendiente implementar dicho conversor de vídeos multiplataforma, que utilice diferentes librerías, ya sea \textit{FFMPEG} u otra librería para dicha conversión.
+
 

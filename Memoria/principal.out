@@ -40,6 +40,7 @@
 \BOOKMARK [2][-]{subsection.4.2.4}{Las secuencias: Effect y GraphConversation}{section.4.2}% 40
 \BOOKMARK [2][-]{subsection.4.2.5}{El controlador de los temporizadores: TimerController}{section.4.2}% 41
 \BOOKMARK [2][-]{subsection.4.2.6}{El gestor de interfaz: GUIManager}{section.4.2}% 42
-\BOOKMARK [0][-]{chapter*.26}{Bibliography}{}% 43
-\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 44
-\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 45
+\BOOKMARK [2][-]{subsection.4.2.7}{El gestor de recursos: ResourceManager}{section.4.2}% 43
+\BOOKMARK [0][-]{chapter*.26}{Bibliography}{}% 44
+\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 45
+\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 46
