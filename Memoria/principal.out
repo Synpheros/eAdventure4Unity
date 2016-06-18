@@ -32,9 +32,9 @@
 \BOOKMARK [2][-]{subsection.3.3.2}{La interfaz Sequence: Effect, Conversation y Condition}{section.3.3}% 32
 \BOOKMARK [2][-]{subsection.3.3.3}{La clase Action}{section.3.3}% 33
 \BOOKMARK [1][-]{section.3.4}{Acerca de los elementos de Adaptaci\363n}{chapter.3}% 34
-\BOOKMARK [0][-]{chapter.4}{Segunda Iteraci\363n}{}% 35
+\BOOKMARK [0][-]{chapter.4}{Segunda Iteraci\363n: Versi\363n final e Integraci\363n}{}% 35
 \BOOKMARK [1][-]{section.4.1}{Arquitectura del Proyecto}{chapter.4}% 36
-\BOOKMARK [1][-]{section.4.2}{El nucleo de Ejecuci\363n: Runner}{chapter.4}% 37
+\BOOKMARK [1][-]{section.4.2}{El n\372cleo de Ejecuci\363n: Runner}{chapter.4}% 37
 \BOOKMARK [2][-]{subsection.4.2.1}{El estado del juego: GameState}{section.4.2}% 38
 \BOOKMARK [2][-]{subsection.4.2.2}{El Controlador del Juego: Game}{section.4.2}% 39
 \BOOKMARK [2][-]{subsection.4.2.3}{La escena y sus elementos}{section.4.2}% 40
@@ -44,6 +44,8 @@
 \BOOKMARK [2][-]{subsection.4.2.7}{El gestor de recursos: ResourceManager}{section.4.2}% 44
 \BOOKMARK [1][-]{section.4.3}{El modelo de Datos: Core}{chapter.4}% 45
 \BOOKMARK [1][-]{section.4.4}{La comunicaci\363n con RAGE: RAGETracker}{chapter.4}% 46
-\BOOKMARK [0][-]{chapter*.25}{Bibliography}{}% 47
-\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 48
-\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 49
+\BOOKMARK [0][-]{chapter.5}{Tercera Iteraci\363n: El Emulador y los editores}{}% 47
+\BOOKMARK [1][-]{section.5.1}{El Emulador de Juegos}{chapter.5}% 48
+\BOOKMARK [0][-]{chapter*.25}{Bibliography}{}% 49
+\BOOKMARK [0][-]{appendix.Alph1}{Title for This Appendix}{}% 50
+\BOOKMARK [0][-]{appendix.Alph2}{Title for This Appendix}{}% 51

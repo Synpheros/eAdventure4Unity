@@ -38,9 +38,9 @@
 \contentsline {subsubsection}{Las clases GraphConversation y Condition}{42}{section*.13}
 \contentsline {subsection}{\numberline {3.3.3}La clase Action}{43}{subsection.3.3.3}
 \contentsline {section}{\numberline {3.4}Acerca de los elementos de Adaptaci\IeC {\'o}n}{43}{section.3.4}
-\contentsline {chapter}{\numberline {4}Segunda Iteraci\IeC {\'o}n}{45}{chapter.4}
+\contentsline {chapter}{\numberline {4}Segunda Iteraci\IeC {\'o}n: Versi\IeC {\'o}n final e Integraci\IeC {\'o}n}{45}{chapter.4}
 \contentsline {section}{\numberline {4.1}Arquitectura del Proyecto}{45}{section.4.1}
-\contentsline {section}{\numberline {4.2}El nucleo de Ejecuci\IeC {\'o}n: Runner}{48}{section.4.2}
+\contentsline {section}{\numberline {4.2}El n\IeC {\'u}cleo de Ejecuci\IeC {\'o}n: Runner}{48}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}El estado del juego: GameState}{51}{subsection.4.2.1}
 \contentsline {subsubsection}{El validador de Condiciones: ConditionChecker}{52}{section*.14}
 \contentsline {subsection}{\numberline {4.2.2}El Controlador del Juego: Game}{52}{subsection.4.2.2}
@@ -61,6 +61,8 @@
 \contentsline {subsection}{\numberline {4.2.7}El gestor de recursos: ResourceManager}{74}{subsection.4.2.7}
 \contentsline {section}{\numberline {4.3}El modelo de Datos: Core}{77}{section.4.3}
 \contentsline {section}{\numberline {4.4}La comunicaci\IeC {\'o}n con RAGE: RAGETracker}{79}{section.4.4}
-\contentsline {chapter}{Bibliography}{82}{chapter*.25}
-\contentsline {chapter}{\numberline {A}Title for This Appendix}{83}{appendix.Alph1}
-\contentsline {chapter}{\numberline {B}Title for This Appendix}{84}{appendix.Alph2}
+\contentsline {chapter}{\numberline {5}Tercera Iteraci\IeC {\'o}n: El Emulador y los editores}{82}{chapter.5}
+\contentsline {section}{\numberline {5.1}El Emulador de Juegos}{82}{section.5.1}
+\contentsline {chapter}{Bibliography}{87}{chapter*.25}
+\contentsline {chapter}{\numberline {A}Title for This Appendix}{88}{appendix.Alph1}
+\contentsline {chapter}{\numberline {B}Title for This Appendix}{89}{appendix.Alph2}

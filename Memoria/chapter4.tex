@@ -1,4 +1,4 @@
-\chapter{Segunda Iteración}
+\chapter{Segunda Iteración: Versión final e Integración}
 
 Como se explica en el la subsección \ref{metodologiadedesarrollo}, en la que se expone la metodología de desarrollo utilizada para el proyecto, este sufre de tres grandes iteraciones para su completitud. En esta sección se explican los detalles implementados en la segunda iteración, es decir, la generación de un mejor diseño de la aplicación, nuevas interfaces, refactorización de clases y código replicado, así como mejoras gráficas visuales dentro de la aplicación, incluyendo referencias a la sección \ref{primeraiteracion}, explicando los cambios en diseño y comportamiento.
 
@@ -25,7 +25,8 @@ En esta arquitectura encontramos tres paquetes importantes que engloban la funci
 
 \newpage
 
-\section{El nucleo de Ejecución: Runner}
+\section{El núcleo de Ejecución: Runner}
+\label{runnerit2}
 
 El núcleo de ejecución, también conocido como \textit{Runner}, está dividido en 3 subpaquetes, \textit{Apearance}, encargado de mejorar la representación visual, \textit{ResourceManager}, encargado de realizar la carga transparente de recursos, y \textit{GameLogic}, el cual podría considerarse el núcleo en si mismo, de lógica del juego. Estos tres paquetes surgen de la generalización de elementos que se encontraban, o bien en la antigua clase \textit{Game}, explicada en la sección \ref{gameit1}, o bien en alguna de las clases de utilidad, explicadas en la sección \ref{utilit1}.
 
@@ -435,6 +436,7 @@ using (AndroidJavaClass ext = new AndroidJavaClass ("com.external.class"))
 Por lo que, como trabajo futuro del proyecto, queda pendiente implementar dicho conversor de vídeos multiplataforma, que utilice diferentes librerías, ya sea \textit{FFMPEG} u otra librería para dicha conversión.
 
 \section{El modelo de Datos: Core}
+\label{coreit2}
 
 En el proceso de integración del proyecto de Piotr Marszal que consiste en reconstruir el editor de eAdventure dentro de Unity, se decidió unificar el modelo de datos. En vista de que, para una implementación al completo de todos los elementos del editor, el modelo de datos planteado en la sección \ref{dataclassesit1}, con las clases de datos que eran capaz de generarse a si mismas, era insuficiente para satisfacer las necesidades del proyecto, se decidió invertir mucho tiempo en portar al completo el modelo de datos de las clases Java a Unity.
 
