@@ -17,7 +17,7 @@ public class LoaderMB : MonoBehaviour {
 		//slider = this.GetComponent<Slider> ();
 		/*unzipthread = new Thread (unZip);
 		unzipthread.Start();*/
-		unZip ();
+		this.StartCoroutine(unZip());
 	}
 	
 	// Update is called once per frame
@@ -25,13 +25,13 @@ public class LoaderMB : MonoBehaviour {
 		//slider.value = ZipUtil.Progress;
 
 		if (ResourceManager.Instance.extracted) {
-			unzipthread.Abort ();
 			SceneManager.LoadScene ("_MenuScene");
 		}
 	}
 
 		
-	void unZip(){
+	IEnumerator unZip(){
 		ResourceManager.Instance.extractFile(LoaderController.Instance.gamePath);
+		yield return null;
 	}
 }
