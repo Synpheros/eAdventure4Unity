@@ -216,7 +216,9 @@ Las líneas, cuando son generadas, utilizan sus dos puntos para generar una \tex
 
 Lo complejo del tratamiento de trayectorias llega con el cálculo de rutas. Para ello se ha implementado una variante del algoritmo de Dijkstra para hallar caminos mínimos en grafos no direccionales con coste. La diferencia es que, debido a que en la ruta el nodo inicial y el nodo final no forman parte de la trayectoria en si misma, sino que son nodos nuevos que se generan en tiempo de ejecución, y únicamente se identifica en qué líneas de trayectoria están contenidos dichos puntos.
 
-Tras esto se realiza el algoritmo de marcado de Dijkstra pero únicamente utilizando las líneas, sin los nodos. Y tras esto se ejecuta la función \textit{reach()} que prepara 
+Tras esto se identifica que líneas contienen el punto de origen y el punto destino, y con esto se realiza el algoritmo de marcado de Dijkstra pero únicamente utilizando las líneas, sin los nodos. Y finalmente se ejecuta la función \textit{reach()} que prepara el lanzamiento de la función recursiva de mismo nombre encargada de recorrer el grafo siguiendo la especificación del algoritmo de Djikstra.
+
+No obstante, el funcionamiento de este algoritmo no es tan bueno como se desearía, pues le falta incluir la distancia que hay entre el punto de origen o destino, y el nodo inicial elegido de la línea de origen y destino. Asimismo, se pueden dar resultados no optimos. Como trabajo futuro se plantea implementar el algoritmo de Djikstra con nodos, e incluir los nodos origen y destino en la trayectoria.
 
 \begin{figure}[h!]
 	\centerline{\includegraphics[height=3.7in]{figures/it2/TrajectoryHandler.png}}
@@ -432,4 +434,46 @@ using (AndroidJavaClass ext = new AndroidJavaClass ("com.external.class"))
 
 Por lo que, como trabajo futuro del proyecto, queda pendiente implementar dicho conversor de vídeos multiplataforma, que utilice diferentes librerías, ya sea \textit{FFMPEG} u otra librería para dicha conversión.
 
+\section{El modelo de Datos: Core}
 
+En el proceso de integración del proyecto de Piotr Marszal que consiste en reconstruir el editor de eAdventure dentro de Unity, se decidió unificar el modelo de datos. En vista de que, para una implementación al completo de todos los elementos del editor, el modelo de datos planteado en la sección \ref{dataclassesit1}, con las clases de datos que eran capaz de generarse a si mismas, era insuficiente para satisfacer las necesidades del proyecto, se decidió invertir mucho tiempo en portar al completo el modelo de datos de las clases Java a Unity.
+
+Esta tediosa y repetitiva labor fue realizada casi en su totalidad por Piotr, quien copiaba el código Java en c\# y se encargaba de sustituir las librerías problemáticas por librerías análogas de .NET. Dentro de mi aportación, se realizaron tareas de corrección de errores y de pruebas para comprobar que todo funcionaba correctamente.
+
+De esta misma manera, Piotr importó el \textit{Loader} original de eAdventure, y, no fue hasta que se comenzó a utilizar en este proyecto, que no se identificó que dicho cargador era inviable de utilizar pues tardaba entre medio y un minuto en leer el documento de especificación del juego; además de que lo hacía con errores que, pese a intentos de arreglarlos, debido a que la implementación de dicho \textit{Loader} fue realizada por uno de los desarrolladores de eAdventure, la complejidad del funcionamiento del mismo se escapaba a nuestra comprensión.
+
+Como estos problemas con el \textit{Loader} continuaban, se decidió crear una nueva implementación del cargador del modelo de datos utilizando la librería \textit{System.XML} que se utilizó para las Clases de datos de la primera iteración, y que ya se conocía que era fácil de utilizar, pues permite utilizar sintaxis de XPath\footnote{XPath (XML Path Language) es un lenguaje declarativo que permite construir expresiones regulares que recorren, procesan y seleccionan elementos de un documento XML}, y acceder al contenido del documento XML de forma sencilla.
+
+Esta segunda implementación la comenzó Piotr, recodificando la mayor parte de \textit{subparsers} del cargador. Sin embargo, el no pudo probar las nuevas clases que estaba implementando, por lo que no pudo darse cuenta de que muchas de ellas, debido a que la base que aplicaba para la transformación no era del todo correcta, no funcionaban. Los grandes \textit{subparsers} como el cargador de escenas, efectos, conversaciones, areas activas, etc... tuvieron que ser nuevamente implementados desde cero por mi. Finalmente, en mi labor se realizó la tarea de implementar los cargadores principales de \textit{AdventureData} y \textit{Chapter}. haciendo estos funcionales al sistema de cargado de ficheros de \textit{System.IO}, así como el de \textit{Resources.Load()}.
+
+Una vez construido el nuevo \textit{Loader}, los tiempos fueron reducidos en un 90\%, pasando de tardar 45 segundos de tiempo de carga en el videojuego \textit{Checklist}, a alrededor de 4 segundos. No obstante esta medida no puede realizarse con precisión debido a que en dichos tiempos de carga se incluye el tiempo que utiliza Unity para inicializarse y ponerse en funcionamiento.
+
+Para completar la integración fue necesario desacoplar partes del sistema de eAdventure entre si mismas, pues el modelo de datos de dicho sistema está extremadamente interconectado, y cada vez que se intenta reutilizar una de sus partes, es necesario traer junto a esa parte, un gran número de partes de dicho modelo. 
+
+Con dicho desacoplamiento, también fueron eliminados del modelo de datos determinados elementos utilizados para iniciar la carga del juego. Por ello fue necesaria una investigación en profundidad hasta hallar una manera segura de trabajar con el paquete \textit{Loader}.
+
+Finalmente, cuando se hubo unificado el modelo de datos, se realizó una unión de ambos proyectos en un único proyecto y repositorio. El proyecto de Piotr se ubica casi en su totalidad dentro del espacio de nombres \textit{Editor}, por lo que, para la unificación de los proyectos, fue necesario extraer de dicho espacio de nombres el modelo de datos, junto al \textit{Loader}, otras clases auxiliares, y más elementos. A esta parte que se extrajo de \textit{Editor} es a la que se conoce como \textit{Core}, pues representa al núcleo de eAdventure.
+
+\newpage
+
+\section{La comunicación con RAGE: RAGETracker}
+
+Pese a que uno de los objetivos principales de este proyecto es el de garantizar y simplificar el ciclo de vida de los juegos serios producidos con eAdventure, así como extender su vida útil lo máximo posible, otro de los planteamientos con los que surge este proyecto es el de poder mejorar la parte de evaluación de eAdventure mediante el uso de RAGE.
+
+Una de las partes que, por tener un grado de dificultad muy elevado de incluir en Unity, debido a que las librerías que se utilizaban no dan soporte a .NET, y se debe construir una nueva infraestructura para soportarlo, es la parte de \textit{Assessment}. Estas partes, que además no tenían toda la funcionalidad deseada, van a ser sustituidas por \textit{Assessment} con RAGE.
+
+RAGE, Realising an Applied Gaming Eco-system, es un proyecto que apunta a desarrollar, transformar y enriquecer tecnologías específicas para la industria de los videojuegos serios, en forma de paquetes autocontenidos para juegos que ayudan a los estudios de videojuegos en el desarrollo de juegos serios, haciéndolo más sencillo, rápido y eficiente económicamente.
+
+En RAGE hay una parte específica dedicada a la evaluación de videojuegos, y esta parte provee una API para los profesores que deseen crear perfiles de evaluación y progreso, así como otros elementos de utilidad que se deseen monitorizar, como el numero de veces que una pregunta ha sido respondida de forma incorrecta, o los días que los estudiantes han sido más activos jugando a un videojuego.
+
+En eAdventure, este proceso de evaluación se realiza mediante la especificación de una serie de frases de evaluación, en lenguaje natural, que, cuando se den una serie de condiciones, serán incluidas en un registro de evaluación. Este registro se muestra al jugador al terminar el juego, y este debe enviar dicho registro al profesor, o debe ser revisado por el profesor al terminar la clase.
+
+Este proceso tiene multitud de problemas, entre los cuales podemos encontrar: casos como que, el profesor nunca llegue a ver dicho registro de evaluación, ya sea porque el alumno decida no enviar dicho registro al profesor, o porque el alumno lo cierre sin querer; problemas a la hora de evaluar porque no sea suficientemente específico en el desarrollo del juego; o el gran problema de que, para poder realizar la evaluación, es el propio desarrollador el que tiene que incluir elementos de evaluación dentro del juego. Sin embargo, todos estos problemas son asumibles, porque se entiende que el profesor va a tener tiempo para dedicar a cada alumno, hablar con él en caso de que tenga dudas acerca del desarrollo del juego, y que los juegos desarrollados, en general, son de corta duración, y pueden ser completados de inicio a fin en una sesión.
+
+Pero, ¿Qué ocurre si pasamos de tener el ámbito de una clase, a una cantidad de alumnos que sobrepasa el límite del profesor? ¿Podría leer los registros de todos los alumnos y evaluar uno por uno? La respuesta es no, o al menos no de forma apropiada. Por ello, es necesario que este proceso de evaluación sea rediseñado y reconstruido utilizando las ventajas que RAGE provee a los desarrolladores de juegos. Delegando este proceso de evaluación, y únicamente monitorizando las desviaciones que sufren los alumnos, se podrá conseguir que el proceso de evaluación de un número de alumnos elevado, mediante el uso de un juego generado por uAdventure, se realice de forma sencilla y cómoda.
+
+Además de las ventajas que RAGE proveerá a uAdventure, el segundo se encargará de facilitar la generación de estos perfiles de evaluación desde el propio editor de uAdventure. Un ejemplo de este proceso automatizado sería, la generación del progreso del usuario dentro del juego a través del árbol de escenas que comunica la escena inicial con la escena final. También se podrían marcar variables importantes para el desarrollo del juego, para su monitorización, y se generarían gráficas de su evolución, así como poder generar alertas si una de dichas variables se saliese de un rango apropiado. Finalmente, se intentaría preservar el antiguo sistema de alertas de eAdventure, utilizando el sistema de alertas de RAGE.
+
+Recalcar también que, RAGE no únicamente permite facilitar la evaluación al profesorado, sino que también ayuda a investigadores y desarrolladores, permitiendo generar estadísticas como las preguntas más falladas, y la opción más elegida dentro de ellas; generación de mapas de calor dentro de una escena, para saber las zonas donde más interactúa el usuario, o saber las escenas donde el jugador pierde más el tiempo, o le resultan más complejas de superar.
+
+En cuanto a la funcionalidad que \textit{RAGETracker} aporta en si mismo, únicamente facilita el proceso de comunicación con RAGE. Implementa unas clases que realizan la conexión con el API, autorizan al usuario mediante un \textit{Token} de identificación, y relacionan el juego al que se está jugando, con un juego dado de alta en RAGE. La implementación de dicho \textit{Tracker} está disponible en \url{https://github.com/e-ucm/unity-tracker}.
