@@ -233,6 +233,7 @@ Esta clase contiene dentro de su fichero la clase \textit{EffectNode} el cual, a
 Los \textit{EffectNode} realizan tareas como activar una \textit{Flag}, poner una variable, ejecutar una \textit{Macro}, o ejecutar una condición, por ello tienen dos variables de control que definen su funcionamiento, y una función \textit{execute()} que los pone en funcionamiento. Estas dos variables de control sirven para determinar si dicho nodo sólo se ejecuta una vez, o varias, y para controlar cuántas veces se ha ejecutado ya dicho nodo. Hasta que un nodo no determina que ha completado su ejecución, este no permite que la secuencia se siga ejecutando.
 
 \subsubsection{Las clases GraphConversation y Condition}
+\label{linqit1}
 
 Estas clases son las más extensibles de todas las clases que se implementaron en la primera iteración del proyecto. Ambas tienen una factoría para generarse, ya sea \textit{ConditionFactory} y \textit{DialogNodeFactory}, y se generan automáticamente a partir de un \textit{XmlElement}, que contiene la especificación extraída del archivo de especificación del juego.
 

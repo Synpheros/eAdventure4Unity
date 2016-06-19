@@ -3,6 +3,7 @@
 Como se explica en el la subsección \ref{metodologiadedesarrollo}, en la que se expone la metodología de desarrollo utilizada para el proyecto, este sufre de tres grandes iteraciones para su completitud. En esta sección se explican los detalles implementados en la tercera iteración, es decir, la generación de un emulador de juegos e eAdventure, utilizando el núcleo de ejecución \textit{Runner} explicado en la sección \ref{runnerit2}, y el modelo de datos de eAdventure explicado en \ref{coreit2}; además de la generación de editores para el editor de uAdventure desarrollado por Piotr Marszal. 
 
 \section{El Emulador de Juegos}
+\label{emulatorit3}
 
 Uno de los principales problemas de todo software consiste en que, el presupuesto que se invierte en el desarrollo de dicho software, no debe invertirse por completo en su desarrollo, pues la vida útil del mismo durará varios años más, en los que debe haber un mantenimiento y soporte para dicho software. El software producido por eAdventure, en muchos casos, hace años que dejó de tener soporte, pues no sólo los desarrolladores abandonaron los proyectos, sino que eAdventure no sufre ninguna actualización desde el 29 de Octubre de 2012, y todos los errores que han surgido, y los problemas de soporte que tiene en diferentes dispositivos han limitado la vida útil del software producido con eAdventure, y su ciclo de vida.
 
@@ -66,7 +67,78 @@ No obstante, y dado que esta primera versión del emulador era insuficiente, ade
 
 \end{itemize}
 
+\section{Los Editores de Secuencias}
 
+Como parte del proceso de integración de los proyectos, y para realizar un aporte comparable al esfuerzo que Piotr había realizado al importar el modelo de datos de eAdventure, en el desarrollo de este proyecto se generaron dos editores basados en ventanas para la edición de las secuencias.
 
+Dada la experiencia de generación de editores de este estilo obtenida durante el desarrollo del TFG IsoUnity, que consistía en la generar un editor de videoaventuras en tercera persona con estilo isométrico, en el que se incluyen editores que presentan similitudes con dichas necesidades, el desarrollo de dichos editores será más sencillo.
 
+Las clases de eAdventure que requieren editores son: Los efectos, que pese a ser lineales, se plantea la posibilidad de incluir bifurcaciones que los transformen en un grafo en un futuro; Las conversaciones, que son grafos de diálogo con nodos de conversación que incluyen diálogo o opciones de respuesta; y el editor de condiciones, que al ser tan pequeño se explicará como parte del editor de efectos.
+
+Para el desarrollo de cada uno de estos editores se implementarán tres clases cruciales:
+
+\begin{itemize}
+	\item La ventana principal del editor, que es capaz de gestionar la secuencia en si misma, compuesta por un listado de nodos, y de mantener en orden las ventanas que representan los editores individuales de cada uno de los nodos.
+	
+	\item Una interfaz que permita implementar editores para los nodos, con métodos para pintarse utilizando la GUI de editor de Unity, y métodos que permiten identificar si un editor sirve para representar un tipo de nodo, y clonarse a si mismo.
+	
+	\item Finalmente, una factoría que explore el espacio de nombres utilizando Linq, en busca de editores que implementen la interfaz para generar editores de nodo. Dicha factoría también tiene que proveer un listado de los editores disponibles, así de facilidades para instanciar un editor para un nodo concreto. Existen detalles acerca de la implementación de factorías utilizando esta técnica en la sección \ref{linqit1}
+\end{itemize}
+
+Con estas tres clases, ya se pueden generar editores individuales para los nodos, consiguiendo un editor de secuencias muy extensible, preparado para añadir nuevos editores de forma sencilla y sin necesidad de modificar ninguna de las clases. Generando una nueva clase que implemente la interfaz del editor, este ya la identificaría y añadiría a su listado de editores disponibles.
+
+\subsection{El Editor de Efectos}
+
+Entre los editores de secuencias implementados, el más sencillo, pero a su vez más largo de implementar es el editor de efectos, pues estos son una secuencia lineal, no son ni árboles, ni grafos, por lo que la implementación de un editor con ventanas lineal se plantea sencilla. Sin embargo, la cantidad de editores de efectos que se deben implementar es muy elevada, pues existen multitud de efectos que implementan la interfaz \textit{AbstractEffect}.
+
+Para la implementación de esta ventana de editor, se extiende la clase abstracta \textit{EditorWindow} que provee una serie de métodos que, de implementarse, permiten la generación de una nueva ventana para el editor. En primer lugar, una funcion Init() que inicializa la ventana para un efecto dado. Una funcion \textit{nodeWindow(int id)} que se encarga de gestionar cada ventana individualmente. Unas funciones \textit{CreateWindows()} y \textit{CreateWindow(AbstracEffect effect)}, que son las encargadas de generar las ventanas para los efectos. Una funcion \textit{curveFromTo()} que genera una línea entre dos ventanas, y finalmente, la función \textit{OnGUI()} que ejecuta todo lo anterior para generar la ventana.
+
+En la figura \ref{mainwindow-effecteditor-it3} se ve una secuencia de efectos sencilla, compuesta por 5 efectos en los que se establece valor para unas variables, el jugador habla, y finalmente, se lanza una conversación completa. El menú desplegable muestra todos los editores de efectos implementados. En la parte de arriba de la figura se observa un botón muy ancho con el texto "New Effect", que sirve para añadir un nuevo nodo a la lista de efectos. En esta ventana, las subventanas que permiten la edición de efectos se pueden mover, por lo que permiten la organización de los mismos de la forma más conveniente.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=4in]{figures/it3/effecteditorwindow.png}}
+	\caption[Ventana Principal - Editor de Efectos]{Ventana principal del editor de efectos.}
+	\label{mainwindow-effecteditor-it3}
+\end{figure}
+
+En la figura \ref{effect-nodes-it3} se muestra un nodo de efecto que muestra una gran cantidad de condiciones para su ejecución. Este nodo puede reducirse en tamaño para facilitar la edición mediante el botón con el guión de color azul, transformándose en la ventana derecha.
+
+\begin{figure}[h!]
+	\centerline{
+		\includegraphics[height=2.5in]{figures/it3/editor-conditions.png}
+		\includegraphics{figures/it3/collapsed-effect.png}
+		}
+	\caption[Editor de Nodo con condiciones - Editor de Efectos]{Editor de nodo de efecto con condiciones, vista normal y reducida.}
+	\label{effect-nodes-it3}
+\end{figure}
+
+\subsection{El Editor de Conversaciones}
+
+Pese a que en primera instancia parece que el editor de conversaciones es muy similar al editor de efectos, y aunque visualmente lo sean, las conversaciones son grafos, y la modificación de un editor que trabaja con listas, a un editor capaz de trabajar con grafos direccionales, no es una tarea trivial. 
+
+Las modificaciones, con respecto al editor de efectos están relacionadas con la gestión de ciclos en los grafos, y la posibilidad de generar hijos para nodos concretos, así como permitir al usuario establecer el hijo de un nodo directamente, mostrando en la interfaz cual es la rama de nodos que, si no tiene ningún otro nodo padre, se va a perder, y cual es la nueva rama que se va a establecer como hija de dicho nodo.
+
+Como en el desarrollo de este editor no era tan necesario generar un gran número de editores, pues las conversaciones únicamente están compuestas por editores de diálogos y de opciones, dichos editores cuentan con un acabado mucho más conseguido, reutilizando muchas de las imágenes de la interfaz de eAdventure. Esto se muestra en la figura \ref{small-dialogeditor-it3}, en la que, además, se muestra lo descrito en el párrafo anterior. La línea azul será el nuevo hijo, y la roja el hijo descartado.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=3in]{figures/it3/small-dialog.png}}
+	\caption[Pequeño diálogo - Editor de Diálogos]{Pequeño diálogo mostrado en el editor de diálogos.}
+	\label{small-dialogeditor-it3}
+\end{figure}
+
+Como detalle adicional, se ha generado una clase llamada \textit{NodePosicioner} que, estableciendo un número de nodos, y una altura de la ventana, posiciona automáticamente los nodos en su lugar correspondiente automáticamente, de manera que ver las secuencias es más cómodo si se abren y no existen datos acerca de su posición. Esto se muestra en la figura \ref{circle-nodes-it3}.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=2in]{figures/it3/nodes-circle.png}}
+	\caption[Anillo de nodos - Editor de Diálogos]{Posicionamiento automático de nodos en el editor de diálogos.}
+	\label{circle-nodes-it3}
+\end{figure}
+
+Finalmente, y para mostrar las posibilidades del editor, tenemos la figura \ref{big-dialog-it3}, en la que se muestra una secuencia muy grande. El icono del candando nos permite la edición de condiciones para mostrar dicha línea, ya sea de opción o de diálogo. La flecha negra permite establecer el nodo hijo para dicha opción directamente. Y por último, el botón de la esquina inferior derecha de cada diálogo permite acceso a los efectos que se ejecutan en dicho nodo. Estas características también se pueden observar en la figura \ref{small-dialog-it3}
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=3in]{figures/it3/big-dialog.png}}
+	\caption[Gran diálogo - Editor de Diálogos]{Gran diálogo mostrado en el editor de diálogos.}
+	\label{big-dialog-it3}
+\end{figure}
 
