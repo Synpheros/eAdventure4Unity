@@ -1,0 +1,45 @@
+\chapter{Conclusiones}
+\label{conclusiones}
+
+Tras haber completado el proyecto, incluyendo el diseño, la implementación y la escritura de esta memoria, se extraen determinadas conclusiones que se deben abordar en este \textit{post mortem} del proyecto. Éstas se presentarán categorizadas dentro de los diferentes objetivos que se plantearon, estableciendo una relación entre objetivos planteados y resultados obtenidos.
+
+El listado de objetivos, planteado en el capítulo \ref{objetivos}, de forma simplificada, es el siguiente:
+
+\begin{enumerate}
+	\item hacer funcionar el videojuego Checklist en Unity3D.
+	
+	\item Hacer funcionar el mayor número de juegos desarrollados por CATEDU.
+	
+	\item Hacer funcionar cualquier juego de eAdventure en Unity3D.
+	
+	\item Generar un diseño y arquitectura de aplicación de calidad.
+	
+	\item Integrar este intérprete con el proyecto de Piotr Marszal.
+	
+	\item Implementar una serie de facilidades que mejoren la interacción en el ámbito táctil.
+	
+	\item Dar la capacidad a los no desarrolladores, de poder jugar a videojuegos generados con eAdventure en cualquier plataforma, y sin necesidad de tener Unity, así como de beneficiarse de las características de uAdventure.
+	
+	\item Mejorar la capacidad de evaluar existente en eAdventure.
+\end{enumerate}
+
+\textbf{Acerca del objetivo 1}: Este objetivo fue uno de los primeros en completarse, pues tras la construcción del prototipo inicial, el videojuego Checklist, descrito en la sección \ref{checklist}, ya era completamente jugable. Pese a que el resultado obtenido en dicho momento del desarrollo no era, a nivel de arquitectura de proyecto y de representación visual del mismo, un resultado tan bueno como para poder producir dicho juego como juego final, según el proyecto avanzó, se implementaron una serie de mejoras que consiguieron que el juego Checklist pudiese generarse y ser un videojuego de calidad.
+
+Para satisfacer este objetivo fue necesaria la implementación del prototipo inicial del proyecto al completo, presentado en la sección \ref{primeraiteracion}. Realizando una investigación acerca de los paquetes ".jar" ejecutables de los juegos, explicada en la sección \ref{comenzando}. Tras esta investigación, se desarrolló una primera arquitectura del proyecto, y se implementaron las clases necesarias para poder leer el fichero de especificación del juego, y almacenar los datos que se presentaban en dicho fichero. A estas clases se las conocería como Clases de Datos. Tras esto se generaron clases capaces de interpretar dichas Clases de Datos y representarse en el videojuego, conocidas como Clases de Comportamiento. Finalmente, y debido a la necesidad de funcionalidad adicional, se implementaron clases que daban soporte a efectos y a conversaciones, así como una clase controladora del juego, llamada \textit{Game}, capaz de gestionar la interacción y el estado del juego.
+
+\textbf{Acerca del objetivo 2}: Los juegos de CATEDU son una gran cantidad de juegos, entre los cuales se encuentran el juego de Primeros Auxilios, o el juego de Viaje a Londres. Para dar soporte a este objetivo fue necesaria la realización de la segunda iteración del proyecto, aunque no en su totalidad. En esta segunda iteración se añadieron nuevas características no soportadas en la primera, como la gestión de Temporizadores, explicada en la sección \ref{timercontrollersecit2}, la capacidad de mover objetos a lo largo de la pantalla, explicada en la sección \ref{itemsit2}, la posibilidad de que hubiera juegos en tercera persona, explicadas en la sección \ref{playerit2}, y la capacidad de que, en estos, el jugador pudiera moverse, explicados en la sección \ref{trajectoryit2}.
+
+Finalmente, para soportar totalmente estos videojuegos fue necesario dar soporte a contenido multimedia audiovisual, como son los videos y el audio. El soporte a estos elementos está explicado en las secciones \ref{resourcemanager} y \ref{scene}.
+
+\textbf{Acerca del objetivo 3}: Dado que conseguir que literalmente cualquier juego de eAdventure funcione en uAdventure es una tarea compleja, pues requiere de implementar todas y cada una de las características de eAdventure, por el momento y muy lamentablemente, es posible que algunos de los juegos que se intenten hacer funcionar, puedan producir algún fallo por la falta de implementación de alguna de las características de eAdventure. Sin embargo, y para intentar garantizar esta característica, se han implementado prácticamente todos los efectos para las macros, efectos y acciones, explicado en la sección \ref{sequencessecit2}.
+
+\textbf{Acerca del objetivo 4}: Para satisfacer este objetivo ha sido necesaria la realización de multitud de iteraciones sobre el código del intérprete de uAdventure, mediante la refactorización y el continuo diseño de elementos de la aplicación se ha conseguido alcanzar un diseño que se apoya sobre los pilares de la Ingeniería del Software, y senta sus bases para ser lo más extensible posible, replicando la menor cantidad de código posible, basándose en patrones como el patrón \textit{Singleton}, o \textit{Factory}, implementando Gestores y Controladores para la gestión y control de tareas, etc... Toda esta labor de diseño además, está acompañada de diagramas de clase que presentan la arquitectura, diseño de clases e implementación a lo largo de la segunda iteración del proyecto, presentada a lo largo de todo el capítulo \ref{it2} de esta memoria.
+
+\textbf{Acerca del objetivo 5}: Para la integración de los proyectos ha sido necesario generar un modelo de datos común para las dos aplicaciones, para que ambos proyectos se construyeran utilizando la misma base. Sin embargo, no sólo el modelo de datos se ha desarrollado, sino que también se desarrolló en conjunto un lector de ficheros de especificación de juegos de eAdventure. Todo esto está explicado en la sección \ref{coreit2}. Por otra parte, en el proceso de integración, en este proyecto se generaron dos editores para el editor de uAdventure desarrollado por Piotr. Dichos editores están explicados en la sección \ref{sequencesit3}.
+
+\textbf{Acerca del objetivo 6}: Para mejorar la interacción en el ámbito táctil se da soporte en el proyecto al uso de dos \textit{Shaders}, los cuales permiten hacer que los elementos interactuables de la escena brillen y se hagan visibles para el usuario que no dispone de un cursor de ordenador para desplazarlo a lo largo de la escena para identificar los elementos interactuables. Por otra parte, se recoloca la interfaz de los juegos en algunos determinados momentos, como en las listas de respuestas, donde las respuestas ya no aparecen como pequeñas líneas de texto en la parte inferior de la pantalla, sino que se presentan como un listado de grandes botones cendrados en la pantalla. Estas características se explican en el apartado \ref{apearanceseccionit2}, así como en la sección \ref{guimanagersectionit2}.
+
+\textbf{Acerca del objetivo 7}: Para dar soporte a los no desarrolladores, para que puedan beneficiarse de las ventajas de uAdventure, y poder utilizar cualquier juego de eAdventure en cualquier plataforma, se ha desarrollado un emulador independiente de videojuegos de eAdventure, capaz de importar juegos en formato ".jar", y permitir al usuario jugarlos. Este emulador está explicado en la sección \ref{emulatorit3}. Este emulador dispone de distintas vistas, entre las que se presenta un explorador de archivos capaz de explorar el sistema de ficheros para permitir al usuario seleccionar el videojuego que desee importar, así como una pantalla principal donde se presentan todos los videojuegos importados, o una pantalla de configuración.
+
+\textbf{Acerca del objetivo 8}: para mejorar la capacidad de evaluar existente en eAdventure, se ha conectado el sistema con RAGE, el cual provee, mediante una interfaz web, una serie de páginas con información importante y gráficas acerca del progreso y evaluación de los alumnos de forma en grupo e individual, permitiendo al profesor enfocar los esfuerzos en aquellos alumnos que hayan quedado rezagados o que demuestren problemas en su aprendizaje. Para ello se ha dado soporte a un proyecto del grupo e-UCM, que consiste en generar un \textit{Tracker} que se comunique con RAGE. Dicha comunicación está explicada en la sección \ref{ragetrackerit2}. Por otra parte, y para generar los perfiles de evaluación, se ha facilitado el acceso a RAGE desde eAdventure, generando un editor y una serie de clases comunes con RAGE, capaces de almacenar elementos de este sistema. Dicho editor se explica en la sección \ref{rageeditorit3}.
+

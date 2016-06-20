@@ -1,4 +1,5 @@
 \chapter{Segunda Iteración: Versión final e Integración}
+\label{it2}
 
 Como se explica en el la subsección \ref{metodologiadedesarrollo}, en la que se expone la metodología de desarrollo utilizada para el proyecto, este sufre de tres grandes iteraciones para su completitud. En esta sección se explican los detalles implementados en la segunda iteración, es decir, la generación de un mejor diseño de la aplicación, nuevas interfaces, refactorización de clases y código replicado, así como mejoras gráficas visuales dentro de la aplicación, incluyendo referencias a la sección \ref{primeraiteracion}, explicando los cambios en diseño y comportamiento.
 
@@ -135,6 +136,7 @@ En esta sección se remarcan las diferencias entre las clases de comportamiento 
 Otro detalle es, para diferenciar más fácilmente entre las clases del modelo de datos y los comportamientos, se les han añadido las siglas MB de \textit{MonoBehaviour}, que identifican que son comportamientos y no clases de datos.
 
 \subsubsection{Detalles de la escena: SceneMB}
+\label{scene}
 
 La escena ha sido refactorizada y ampliada para incluir más funcionalidad y facilitar el uso de otra. Detalles de esto se puede encontrar en la figura \ref{gameit2}.
 
@@ -161,6 +163,7 @@ Por último, ahora la escena gestiona la interacción que se realice sobre ella,
 \end{itemize}
 
 \subsubsection{Los objetos del juego: ObjectMB}
+\label{itemsit2}
 
 Con respecto a lo explicado en la sección \ref{objectexitactiveareait1} acerca de la antigua clase \textit{eObject}, esta ha sufrido una evolución. Se ha simplificado mucho gracias al uso de \textit{Representable}, \textit{Interactuable} y \textit{Transparent}. Ahora únicamente reacciona si la componente \textit{Transparent} se lo permite, y gracias a \textit{Representable} y al \textit{ResourceManager} es mucho más sencillo cambiar entre la textura normal y la textura activa, que se debe mostrar cuando el ratón pasa por encima el objeto.
 
@@ -243,6 +246,7 @@ Mas allá de esto, el esfuerzo se realizó añadiendo la mayor parte de efectos 
 \end{figure}
 
 \subsection{El controlador de los temporizadores: TimerController}
+\label{timercontrollersecit2}
 
 El controlador de los temporizadores es una clase nueva que no existía en la anterior iteración. Esta clase comportamiento se añade como componente a la cámara y se encarga, mientras está contando, de controlar los \textit{Timers} que el juego necesita para su ejecución.
 
@@ -265,6 +269,7 @@ la figura \ref{timercontrollerit2} muestra el diagrama de clases de lo descrito 
 \newpage
 
 \subsection{El gestor de interfaz: GUIManager}
+\label{guimanagersectionit2}
 
 Como se explica en la sección superior a esta subsección, existe una clase gestora que se encarga de manejar la interfaz en su totalidad de forma transparente. Facilita una serie de funciones que permiten, de forma sencilla, mostrar burbujas de diálogo, cambiar el cursor, mostrar un menú contextual de acciones, o un menú de opciones.
 
@@ -384,6 +389,7 @@ Finalmente, en la figura \ref{menuvisualit2} muestra el menú generado en una si
 \end{figure}
 
 \subsection{El gestor de recursos: ResourceManager}
+\label{resourcemanager}
 
 Como se ha comentado varias veces a lo largo de esta sección, para facilitar el acceso a los recursos desde cualquier parte del proyecto, existe un \textit{Singleton} llamado \textit{ResourceManager} que provee de elementos multimedia al que lo solicite.
 
@@ -403,7 +409,7 @@ con respecto a los tipos de ficheros que se pueden cargar con \textit{ResourceMa
 	
 	\item \textit{Animaciones}: Las animaciones que se cargan son las de eAdventure, y están compuestas por una serie de imágenes, esto se hace en la clase \textit{eAnim}, la cual no ha cambiado mucho en su funcionamiento desde lo explicado en la sección \ref{dataclassesit1}. Para añadir soporte a \textit{Resources.Load()} ha sido necesario implementar un método que renombra todos los archivos ".eaa" a ".xml" pues Unity no reconoce dichos archivos como ficheros de texto y no permite cargarlos.
 	
-	\item \textit{Vídeos}: La carga de videos se realiza almacenándolos en una \textit{MovieTexture}. Para la carga de estos desde el sistema de ficheros se utiliza la clase \textit{www}, que permite hacer solicitudes POST y GET, ya sea en local, al sistema de ficheros, o a un servidor. Esta carga requiere la utilización de corrutinas, pues sin ellas el juego se quedaría completamente congelado hasta que el recurso estuviera cargado. Finalmente mencionar que los vídeos únicamente pueden estar en formato ".ogv" bajo el codec OGG Theora.
+	\item \textit{Vídeos}: La carga de vídeos se realiza almacenándolos en una \textit{MovieTexture}. Para la carga de estos desde el sistema de ficheros se utiliza la clase \textit{www}, que permite hacer solicitudes POST y GET, ya sea en local, al sistema de ficheros, o a un servidor. Esta carga requiere la utilización de corrutinas, pues sin ellas el juego se quedaría completamente congelado hasta que el recurso estuviera cargado. Finalmente mencionar que los vídeos únicamente pueden estar en formato ".ogv" bajo el codec OGG Theora.
 	
 	\item \textit{Audio}: De manera similar a los vídeos, se utiliza la clase \textit{www} para su carga, aunque en esta ocasión son almacenados en \textit{AudioClip}.
 	
@@ -459,6 +465,7 @@ Finalmente, cuando se hubo unificado el modelo de datos, se realizó una unión 
 \newpage
 
 \section{La comunicación con RAGE: RAGETracker}
+\label{ragetrackerit2}
 
 Pese a que uno de los objetivos principales de este proyecto es el de garantizar y simplificar el ciclo de vida de los juegos serios producidos con eAdventure, así como extender su vida útil lo máximo posible, otro de los planteamientos con los que surge este proyecto es el de poder mejorar la parte de evaluación de eAdventure mediante el uso de RAGE.
 

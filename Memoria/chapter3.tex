@@ -219,6 +219,7 @@ public Texture2D LoadTexture(bytes[] fileData)
 Tras esto la textura queda guardada y no se vuelve a generar, por lo que se reduce el tiempo de ejecución del programa, a coste de sacrificar memoria. En este caso, como las texturas de los videojuegos generados con eAdventure no ocupan más que el propio juego en sí mismas, se asume que, el coste en memoria de la aplicación no será muy elevado.
 
 \subsection{La interfaz Sequence: Effect, Conversation y Condition})
+\label{sequencessecit2}
 
 La interfaz \textit{Sequence} surge de la necesidad de generar una interfaz para interactuar con los efectos y las conversaciones, elementos que son capaces de ejecutarse y realizar tareas que pueden tener alto nivel de complejidad. Esta interfaz, en esencia, provee de un método \textit{public bool execute()}, la cual ejecuta el contenido de si mismas, y devuelve verdadero en caso de que, la secuencia necesite esperar, ya sea por la necesidad de interacción del usuario, o por que un elemento debe ejecutarse un tiempo determinado.
 

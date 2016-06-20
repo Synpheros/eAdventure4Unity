@@ -68,6 +68,7 @@ No obstante, y dado que esta primera versión del emulador era insuficiente, ade
 \end{itemize}
 
 \section{Los Editores de Secuencias}
+\label{sequencesit3}
 
 Como parte del proceso de integración de los proyectos, y para realizar un aporte comparable al esfuerzo que Piotr había realizado al importar el modelo de datos de eAdventure, en el desarrollo de este proyecto se generaron dos editores basados en ventanas para la edición de las secuencias.
 
@@ -118,12 +119,12 @@ Pese a que en primera instancia parece que el editor de conversaciones es muy si
 
 Las modificaciones, con respecto al editor de efectos están relacionadas con la gestión de ciclos en los grafos, y la posibilidad de generar hijos para nodos concretos, así como permitir al usuario establecer el hijo de un nodo directamente, mostrando en la interfaz cual es la rama de nodos que, si no tiene ningún otro nodo padre, se va a perder, y cual es la nueva rama que se va a establecer como hija de dicho nodo.
 
-Como en el desarrollo de este editor no era tan necesario generar un gran número de editores, pues las conversaciones únicamente están compuestas por editores de diálogos y de opciones, dichos editores cuentan con un acabado mucho más conseguido, reutilizando muchas de las imágenes de la interfaz de eAdventure. Esto se muestra en la figura \ref{small-dialogeditor-it3}, en la que, además, se muestra lo descrito en el párrafo anterior. La línea azul será el nuevo hijo, y la roja el hijo descartado.
+Como en el desarrollo de este editor no era tan necesario generar un gran número de editores, pues las conversaciones únicamente están compuestas por editores de diálogos y de opciones, dichos editores cuentan con un acabado mucho más conseguido, reutilizando muchas de las imágenes de la interfaz de eAdventure. Esto se muestra en la figura \ref{small-dialog-it3}, en la que, además, se muestra lo descrito en el párrafo anterior. La línea azul será el nuevo hijo, y la roja el hijo descartado.
 
 \begin{figure}[h!]
 	\centerline{\includegraphics[height=3in]{figures/it3/small-dialog.png}}
 	\caption[Pequeño diálogo - Editor de Diálogos]{Pequeño diálogo mostrado en el editor de diálogos.}
-	\label{small-dialogeditor-it3}
+	\label{small-dialog-it3}
 \end{figure}
 
 Como detalle adicional, se ha generado una clase llamada \textit{NodePosicioner} que, estableciendo un número de nodos, y una altura de la ventana, posiciona automáticamente los nodos en su lugar correspondiente automáticamente, de manera que ver las secuencias es más cómodo si se abren y no existen datos acerca de su posición. Esto se muestra en la figura \ref{circle-nodes-it3}.
@@ -137,8 +138,28 @@ Como detalle adicional, se ha generado una clase llamada \textit{NodePosicioner}
 Finalmente, y para mostrar las posibilidades del editor, tenemos la figura \ref{big-dialog-it3}, en la que se muestra una secuencia muy grande. El icono del candando nos permite la edición de condiciones para mostrar dicha línea, ya sea de opción o de diálogo. La flecha negra permite establecer el nodo hijo para dicha opción directamente. Y por último, el botón de la esquina inferior derecha de cada diálogo permite acceso a los efectos que se ejecutan en dicho nodo. Estas características también se pueden observar en la figura \ref{small-dialog-it3}
 
 \begin{figure}[h!]
-	\centerline{\includegraphics[height=3in]{figures/it3/big-dialog.png}}
+	\centerline{\includegraphics[height=5in]{figures/it3/big-dialog.png}}
 	\caption[Gran diálogo - Editor de Diálogos]{Gran diálogo mostrado en el editor de diálogos.}
 	\label{big-dialog-it3}
 \end{figure}
 
+\newpage
+
+\newpage
+
+\section{El Editor de RAGE}
+\label{rageeditorit3}
+
+Como se ha mencionado varias veces a lo largo del documento, especialmente en la sección \ref{ragetrackerit2}, donde se explica la necesidad de sustituir las funcionalidades de evaluación de alumnos por un sistema más elaborado que el que encontramos en eAdventure; el sistema de evaluación que se utiliza en uAdventure está fuera del mismo, en la nube, y se llama RAGE.
+
+Esta herramienta provee, mediante una interfaz web, una serie de páginas con información importante y gráficas acerca del progreso y evaluación de los alumnos de forma en grupo e individual, permitiendo al profesor enfocar los esfuerzos en aquellos alumnos que hayan quedado rezagados o que demuestren problemas en su aprendizaje.
+
+Pese a que esta interfaz no provee de funcionalidad específica más allá de la que provee la propia interfaz web de RAGE, las clases y funciones implementadas serán utilizadas como trabajo futuro para guardar las configuraciones de evaluación y progreso de videojuegos en RAGE. El propósito de esta ventana se conservará, permitiendo, si se desea, modificar los algoritmos generados por uAdventure para el cálculo de estos elementos.
+
+La figura \ref{ragewindowit3} muestra las clases que participan en el editor de RAGE. En estas clases se encuentra \textit{RageWindow}, que provee de interfaz y de controlador para la interacción con RAGE, la clase \textit{GameConfiguration}, que es una clase contenedora de los datos de la configuración de un juego en RAGE, con la capacidad de transformarse en JSON, igual que \textit{Warning}. Por otra parte, se encuentra ThreadedNet, una clase que permite realizar peticiones POST y GET de forma paralela utilizando hilos de procesamiento.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[height=3.5in]{figures/it3/RageWindow.png}}
+	\caption[Diagrama de Clases - Editor de RAGE]{Diagrama de clases de las clases que participan en el editor de RAGE.}
+	\label{ragewindowit3}
+\end{figure}
