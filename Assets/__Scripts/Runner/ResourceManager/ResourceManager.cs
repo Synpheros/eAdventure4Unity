@@ -165,7 +165,13 @@ public sealed class ResourceManager{
 				System.IO.Directory.Delete (f,true);
 		}
 
-		extracted = true;
+        VideoConverter converter = new VideoConverter();
+        foreach (string video in System.IO.Directory.GetFiles(exportLocation + "/assets/video/"))
+        {
+            converter.Convert(video);
+        }
+
+            extracted = true;
 	}
 
 	public string getCurrentDirectory(){

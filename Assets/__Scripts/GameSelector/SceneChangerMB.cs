@@ -4,9 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneChangerMB : MonoBehaviour {
 	
-	void Start () {
-	
-	}
+	void Start ()
+    {
+        VideoConverter converter = new VideoConverter();
+        converter.Convert("C:/Users/Synpheros/Desktop/ffmpeg/MAQ29909.mpg");
+    }
 
 	void Update () {
 		

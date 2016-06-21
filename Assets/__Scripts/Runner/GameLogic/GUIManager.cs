@@ -121,7 +121,7 @@ public class GUIManager : MonoBehaviour {
 
 		if (talker != null) {
 			Vector2 position = talker.transform.localPosition;
-			position.y += talker.GetComponent<CharacterMB> ().transform.localScale.y / 2;
+			position.y += talker.transform.localScale.y / 2;
 
 			bubble.Destiny = position;
 			bubble.Origin = new Vector2 (position.x, position.y - 10f);
