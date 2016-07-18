@@ -1,7 +1,11 @@
 \chapter{Conclusiones}
 \label{conclusiones}
 
-Tras haber completado el proyecto, incluyendo el diseño, la implementación y la escritura de esta memoria, se extraen determinadas conclusiones que se deben abordar en este \textit{post mortem} del proyecto. Éstas se presentarán categorizadas dentro de los diferentes objetivos que se plantearon, estableciendo una relación entre objetivos planteados y resultados obtenidos.
+Tras haber completado el proyecto, incluyendo el diseño, la implementación y la escritura de esta memoria, se extraen determinadas conclusiones que se deben abordar en este \textit{post mortem} del proyecto. Primero se realizará una reflexión personal acerca de los resultados del proyecto y luego se presentarán conclusiones categorizadas dentro de los diferentes objetivos que se plantearon, estableciendo una relación entre objetivos planteados y resultados obtenidos.
+
+Bajo mi impresión personal, estoy bastante satisfecho con el resultado obtenido, pues, en mayor o menor medida he satisfecho la lista de objetivos que me plantee, aprendiendo gran cantidad de nuevos conceptos. Mediante la experimentación he aprendido que, al menos en mi caso, trabajo mejor realizando un pequeño diseño, en papel, de cómo me imagino que deberían funcionar las cosas, y desarrollando un prototipo que realice lo implementado, y me permita ver si el resultado obtenido es el esperado, o se necesita realizar un rediseño de la aplicación.
+
+Una de las conclusiones que extraigo del proyecto es que es muy satisfactorio trabajar con un estudiante extranjero, de una cultura diferente, como es Piotr Marszal. La experiencia de trabajar con una persona que se toma su trabajo tan en serio, al que le puedes pedir resultados y responde ante tus necesidades, es una experiencia muy buena, pues te permite crecer como persona al conocer otra forma de trabajar, y hace que te impliques más en el desarrollo del proyecto, desarrollando un código de mayor calidad.
 
 El listado de objetivos, planteado en el capítulo \ref{objetivos}, de forma simplificada, es el siguiente:
 
@@ -42,4 +46,53 @@ Finalmente, para soportar totalmente estos videojuegos fue necesario dar soporte
 \textbf{Acerca del objetivo 7}: Para dar soporte a los no desarrolladores, para que puedan beneficiarse de las ventajas de uAdventure, y poder utilizar cualquier juego de eAdventure en cualquier plataforma, se ha desarrollado un emulador independiente de videojuegos de eAdventure, capaz de importar juegos en formato ".jar", y permitir al usuario jugarlos. Este emulador está explicado en la sección \ref{emulatorit3}. Este emulador dispone de distintas vistas, entre las que se presenta un explorador de archivos capaz de explorar el sistema de ficheros para permitir al usuario seleccionar el videojuego que desee importar, así como una pantalla principal donde se presentan todos los videojuegos importados, o una pantalla de configuración.
 
 \textbf{Acerca del objetivo 8}: para mejorar la capacidad de evaluar existente en eAdventure, se ha conectado el sistema con RAGE, el cual provee, mediante una interfaz web, una serie de páginas con información importante y gráficas acerca del progreso y evaluación de los alumnos de forma en grupo e individual, permitiendo al profesor enfocar los esfuerzos en aquellos alumnos que hayan quedado rezagados o que demuestren problemas en su aprendizaje. Para ello se ha dado soporte a un proyecto del grupo e-UCM, que consiste en generar un \textit{Tracker} que se comunique con RAGE. Dicha comunicación está explicada en la sección \ref{ragetrackerit2}. Por otra parte, y para generar los perfiles de evaluación, se ha facilitado el acceso a RAGE desde eAdventure, generando un editor y una serie de clases comunes con RAGE, capaces de almacenar elementos de este sistema. Dicho editor se explica en la sección \ref{rageeditorit3}.
+
+\chapter{Conclusions}
+
+After completing this project, including the design, implementation and writing of this report, we have identified certain conclusions that are being addressed in the post mortem of this project.certain conclusions to be addressed in this post mortem of the project are extracted. They will be presented categorized within the different objectives that we identified, establishing a relationship between the objectives and the results.
+
+Under my personal impression, I am quite satisfied with the result, therefore, in greater or lesser quantity, I have met the target list that i wrote, learning many new concepts. Through experimentation I have learned that, at least in my case, I produce better projects making a small design on paper, how I imagine things should work, and developing a prototype that implements that design, and lets me see if the result obtained it is the expected, or need to make a redesign of the application.
+
+One conclusion I get from the project is that is very satisfying to work with a foreign student, a different culture, such as Piotr Marszal. The experience of working with a person who takes his job so seriously, which you can order results and responds to your needs, is a very good experience, because you can grow as a person to know another way of working, and makes you involve yourself in the development of the project, developing a code of higher quality.
+
+The simplified list of objectives identified in Chapter 2 is the following:
+1. Make the Checklist videogame work in Unity3D .
+2. Make the highest number of games developed by CATEDU work in Unity 3D.
+3. Correctly run any eAdventure game in Unity3D .
+4. Design a quality application architecture.
+5. Integrate the implemented platform with Piotr Marszal project.
+6. Implement a set of interaction improvements for mobile devices.
+7. Develop a functionality to allow non-developers to be able to play games generated with eAdventure on any platform, without having Unity installed, as well as
+benefit from the characteristics of uAdventure.
+8. Improve the existing eAdventure assessment functionality.
+
+\textbf{About the first goal}: This goal was one of the first to be completed, since
+after the construction of the initial prototype, the game Checklist, described in section \ref{checklist} was fully playable. Although the results obtained at that time
+were not representative of a high quality videogame. The quality of the Checklist videogame improved significantly after several iterations.
+
+
+To satisfy this objective was necessary to implement the initial prototype of
+whole project, presented in chapter \ref{primeraiteracion}. Researching about “.jar”
+packages and runnable games, explained in Section 3. After this research,
+we developed the first project architecture, and we implemented the necessary classes read and store the data specified inside the game’s specification file. These classes are known as the Data Classes. Afterwards, we generated the Behavior Classes (classes that interpret and run the Data Classes). Finally, we implemented the classes required for additional functionalities such as support for effects, conversations and a controller known as Game, able to manage the game state and operations over its data model.
+
+
+
+\textbf{About Objective 2} : CATEDU is composed of a set of games such as the First Aid Game, or the game Travel to London. We had to iterate a second time over the project, although not entirely. In this second iteration new features were added such as Timer management , explained in section \ref{timercontrollersecit2}, the ability to move objects across the screen, explained in section 5.2.3, the support for third person games, explained in section \ref{itemsit2} , and the player movement in these types of games, explained in sections \ref{playerit2}, and \ref{trajectoryit2}.
+
+Finally, for give full suport to this videogames, it was necesary to give support to multimedia content, like videos and audio. Support to multimedia is described in sections \ref{resourcemanager} and \ref{scene}.
+
+About Objective 3 : Correctly running every eAdventure game in uAdventure is a very complex task because it requires the implementation of all the original eAdventure functionalities. Currently, it is possible that some of the existing games may not be fully runnable on uAdventure. However, to maximize the amount of functionality implemented, we fully support macros, effects and actions, explained in section \ref{sequencessecit2}.
+
+\textbf{About Objective 4}. To complete this objective we had to iterate several times over the uAdventure source code. We accomplished a source code that is flexible and implements several Software Engeneering design patterns such as Singleton or Factory (implementing Managers and Controllers for the operations process). This refactoring and redesign process is  supported by class diagrams for the architecture and the class implementation documented in chapter 5 \ref{it2}.
+
+\textbf{About Objective 5}. To be able to integrate both projects it has been necessary to develop a common data model. We have developed the common data model and a file reader designed for the original eAdventure files and explained in section \ref{coreit2}. During the integration process, we also ccreated two editors that have been explained in section \ref{sequencesit3}.
+
+\textbf{About Objective 6}. To improve the interaction functionality, especially designed for mobile devices, we have developed two different shaders. The shaders highlight elements of interest of the scene. This is useful when there is no cursor available on the screen. We also redesigned parts of the user interface to improve it for mobile devices. All these improvements are described in section \ref{guimanagersectionit2}.
+
+\textbf{About Objective 7} In order to allow users with no programming skills use the uAdventure framework and be able to run eAdventure games on different platforms we have developed an emulator able to import and play games formatted as “.jar” packages. The emulator consists of a file explorer that allows the user to select the games to be imported. This is fully explained in section \ref{ragetrackerit2}.
+
+\textbf{About Objective 8} To improve the current assessment functionality and the evaluation support of eAdventure, we have connected the system with RAGE. RAGE provides the analysis infrastructure required to process the progress and other related learning outcomes. We developed the functionality required to manage the data model of RAGE (such as games, classes and sessions) and we used a tracker asset developed by the e-UCM research group to communicate with the RAGE platform, explained in section \ref{rageeditorit3} 
+
+
 

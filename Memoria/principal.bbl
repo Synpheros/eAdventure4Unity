@@ -1,3 +1,68 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
+
+\bibitem{unrealengine}
+
+
+\bibitem{adventuregamestudio}
+
+
+\bibitem{cssseparar}
+Miguel~Angel Alvarez.
+\newblock {CSS: Separar contenido y presentación}, 2015.
+
+\bibitem{BaeloAlvarez2009}
+Roberto {Baelo {\'{A}}lvarez}.
+\newblock {El e-learning, una respuesta educativa a las demandas de las
+  sociedades del siglo XXI}.
+\newblock {\em Pixel-Bit: Revista de medios y educaci{\'{o}}n}, (35):87--96,
+  2009.
+
+\bibitem{checklisteucm}
+e~UCM.
+\newblock {Checklist (game abouth safe surgery checklist)}.
+
+\bibitem{gamemaker}
+Javier Fugitivo.
+\newblock {Game Maker Studio: Primeros pasos}, 2013.
+
+\bibitem{baltaslide}
+Baltasar~Fernández Manjón.
+\newblock { Improving the Application of the Surgical Checklist Using Serious
+  Games, Games for Health Europe Conference, Amsterdam, NL}.
+\newblock 2013.
+
+\bibitem{Michael2005}
+D~R Michael and S~L Chen.
+\newblock {Serious Games: Games That Educate, Train, and Inform}.
+\newblock {\em Education}, October 31:1--95, 2005.
+
+\bibitem{Reina2012}
+Laura~Arjona Reina and Gregorio Robles.
+\newblock {Mining for localization in Android}.
+\newblock {\em IEEE International Working Conference on Mining Software
+  Repositories}, pages 136--139, 2012.
+
+\bibitem{Report2009}
+Technical Report.
+\newblock {Analysis of Dalvik Virtual Machine and Class Path Library}.
+\newblock {\em Management}, pages 1 -- 42, 2009.
+
+\bibitem{unitymanual}
+Unity Technologies.
+\newblock {Manual: Execution Order of Event Functions (Orden de Ejecución de
+  Funciones de Evento)}.
+
+\bibitem{Torrente2010}
+Javier Torrente, {\'{A}}ngel {Del Blanco}, Eugenio~J. Marchiori, Pablo
+  Moreno-Ger, and Baltasar Fern{\'{a}}ndez-Manj{\'{o}}n.
+\newblock {e-Adventure: Introducing Educational Games in the Learning Process}.
+\newblock In {\em IEEE Education Engineering (EDUCON) 2010 Conference}, pages
+  1121--1126, Madrid, Spain, 2010. IEEE.
+
+\bibitem{TorresMolina2007}
+Yolanda {Torres Molina}.
+\newblock {Localizaci{\'{o}}n de juegos para m{\'{o}}vil}.
+\newblock {\em Tradum{\`{a}}tica: traducci{\'{o}} i tecnologies de la
+  informaci{\'{o}} i la comunicaci{\'{o}}}, (5), 2007.
 
 \end{thebibliography}

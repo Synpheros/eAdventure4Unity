@@ -26,18 +26,15 @@ Este es el caso del videojuego Checklist, creado en eAdventure para formar a per
 
 El planteamiento de la reconstrucción de dicho videojuego, lleva a la evolución de este proyecto en algo reutilizable, generando una herramienta capaz de interpretar el contenido de cualquier juego generado por eAdventure, y permitir jugarlo. Así como la posibilidad de generar dicho juego, en un paquete único ejecutable, y compatible con múltiples plataformas y sistemas operativos.
 
-Gracias a este caso personal y la experiencia portando dicho videojuego, se realizará una explicación acerca de cómo evolucionó este proyecto desde el planteamiento de una reconstrucción de juego, así como sus múltiples iteraciones en el diseño de arquitectura, y su posterior integración junto al proyecto de Piotr Marzsal. En este proceso se exponen todos aquellos problemas que surgen, así como su resolución, enfrentando un cambio de paradigma en el que se pasa de tener una arquitectura orientada a objetos, a una arquitectura orientada a componentes. 
+Gracias a este caso personal y la experiencia portando dicho videojuego, se realiza una memoria acerca que explica el proceso de cómo evolucionó este proyecto desde el planteamiento de una reconstrucción de juego, así como sus múltiples iteraciones en el diseño de arquitectura, y su posterior integración junto al proyecto de Piotr Marzsal. En este proceso se exponen todos aquellos problemas que surgen, así como su resolución, enfrentando un cambio de paradigma en el que se pasa de tener una arquitectura orientada a objetos, a una arquitectura orientada a componentes.
 
+No obstante, y para el beneficio del mayor número de personas, las cuales no tienen por qué tener conocimientos de informática para poder disfrutar de juegos de eAdventure en cualquier plataforma, se produce un emulador de estos videojuegos que permite importar cualquier videojuego, y jugarlo. Esta capacidad dará soporte al ciclo de vida de auellos videojuegos cuyo ciclo de vida no pueda ser soportado por sus desarrolladores.
 
-%\begin{figure}[htb]%t=top, b=bottom, h=here
-%
-%    \includegraphics[height=2.5in]{figures/graph.png}
-%
-%    \caption[Optional: Short caption to appear in List of
-%    Figures]{Full caption to appear below the Figure}
-%
-%    \label{figure1}
-%\end{figure}
+\begin{figure}[htb]
+	\centerline{\includegraphics[height=6in]{figures/uAdventuregrafico.png}}
+	\caption[Introducción uAdventure]{Gráfico que presenta la introducción de uAdventure}
+	\label{intrograph}
+\end{figure}
 
 % +--------------------------------------------------------------------+
 % |To create cross-references to figures, tables and segments
@@ -104,13 +101,13 @@ Gracias a este caso personal y la experiencia portando dicho videojuego, se real
 \section{Los videojuego educativos y el E-Learning}
 \label{seriousgames}
 
-El e-Learning, también conocido en español con la terminología de Aprendizaje Electrónico, es aquello que, según Martín Hernández, engloba aquellas aplicaciones y servicios que, tomando como base las TIC, se orientan a facilitar el proceso de enseñanza-aprendizaje [1]. Este e-Learning surgió en un primer momento con la intención de facilitar el acceso a la información al mayor número de personas posibles, pero esto fue satisfecho rápidamente por sistemas muy simplificados de e-Learning que básicamente son grandes repositorios de información con unas pocas facilidades.
+El e-Learning, también conocido en español con la terminología de Aprendizaje Electrónico, es aquello que, según Martín Hernández, engloba aquellas aplicaciones y servicios que, tomando como base las TIC, se orientan a facilitar el proceso de enseñanza-aprendizaje \cite{BaeloAlvarez2009}. Este e-Learning surgió en un primer momento con la intención de facilitar el acceso a la información al mayor número de personas posibles, pero esto fue satisfecho rápidamente por sistemas muy simplificados de e-Learning que básicamente son grandes repositorios de información con unas pocas facilidades.
 
 Este sector, sin embargo, está avanzando para que no haya tanta diferencia con los sistemas de educación tradicionales, intentando reducir la separación que se produce entre un profesor y un alumno cuando se realiza la educación mediante plataformas educativas en línea, añadiendo elementos de monitorización y seguimiento, elementos que fomentan la participación en comunidad como foros de trabajo, o añadiendo elementos de gamificación en los proyectos de aprendizaje que se desarrollan.
 
 No obstante, estos sistemas de educación pese a ser mucho más dinámicos, permitiendo que los usuarios marquen su ritmo de aprendizaje, y presentarse con un enfoque diferente, que supone un grado de implicación personal en el que es el usuario el que decide realizar un aprendizaje, y no una imposición social, familiar o incluso personal; no dan la motivación suficiente a muchos estudiantes para continuar con la educación y no abandonarla. Es por ello que otro tipo de género de herramientas de e-Learning surgen, donde la motivación para aprender se adquiere a través del uso de la herramienta, y el aprendizaje suele ser una cualidad implícita que se adquiere por la utilización de la misma. Estos son los videojuegos educativos.
 
-El abandono escolar es uno de los problemas más importantes actualmente. Según Prensky, los estudiantes son nativos digitales, personas capaces de interactuar con ricos dispositivos digitales como ordenadores, dispositivos móviles o videoconsolas. Esto difiere con las metodologías tradicionales de educación, en términos de interacción y contenido [2].
+El abandono escolar es uno de los problemas más importantes actualmente. Según Prensky, los estudiantes son nativos digitales, personas capaces de interactuar con ricos dispositivos digitales como ordenadores, dispositivos móviles o videoconsolas. Esto difiere con las metodologías tradicionales de educación, en términos de interacción y contenido \cite{Torrente2010}.
 
 Por todo ello, los videojuegos educativos suponen un tema de estudio y desarrollo muy importante dentro de las diferentes tecnologías de e-Learning.
 
@@ -126,18 +123,20 @@ El objeto de trabajo de este proyecto se ha dividido en tres aspectos. En primer
 \subsection{eAdventure}
 \label{eadventure}
 
+eAdventure es una herramienta de autoría de aventuras gráficas conversacionales, que permite aplicar un enfoque educativo a los videojuegos desarrollados con dicha herramienta, permitiendo generar un perfil de evaluación de los alumnos. Esta herramienta es libre y gratuita, y está desarrollada por el equipo e-UCM de la Facultad de Informática de la Universidad Complutense de Madrid.
+
 Sobre eAdventure Los videojuegos educativos, a la hora de ser producidos, tienen tres grandes problemas a los que los productores del videojuego deben enfrentarse. Estos tres problemas son: 
 
 En primer lugar, la dificultad de balancear la parte divertida y la parte educativa del videojuego. El correcto balance de ambos aspectos es necesario para el éxito del videojuego, pues, si los estudiantes no se divierten mientras juegan, lo mas probable es que terminen abandonando el juego, lo que echaría por tierra todo el esfuerzo de creación del videojuego; y por otra parte, si todos los esfuerzos son puestos en hacer la parte divertida del juego, es posible que el impacto educativo del mismo sea demasiado pequeño. Diversos autores como Dickey defienden que, los videojuegos enfocados en la historia, como cuentacuentos digitales, o aventuras gráficas point-and-click, son géneros que se adecuan mucho a las necesidades de los videojuegos educativos.
 
 Las aventuras gráficas son un género conocido dentro del mundo de los videojuegos, con grandes títulos como Monkey Island, The Day of The Tentacle o, la franquicia española, Runaway. Tal es el grado de popularidad que tienen estos videojuegos que existen herramientas específicas para la creación de videojuegos de este género, como Adventure Game Studio, DAGE o Open SLUDGE. Sin embargo, todo este tipo de herramientas, pese a ayudar mucho a producir videojuegos de este género, pero no aportan funcionalidades específicas para los videojuegos educativos. De esta manera, eAdventure, aporta un enfoque específico orientado a los videojuegos educativos. 
 
-En segundo lugar, el desarrollo de videojuegos es uno de los sectores dentro del desarrollo de software que supone un coste muy grande para su desarrollo, llegando a costar varios millones de dólares. En la última década, han surgido varios proyectos de videojuegos educativos cuyo presupuesto supera los cientos de miles de euros [2]. Sin embargo, con herramientas apropiadas que simplificasen el proceso de desarrollo del juego, y que además fuesen de bajo coste, se podría reducir el presupuesto necesario para desarrollar videojuegos educativos. Es por ello que eAdventure se presenta como una alternativa libre y gratuita para simplificar el desarrollo de videojuegos educativos. 
+En segundo lugar, el desarrollo de videojuegos es uno de los sectores dentro del desarrollo de software que supone un coste muy grande para su desarrollo, llegando a costar varios millones de dólares. En la última década, han surgido varios proyectos de videojuegos educativos cuyo presupuesto supera los cientos de miles de euros \cite{Michael2005}. Sin embargo, con herramientas apropiadas que simplificasen el proceso de desarrollo del juego, y que además fuesen de bajo coste, se podría reducir el presupuesto necesario para desarrollar videojuegos educativos. Es por ello que eAdventure se presenta como una alternativa libre y gratuita para simplificar el desarrollo de videojuegos educativos. 
 
 Y finalmente, en tercer lugar, el último problema que tienen los videojuegos, está relacionado con los problemas de distribución de un videojuego una vez que está desarrollado. Es frecuente encontrar que videojuegos están únicamente
 disponibles en una plataforma o sistema operativo, por lo que gran cantidad de personas no pueden disfrutar de un videojuego, y por consiguiente, los desarrolladores no consiguen que sus videojuegos no tengan el efecto deseado.
 
-Sin embargo, esta herramienta, como se mencionó en la introducción, está desarrollada en Java, y produce Applets standalone, que, pese a no necesitar ninguna instalación, necesitan de la maquina virtual Java para funcionar. La máquina virtual Java ha gozado de mucha popularidad a lo largo de los años, pero actualmente cada vez cuesta más encontrar dispositivos de uso cotidiano que dispongan de ella. Tanto es así que, sistemas operativos como Android, cuyo lenguaje de programación principal es Java, han construido su propia máquina virtual llamada Dalvik [3], la cual está siendo sustituida actualmente por ART [4], y que reemplaza completamente a la maquina virtual Java para la ejecución de programas desarrollados en dicho lenguaje.
+Sin embargo, esta herramienta, como se mencionó en la introducción, está desarrollada en Java, y produce Applets standalone, que, pese a no necesitar ninguna instalación, necesitan de la maquina virtual Java para funcionar. La máquina virtual Java ha gozado de mucha popularidad a lo largo de los años, pero actualmente cada vez cuesta más encontrar dispositivos de uso cotidiano que dispongan de ella. Tanto es así que, sistemas operativos como Android, cuyo lenguaje de programación principal es Java, han construido su propia máquina virtual llamada Dalvik \cite{Report2009}, la cual está siendo sustituida actualmente por ART \ref{Levin}, y que reemplaza completamente a la maquina virtual Java para la ejecución de programas desarrollados en dicho lenguaje.
 
 Es por ello que el desarrollo analizado en este artículo se encarga de mejorar la capacidad de eAdventure para la distribución de juegos, desarrollando un intérprete capaz de visualizar un juego creado en eAdventure, en el motor de videojuegos Unity. 
 
@@ -147,11 +146,11 @@ Es por ello que el desarrollo analizado en este artículo se encarga de mejorar 
 \subsection{Checklist}
 \label{checklist}
 
-Ante la pregunta ¿Que instrumento reduce el ratio de muertes y complicaciones en cirugía en más de un tercio? Pese a que pueda parecer que son los avances tecnológicos, la calidad de la medicina y de los utensilios, o la higiene en los hospitales, esta no es la respuesta. Estos factores han mejorado la medicina, y han logrado que avance hasta el punto de realizar operaciones que antes considerábamos impensables, ayudando a los médicos a detectar problemas mucho antes de que surjan y a monitorizar situaciones peligrosas. Pero es algo mucho mas sencillo lo que ayuda a evitar muertes y complicaciones, y esto es una simple lista que se realiza antes, durante y después de una operación. Esta lista tiene el nombre de Lista de Verificación Quirúrgica [5].
+Ante la pregunta ¿Que instrumento reduce el ratio de muertes y complicaciones en cirugía en más de un tercio? Pese a que pueda parecer que son los avances tecnológicos, la calidad de la medicina y de los utensilios, o la higiene en los hospitales, esta no es la respuesta. Estos factores han mejorado la medicina, y han logrado que avance hasta el punto de realizar operaciones que antes considerábamos impensables, ayudando a los médicos a detectar problemas mucho antes de que surjan y a monitorizar situaciones peligrosas. Pero es algo mucho mas sencillo lo que ayuda a evitar muertes y complicaciones, y esto es una simple lista que se realiza antes, durante y después de una operación. Esta lista tiene el nombre de Lista de Verificación Quirúrgica \cite{baltaslide}.
 
 La Lista de Verificación Quirúrgica fue desarrollada por la Organización Mundial de la Salud en 2007 buscando identificar las normas mínimas de aplicación universal. Se construyó mediante el estudio de pacientes, cirujanos, anestesiólogos, enfermeras y expertos en seguridad de los pacientes a lo largo de dos años. En si, la lista está formada por simples comprobaciones que llevan muy poco tiempo de realizar, y no debe ser una carga para el equipo quirúrgico, pues ellos ya tienen una labor muy importante que llevar a cabo.
 
-El videojuego Checklist surge para concienciar y educar acerca de la correcta aplicación de la Lista de Verificación Quirúrgica, mostrando, tanto los beneficios de aplicarla correctamente, como las consecuencias de una mala aplicación. Se desarrolló en la UCM, por el grupo de investigación eUCM junto con la Facultad de Medicina de la UCM, el Hospital Doce de Octubre y el Massachusetts General Hospital [6].
+El videojuego Checklist surge para concienciar y educar acerca de la correcta aplicación de la Lista de Verificación Quirúrgica, mostrando, tanto los beneficios de aplicarla correctamente, como las consecuencias de una mala aplicación. Se desarrolló en la UCM, por el grupo de investigación eUCM junto con la Facultad de Medicina de la UCM, el Hospital Doce de Octubre y el Massachusetts General Hospital \cite{checklisteucm}.
 
 Este juego está desarrollado utilizando eAdventure, y por consiguiente es del género Aventura Gráfica, más concretamente, una en Primera Persona, en la que el jugador no maneja a un personaje dentro de un juego, sino que ocupa el lugar del protagonista, quien toma uno de los diferentes roles que se ofrecen y que participan dentro de un quirófano, y realiza participación en una operación en tres situaciones diferentes: Antes de inducir la anestesia al paciente, antes de la primera incisión en la piel, y antes de que el paciente se marche de la sala de operación. Asimismo, dentro del videojuego suceden diferentes eventos que se dan de forma aleatoria, como una incisión mal marcada, o un compañero que no coopera.
 
@@ -163,12 +162,9 @@ Los motores de videojuegos son herramientas que permiten y facilitan la creació
 
 Unity es un motor de videojuegos caracterizado por ser capaz de producir videojuegos para multitud de plataformas, entre las cuales encontramos Windows, OS X y Linux, junto con los mas frecuentes sistemas operativos móviles y de tabletas, como Android e  iOS, tanto iPad como iPhone, además de videoconsolas como PlayStation 3, PlayStation Vita, Wii, Wii U, etc. Esta facilidad para producir videojuegos en múltiples plataformas, así como su licencia gratuita para los desarrolladores independientes, y pequeñas startups que no tienen presupuesto para pagar las costosas licencias de los motores de videojuegos, hacen de este motor una opción muy elegida por gran número de desarrolladores que quieren llegar al mayor número de personas con el menor esfuerzo posible.
 
-Asimismo, otras de las características de este motor incluyen la, ampliamente utilizada en videojuegos, arquitectura basada en componentes, en la que los objetos se componen de distinta manera dependiendo de sus necesidades en cada momento, permitiéndoles mutar o adquirir un comportamiento adicional si se requiere; en contraposición a la arquitectura orientada a objetos, en la que los objetos adquieren una funcionalidad al implementar una interfaz o heredar de una clase de una jerarquía superior, así como adquirir funcionalidad mediante la implementación de si misma. Esta arquitectura permite tener objetos más dinámicos, así como facilitar la reutilización de código gracias a la incorporación del mismo componente en varios objetos, sin embargo supone un cambio de paradigma en la programación, y requiere conocer tanto el funcionamiento de Unity, la comunicación entre sus componentes, así como el complejo ciclo de vida que compone cada Tick de juego [7].
+Asimismo, otras de las características de este motor incluyen la, ampliamente utilizada en videojuegos, arquitectura basada en componentes, en la que los objetos se componen de distinta manera dependiendo de sus necesidades en cada momento, permitiéndoles mutar o adquirir un comportamiento adicional si se requiere; en contraposición a la arquitectura orientada a objetos, en la que los objetos adquieren una funcionalidad al implementar una interfaz o heredar de una clase de una jerarquía superior, así como adquirir funcionalidad mediante la implementación de si misma. Esta arquitectura permite tener objetos más dinámicos, así como facilitar la reutilización de código gracias a la incorporación del mismo componente en varios objetos, sin embargo supone un cambio de paradigma en la programación, y requiere conocer tanto el funcionamiento de Unity, la comunicación entre sus componentes, así como el complejo ciclo de vida que compone cada Tick de juego \cite{unitymanual}.
 
 En Unity, cada objeto que toma partido dentro de la escena, está constituido por un GameObject y todas aquellas componentes asociadas, extendiendo a la clase MonoBehabiour, así como una componente Transform que le permite orientarse y deformarse en la escena, y una componente Renderer que le ayuda a representarse.
-
-\subsection{RAGE}
-\label{rage}
 
 \section{Estado del Arte}
 \label{estadodelarte}
@@ -192,12 +188,12 @@ Estos motores, aun así, siguen teniendo un nivel de abstracción bastante grand
 
 Uno de los motores que fueron planteados cuando surgió este proyecto es Unreal Engine, esto es debido a que, al igual que Unity3D, ofrece licencias gratuitas para desarrolladores independientes que no obtienen beneficio, o obtienen poco beneficio de sus juegos. Este motor es conocido por la gran calidad gráfica que se consigue produciendo juegos con el.
 
-Unreal Engine fue desarrollado por Epic Games, inicialmente en 1998 para el desarrollo de videojuego First Person Shooter Unreal. El motor ha ido evolucionando desarrollando videojuegos como Unreal Tournament, Turok, America's Army -videojuego desarrollado por un equipo de desarrolladores de la Marina estadounidense con el objetivo de formar a civiles en armamento y estrategias de combate, y conseguir reclutarlos posteriormente en el ejercito de los Estados Unidos-, Gears of War, la saga Bioshock, o la saga Mass Effect. 
+Unreal Engine fue desarrollado por Epic Games, inicialmente en 1998 para el desarrollo de videojuego First Person Shooter Unreal \cite{unrealengine}. El motor ha ido evolucionando desarrollando videojuegos como Unreal Tournament, Turok, America's Army -videojuego desarrollado por un equipo de desarrolladores de la Marina estadounidense con el objetivo de formar a civiles en armamento y estrategias de combate, y conseguir reclutarlos posteriormente en el ejercito de los Estados Unidos-, Gears of War, la saga Bioshock, o la saga Mass Effect. 
 
 Unreal Engine está caracterizado por tener una gran capacidad de renderización y calidad gráfica, así como un complejo sistema de materiales, iluminación y sombras, que consiguen, si se aplican correctamente, un resultado muy similar a una imagen real, como en la demo técnica London Apartment, visible en la figura \ref{londonapartment}. Esto, no obstante, no implica que todo lo generado con Unreal Engine tenga una calidad gráfica excenelente; únicamente hace más sencillo este proceso.
 
 \begin{figure}[htb]
-	\includegraphics[height=2.5in]{figures/london-apartment.jpg}
+	\centerline{\includegraphics[height=2.5in]{figures/london-apartment.jpg}}
 	\caption[Unreal Engine 4 - London Apartment]{London Apartment, una demo técnica desarrollada con Unreal Engine 4.}
 	\label{londonapartment}
 \end{figure}
@@ -206,6 +202,15 @@ Uno de los factores que influyen en la decisión de elegir qué motor es el mas 
 
 Sin embargo, en nuestro equipo existen dos factores por los que Unreal Engine 4 fué descartado. En primer lugar encontramos que modificar Unreal Engine 4, pese a que se han incorporado nuevos sistemas de gestión de Plugins en esta última versión, es una tarea extremadamente laboriosa, sobre la que hay disponible escasa documentación, y que todavía se encuentra en estado de desarrollo. Por otra parte, ambos integrantes del equipo tenemos gran experiencia en el uso de Unity, por lo que el proceso de aprendizaje hubiera sido bastante laborioso.
 
+\subsubsection{GameMaker: Studio}
+
+Este motor de videojuegos, creado por el profesor Mark Overmans, y posteriormente desarrollado por la empresa YoYo Games, con fecha de lanzamiento inicial el 15 de noviembre de 1999, es un motor de desarrollo de videojuegos, basado en el desarrollo rápido de aplicaciones \cite{gamemaker}. Este motor es gratuito, aunque también se puede encontrar una versión comercial que amplia las funcionalidades del editor \cite{gamemaker}.
+
+Este motor está especialmente diseñado para permitir al usuario desarrollar un juego sin la necesidad de aprender un lenguaje de programación. No obstante, contiene su propio lenguaje de \textit{scripting} interpretado llamado \textit{Game Maker Language}.
+
+Pese a que se pueden generar videojuegos tridimensionales, su diseño está enfocado a la generación de juegos en dos dimensiones. E incluye características como el manejo de recursos, entre los que se encuentran gráficos, sonidos, fondos, etc... los cuales se asignan a objetos, el manejo de Eventos, como la pulsación de una tecla, o una jerarquía de objetos sobre los que se actúa en el videojuego.
+
+Como características destacadas de este motor, encontramos que permite al programador añadir elementos a la escena utilizando mecanismos de \textit{Drag and Drop}. Así como la posibilidad de generar videojuegos en formato ".exe" para el sistema operativo Windows, así como la posibilidad de generar un archivo ".apk", instalable en Android.
 
 \subsection{Motores de desarrollo de Aventuras Gráficas}
 \label{herramientasaventuras}
@@ -219,14 +224,14 @@ Entre las características que abstraen los motores de desarrollo de aventuras g
 \subsubsection{Adventure Game Studio}
 \label{adventuregamestudio}
 
-Dentro de esto de editores, encontramos a el más conocido de todos ellos, Adventure Game Studio, también conocido por sus siglas AGS. Está caracterizado por la increíble personalización que tienen los juegos que se generan con esta herramienta, permitiendo modificar prácticamente todos los elementos que lo conforman, además de dar la oportunidad a los desarrolladores, de generar su propios Scripts e incluirlos en el juego. 
+Dentro de esto de editores, encontramos a el más conocido de todos ellos, Adventure Game Studio, también conocido por sus siglas AGS. Está caracterizado por la increíble personalización que tienen los juegos que se generan con esta herramienta, permitiendo modificar prácticamente todos los elementos que lo conforman, además de dar la oportunidad a los desarrolladores, de generar su propios Scripts e incluirlos en el juego \cite{adventuregamestudio}. 
 
 Este software no sólo es un gran editor que da casi infinitas posibilidades a los desarrolladores, sino que además está acompañado de una gran comunidad de usuarios, desarrolladores independientes y aficionados, que comparten entre ellos sus proyectos. Todos estos proyectos compartidos, son debidamente catalogados en el repositorio de juegos que provee la propia página web de esta herramienta. Una de las pegas que tiene este editor es que únicamente funciona en Windows, aunque existen alternativas muy similares para linux.
 
 Finalmente mencionar que este motor, pese a ser gratuito para proyectos que no son comerciales, tiene una licencia que, en caso de ser comercializado, establece que el usuario debe encargarse de pagar por todas las librerías que AGS utiliza para funcionar a los desarrolladores de dichas librerías.
 
 \begin{figure}[htb]
-    \includegraphics[height=2.5in]{figures/ags.png}
+    \centerline{\includegraphics[height=2.5in]{figures/ags.png}}
     \caption[Adventure Game Studio]{Una escena en Adventure Game Studio}
     \label{agsfigure}
 \end{figure}
@@ -243,7 +248,7 @@ No obstante, este editor tiene algunos problemas, como que, por ejemplo, la cám
 Como detalle adicional de este editor, y característica de las más importantes, es que, es multiplataforma, y no solo se puede ejecutar en Windows, OSX y Linux, sino que además, le da al usuario la posibilidad de generar su juego para estas plataformas, en un paquete individual, con todos los recursos incluidos dentro del mismo.
 
 \begin{figure}[htb]
-	\includegraphics[height=2.5in]{figures/sludge.png}
+	\centerline{\includegraphics[height=2.5in]{figures/sludge.png}}
 	\caption[Open SLUDGE]{Multitud de ventanas de Open SLUDGE ejecutándose en OSX}
 	\label{sludgefigure}
 \end{figure}
@@ -256,7 +261,7 @@ En la figura \ref{sludgefigure} se observa como Open SLUDGE se ejecuta en OSX. L
 Por último encontramos WinterMute Engine. Este pack de herramientas, cuya primera versión data de enero de 2003, para crear aventuras Point and Click, está caracterizado por ser capaz de crear aventuras gráficas 2D, 2.5D (Personajes en 2 dimensiones, y entornos en 3D, y viceversa), y aventuras generadas completamente en 3D. Al igual que SLUDGE, tiene características estándar como personajes y paralaje en escenas, aunque, frente a este, añade características como editores de interfaz, o soporte a accesibilidad, como poder hacer Text-To-Speech. Sin embargo, una de las características más llamativas de este editor, es la posilibidad de poder generar aventuras gráficas y que estas se ejecuten en iOS, pudiendo instalarlas en un iPad o iPhone. Finalmente decir que el proyecto se distribuye bajo licencia MIT.
 
 \begin{figure}[htb]
-	\includegraphics[height=2.5in]{figures/wme.jpg}
+	\centerline{\includegraphics[height=2.5in]{figures/wme.jpg}}
 	\caption[WinterMute Engine]{Gestor de proyectos de Wintermute Engine}
 	\label{wmengine}
 \end{figure}
@@ -269,7 +274,7 @@ en la figura \ref{wmengine} se muestra una vista del editor WinterMute Engine. L
 Creado por Javier Torrente e Iván Martínez-Ortiz, y con última versión datada el 30 de enero de 2014, encontramos el proyecto eAdventure Android, el cual tiene dos propósitos. El primero es el de permitir al usuario ejecutar juegos de eAdventure en Android, y el segundo es el de explotar los sensores del dispositivo, como el GPS para la ubicación, y la cámara para lectura de códigos QR. Este proyecto tuvo problemas de continuidad ya que uno de los desarrolladores dejó el equipo y, debido a la dificultad para continuar el proyecto sin su aportación, se decidió que el proyecto evolucionase en otro proyecto llamado Mokap.
 
 \begin{figure}[htb]
-	\includegraphics[height=2.5in]{figures/eandroid.png}
+	\centerline{\includegraphics[height=2.5in]{figures/eandroid.png}}
 	\caption[eAdventure Android - Lupa]{El videojuego Fire Protocol mostrando la habilidad de hacer Zoom con una lupa e identificar elementos.}
 	\label{eandroidlupa}
 \end{figure}
@@ -277,7 +282,7 @@ Creado por Javier Torrente e Iván Martínez-Ortiz, y con última versión datad
 El proyecto eAdventure Android añadía características que facilitaban el uso de juegos de eAdventure en entornos táctiles, como la capacidad de identificar elementos mediante el uso de una lupa que, si sobrepasaba algún elemento interactuable en la escena, muestra al usuario información acerca de dicho elemento. Esta característica se puede encontrar en la figura \ref{eandroidlupa}. Además de esta característica, eAdventure android tiene una forma diferente de mostrar el menú, ya que este puede ser difícil de tocar con los dedos en una pantalla pequeña. esto se puede encontrar en la figur a\label{eandroidmenu}.
 
 \begin{figure}[htb]
-	\includegraphics[height=2.5in]{figures/eandroid-menu.png}
+	\centerline{\includegraphics[height=2.5in]{figures/eandroid-menu.png}}
 	\caption[eAdventure Android - Menu]{El videojuego Chocolate Factory mostrando el menú contextual.}
 	\label{eandroidmenu}
 \end{figure}
@@ -293,7 +298,7 @@ En un comienzo, el proyecto se llamo eAdventure Editor y se ejecutaría en Andro
 Esta primera versión se puede observar en la figura \ref{mokap1}. El personaje se ha dibujado mediante la herramienta de pincel, que permite modificar su grosor y color. Este personaje, una vez se termina de pintar, se transforma en una figura geométrica rodeando las formas que lo componen con polígonos. Esto facilita la detección de colisiones, para saber si el usuario realiza una interacción con dicho elemento. En la imagen se puede ver un texto generado con la herramienta de generación de textos, el cual pone "hola" en color azul con borde negro. Finalmente, en la imagen se observa el menú que permite posicionar los elementos en diferente orden de profundidad en la escena.
 
 \begin{figure}[htb]
-	\includegraphics[height=2.5in]{figures/mokap1.png}
+	\centerline{\includegraphics[height=2.5in]{figures/mokap1.png}}
 	\caption[Mokap - eAdventure Editor]{Primera versión de Mokap, llamada eAdventure Editor en Android.}
 	\label{mokap1}
 \end{figure}
@@ -301,7 +306,7 @@ Esta primera versión se puede observar en la figura \ref{mokap1}. El personaje 
 Sin embargo, de la primera versión a la última ocurrieron muchos cambios significativos, un completo lavado de cara a la aplicación entera, así como un cambio de nombre, pasando a llamarse Mokap, con un nuevo logotipo. En el desarrollo de esta nueva versión estuvo implicado todo el equipo de e-UCM, y sin hablar de cambios en la infraestructura y el código, la lista de funcionalidades añadidas es muy extensa. Entre estas funcionalidades encontramos capacidades como poder mover elementos en la escena y hacer que parpadeen, ya sea periódicamente, una vez, o un número determinado de veces. El repositorio fue mejorado para permitir incorporar elementos compuestos y animados, así como música y sonidos. Otra de las características que se incorporaron en Mokap es la habilidad de incorporar Shaders a la escena, para conseguir resultados mucho más vistosos.
 
 \begin{figure}[htb]
-	\includegraphics[height=2.5in]{figures/mokap2.png}
+	\centerline{\includegraphics[height=2.5in]{figures/mokap2.png}}
 	\caption[Mokap - Última Versión]{Última versión de Mokap, mostrando una escena compleja compuesta por múltiples elementos compuestos.}
 	\label{mokap2}
 \end{figure}
