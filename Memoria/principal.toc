@@ -1,74 +1,76 @@
 \select@language {spanish}
-\contentsline {chapter}{\IeC {\'I}ndice}{\es@scroman {i}}{section*.1}
-\contentsline {chapter}{Agradecimientos}{\es@scroman {iii}}{section*.3}
-\contentsline {chapter}{Dedicatoria}{\es@scroman {iv}}{section*.4}
+\contentsline {chapter}{Agradecimientos}{\es@scroman {i}}{section*.2}
+\contentsline {chapter}{Dedicatoria}{\es@scroman {ii}}{section*.3}
+\contentsline {chapter}{\IeC {\'I}ndice}{\es@scroman {ii}}{section*.3}
+\contentsline {chapter}{List of Figures}{\es@scroman {vi}}{chapter*.5}
 \contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}Los videojuego educativos y el E-Learning}{2}{section.1.1}
-\contentsline {section}{\numberline {1.2}El Objeto de Trabajo}{4}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}eAdventure}{4}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {1.2.2}Checklist}{6}{subsection.1.2.2}
+\contentsline {section}{\numberline {1.1}Los videojuego educativos y el E-Learning}{4}{section.1.1}
+\contentsline {section}{\numberline {1.2}El Objeto de Trabajo}{5}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}eAdventure}{5}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Checklist}{7}{subsection.1.2.2}
 \contentsline {subsection}{\numberline {1.2.3}El motor de videojuegos Unity}{8}{subsection.1.2.3}
-\contentsline {section}{\numberline {1.3}Estado del Arte}{9}{section.1.3}
-\contentsline {subsection}{\numberline {1.3.1}Motores de videojuegos}{9}{subsection.1.3.1}
-\contentsline {subsubsection}{Unreal Engine}{11}{section*.5}
-\contentsline {subsubsection}{GameMaker: Studio}{12}{section*.6}
-\contentsline {subsection}{\numberline {1.3.2}Motores de desarrollo de Aventuras Gr\IeC {\'a}ficas}{13}{subsection.1.3.2}
-\contentsline {subsubsection}{Adventure Game Studio}{14}{section*.7}
-\contentsline {subsubsection}{Open SLUDGE}{14}{section*.8}
-\contentsline {subsubsection}{WinterMute Engine}{16}{section*.9}
-\contentsline {subsection}{\numberline {1.3.3}eAdventure Android y Mokap}{17}{subsection.1.3.3}
-\contentsline {section}{\numberline {1.4}Metodolog\IeC {\'\i }a de desarrollo}{21}{section.1.4}
-\contentsline {chapter}{\numberline {2}Objetivos}{24}{chapter.2}
-\contentsline {chapter}{\numberline {3}Comenzando con el Proyecto}{27}{chapter.3}
-\contentsline {chapter}{\numberline {4}Primera Iteraci\IeC {\'o}n: Prototipo inicial}{31}{chapter.4}
-\contentsline {section}{\numberline {4.1}Arquitectura del Proyecto}{31}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Controlador Principal de Juego}{33}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Clases de Datos}{33}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Clases de Comportamiento}{33}{subsection.4.1.3}
-\contentsline {section}{\numberline {4.2}Detalles de la implementaci\IeC {\'o}n}{34}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Sobre la clase Game}{35}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Sobre las Clases de Datos}{37}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}Sobre las Clases de Comportamiento}{40}{subsection.4.2.3}
-\contentsline {subsubsection}{Detalles de la clase Character}{41}{section*.10}
-\contentsline {subsubsection}{Detalles de la clase eObject, Exit y ActiveArea}{42}{section*.11}
-\contentsline {subsubsection}{Detalles espec\IeC {\'\i }ficos de Scene}{42}{section*.12}
-\contentsline {section}{\numberline {4.3}Sobre las Clases de Utilidad}{44}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}La clase Texture2DHolder}{45}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}La interfaz Sequence: Effect, Conversation y Condition}{46}{subsection.4.3.2}
-\contentsline {subsubsection}{La clase Effect}{46}{section*.13}
-\contentsline {subsubsection}{Las clases GraphConversation y Condition}{47}{section*.14}
-\contentsline {subsection}{\numberline {4.3.3}La clase Action}{48}{subsection.4.3.3}
-\contentsline {section}{\numberline {4.4}Acerca de los elementos de Adaptaci\IeC {\'o}n}{48}{section.4.4}
-\contentsline {chapter}{\numberline {5}Segunda Iteraci\IeC {\'o}n: Versi\IeC {\'o}n final e Integraci\IeC {\'o}n}{50}{chapter.5}
-\contentsline {section}{\numberline {5.1}Arquitectura del Proyecto}{50}{section.5.1}
-\contentsline {section}{\numberline {5.2}El n\IeC {\'u}cleo de Ejecuci\IeC {\'o}n: Runner}{53}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}El estado del juego: GameState}{56}{subsection.5.2.1}
-\contentsline {subsubsection}{El validador de Condiciones: ConditionChecker}{57}{section*.15}
-\contentsline {subsection}{\numberline {5.2.2}El Controlador del Juego: Game}{57}{subsection.5.2.2}
-\contentsline {subsubsection}{Representable, Interactuable, Movable y Transparent}{59}{section*.16}
-\contentsline {subsection}{\numberline {5.2.3}La escena y sus elementos}{61}{subsection.5.2.3}
-\contentsline {subsubsection}{Detalles de la escena: SceneMB}{61}{section*.17}
-\contentsline {subsubsection}{Los objetos del juego: ObjectMB}{62}{section*.18}
-\contentsline {subsubsection}{Las deformables ActiveAreasMB}{63}{section*.19}
-\contentsline {subsubsection}{Las clases vivas: PlayerMB y CharacterMB}{64}{section*.20}
-\contentsline {subsubsection}{Las trayectorias: TrayectoryHandler}{65}{section*.21}
-\contentsline {subsection}{\numberline {5.2.4}Las secuencias: Effect y GraphConversation}{67}{subsection.5.2.4}
-\contentsline {subsection}{\numberline {5.2.5}El controlador de los temporizadores: TimerController}{68}{subsection.5.2.5}
-\contentsline {subsection}{\numberline {5.2.6}El gestor de interfaz: GUIManager}{69}{subsection.5.2.6}
-\contentsline {subsubsection}{Proveedor de recursos de GUI: GUIProvider}{72}{section*.22}
-\contentsline {subsubsection}{Las burbujas de di\IeC {\'a}logo: Bubble}{73}{section*.23}
-\contentsline {subsubsection}{Elementos de mejora visual: Apearance}{75}{section*.24}
-\contentsline {subsubsection}{El men\IeC {\'u} contextual de acciones: Menu}{77}{section*.25}
-\contentsline {subsection}{\numberline {5.2.7}El gestor de recursos: ResourceManager}{79}{subsection.5.2.7}
-\contentsline {section}{\numberline {5.3}El modelo de Datos: Core}{82}{section.5.3}
-\contentsline {section}{\numberline {5.4}La comunicaci\IeC {\'o}n con RAGE: RAGETracker}{84}{section.5.4}
-\contentsline {chapter}{\numberline {6}Tercera Iteraci\IeC {\'o}n: El Emulador y los editores}{87}{chapter.6}
-\contentsline {section}{\numberline {6.1}El Emulador de Juegos}{87}{section.6.1}
-\contentsline {section}{\numberline {6.2}Los Editores de Secuencias}{92}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}El Editor de Efectos}{93}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}El Editor de Conversaciones}{95}{subsection.6.2.2}
-\contentsline {section}{\numberline {6.3}El Editor de RAGE}{97}{section.6.3}
-\contentsline {chapter}{\numberline {7}Conclusiones}{99}{chapter.7}
-\contentsline {chapter}{\numberline {8}Conclusions}{104}{chapter.8}
-\contentsline {chapter}{\numberline {9}Trabajo Futuro}{108}{chapter.9}
-\contentsline {chapter}{Bibliography}{111}{chapter*.26}
+\contentsline {section}{\numberline {1.3}Estado del Arte}{10}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Motores de videojuegos}{10}{subsection.1.3.1}
+\contentsline {subsubsection}{Unreal Engine}{11}{section*.6}
+\contentsline {subsubsection}{GameMaker: Studio}{13}{section*.7}
+\contentsline {subsection}{\numberline {1.3.2}Motores de desarrollo de Aventuras Gr\IeC {\'a}ficas}{14}{subsection.1.3.2}
+\contentsline {subsubsection}{Adventure Game Studio}{14}{section*.8}
+\contentsline {subsubsection}{Open SLUDGE}{16}{section*.9}
+\contentsline {subsubsection}{WinterMute Engine}{16}{section*.10}
+\contentsline {subsection}{\numberline {1.3.3}eAdventure Android y Mokap}{18}{subsection.1.3.3}
+\contentsline {section}{\numberline {1.4}Metodolog\IeC {\'\i }a de desarrollo}{22}{section.1.4}
+\contentsline {chapter}{\numberline {2}Objetivos}{25}{chapter.2}
+\contentsline {chapter}{\numberline {3}Comenzando con el Proyecto}{28}{chapter.3}
+\contentsline {chapter}{\numberline {4}Primera Iteraci\IeC {\'o}n: Prototipo inicial}{32}{chapter.4}
+\contentsline {section}{\numberline {4.1}Arquitectura del Proyecto}{32}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Controlador Principal de Juego}{34}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Clases de Datos}{34}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Clases de Comportamiento}{34}{subsection.4.1.3}
+\contentsline {section}{\numberline {4.2}Detalles de la implementaci\IeC {\'o}n}{35}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Sobre la clase Game}{36}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Sobre las Clases de Datos}{38}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Sobre las Clases de Comportamiento}{41}{subsection.4.2.3}
+\contentsline {subsubsection}{Detalles de la clase Character}{42}{section*.11}
+\contentsline {subsubsection}{Detalles de la clase eObject, Exit y ActiveArea}{43}{section*.12}
+\contentsline {subsubsection}{Detalles espec\IeC {\'\i }ficos de Scene}{43}{section*.13}
+\contentsline {section}{\numberline {4.3}Sobre las Clases de Utilidad}{45}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}La clase Texture2DHolder}{46}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}La interfaz Sequence: Effect, Conversation y Condition}{47}{subsection.4.3.2}
+\contentsline {subsubsection}{La clase Effect}{47}{section*.14}
+\contentsline {subsubsection}{Las clases GraphConversation y Condition}{48}{section*.15}
+\contentsline {subsection}{\numberline {4.3.3}La clase Action}{49}{subsection.4.3.3}
+\contentsline {section}{\numberline {4.4}Acerca de los elementos de Adaptaci\IeC {\'o}n}{49}{section.4.4}
+\contentsline {chapter}{\numberline {5}Segunda Iteraci\IeC {\'o}n: Versi\IeC {\'o}n final e Integraci\IeC {\'o}n}{51}{chapter.5}
+\contentsline {section}{\numberline {5.1}Arquitectura del Proyecto}{51}{section.5.1}
+\contentsline {section}{\numberline {5.2}El n\IeC {\'u}cleo de Ejecuci\IeC {\'o}n: Runner}{54}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}El estado del juego: GameState}{57}{subsection.5.2.1}
+\contentsline {subsubsection}{El validador de Condiciones: ConditionChecker}{58}{section*.16}
+\contentsline {subsection}{\numberline {5.2.2}El Controlador del Juego: Game}{58}{subsection.5.2.2}
+\contentsline {subsubsection}{Representable, Interactuable, Movable y Transparent}{60}{section*.17}
+\contentsline {subsection}{\numberline {5.2.3}La escena y sus elementos}{62}{subsection.5.2.3}
+\contentsline {subsubsection}{Detalles de la escena: SceneMB}{62}{section*.18}
+\contentsline {subsubsection}{Los objetos del juego: ObjectMB}{63}{section*.19}
+\contentsline {subsubsection}{Las deformables ActiveAreasMB}{64}{section*.20}
+\contentsline {subsubsection}{Las clases vivas: PlayerMB y CharacterMB}{65}{section*.21}
+\contentsline {subsubsection}{Las trayectorias: TrayectoryHandler}{66}{section*.22}
+\contentsline {subsection}{\numberline {5.2.4}Las secuencias: Effect y GraphConversation}{68}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}El controlador de los temporizadores: TimerController}{69}{subsection.5.2.5}
+\contentsline {subsection}{\numberline {5.2.6}El gestor de interfaz: GUIManager}{70}{subsection.5.2.6}
+\contentsline {subsubsection}{Proveedor de recursos de GUI: GUIProvider}{73}{section*.23}
+\contentsline {subsubsection}{Las burbujas de di\IeC {\'a}logo: Bubble}{74}{section*.24}
+\contentsline {subsubsection}{Elementos de mejora visual: Apearance}{76}{section*.25}
+\contentsline {subsubsection}{El men\IeC {\'u} contextual de acciones: Menu}{78}{section*.26}
+\contentsline {subsection}{\numberline {5.2.7}El gestor de recursos: ResourceManager}{80}{subsection.5.2.7}
+\contentsline {section}{\numberline {5.3}El modelo de Datos: Core}{83}{section.5.3}
+\contentsline {section}{\numberline {5.4}La comunicaci\IeC {\'o}n con RAGE: RAGETracker}{85}{section.5.4}
+\contentsline {chapter}{\numberline {6}Tercera Iteraci\IeC {\'o}n: El Emulador y los editores}{88}{chapter.6}
+\contentsline {section}{\numberline {6.1}El Emulador de Juegos}{88}{section.6.1}
+\contentsline {section}{\numberline {6.2}Los Editores de Secuencias}{93}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}El Editor de Efectos}{94}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}El Editor de Conversaciones}{96}{subsection.6.2.2}
+\contentsline {section}{\numberline {6.3}El Editor de RAGE}{98}{section.6.3}
+\contentsline {chapter}{\numberline {7}Conclusiones}{100}{chapter.7}
+\contentsline {chapter}{\numberline {8}Conclusions}{105}{chapter.8}
+\contentsline {chapter}{\numberline {9}Trabajo Futuro}{109}{chapter.9}
+\contentsline {chapter}{Bibliograf\'{\i }a}{111}{chapter*.27}
+\contentsline {chapter}{Bibliography}{112}{chapter*.27}

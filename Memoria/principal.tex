@@ -101,8 +101,8 @@
 % | style.                                                             |
 % +--------------------------------------------------------------------+
 
-\usepackage[sort&compress]{natbib}
-\bibpunct{}{}{,}{s}{}{}
+%\usepackage[sort&compress]{natbib}
+%\bibpunct{}{}{,}{s}{}{}
 %\usepackage{hypernat}
 
 % +--------------------------------------------------------------------+
@@ -225,11 +225,6 @@
 % +--------------------------------------------------------------------+
 
 \phantomsection
-\addcontentsline{toc}{chapter}{Índice}
-
-\tableofcontents
-%\listoffigures
-%\listoftables
 
 %\hfill  Are these lines necessary?
 %\hfill
@@ -255,6 +250,11 @@
 \input{dedicatoria.tex}
 \phantomsection
 \addcontentsline{toc}{chapter}{Dedicatoria}
+
+\addcontentsline{toc}{chapter}{Índice}
+\tableofcontents
+\listoffigures
+%\listoftables
 
 % +--------------------------------------------------------------------+
 % | Preface Page
@@ -327,7 +327,7 @@
 
 
 %\bibdata{references}
-\bibliographystyle{plain}
+%\bibliographystyle{plain}
 \bibliography{references}
 \addcontentsline{toc}{chapter}{Bibliography}
 

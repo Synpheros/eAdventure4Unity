@@ -1,11 +1,5 @@
 \begin{thebibliography}{10}
 
-\bibitem{unrealengine}
-
-
-\bibitem{adventuregamestudio}
-
-
 \bibitem{cssseparar}
 Miguel~Angel Alvarez.
 \newblock {CSS: Separar contenido y presentación}, 2015.
@@ -36,6 +30,10 @@ D~R Michael and S~L Chen.
 \newblock {Serious Games: Games That Educate, Train, and Inform}.
 \newblock {\em Education}, October 31:1--95, 2005.
 
+\bibitem{adventuregamestudio}
+Juan Ignacio~Rodriguez Navarro.
+\newblock {Introducción al manual de Adventure Game Studio (AGS)}, 2008.
+
 \bibitem{Reina2012}
 Laura~Arjona Reina and Gregorio Robles.
 \newblock {Mining for localization in Android}.
@@ -51,6 +49,10 @@ Technical Report.
 Unity Technologies.
 \newblock {Manual: Execution Order of Event Functions (Orden de Ejecución de
   Funciones de Evento)}.
+
+\bibitem{unrealengine}
+Mike Thomsen.
+\newblock {History of the Unreal engine}, 2010.
 
 \bibitem{Torrente2010}
 Javier Torrente, {\'{A}}ngel {Del Blanco}, Eugenio~J. Marchiori, Pablo
