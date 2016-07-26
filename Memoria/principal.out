@@ -7,52 +7,58 @@
 \BOOKMARK [0][-]{section*.3}{\315ndice}{}% 7
 \BOOKMARK [0][-]{chapter*.5}{List of Figures}{}% 8
 \BOOKMARK [0][-]{chapter.1}{Introducci\363n}{}% 9
-\BOOKMARK [1][-]{section.1.1}{Los videojuego educativos y el E-Learning}{chapter.1}% 10
-\BOOKMARK [1][-]{section.1.2}{El Objeto de Trabajo}{chapter.1}% 11
-\BOOKMARK [2][-]{subsection.1.2.1}{eAdventure}{section.1.2}% 12
-\BOOKMARK [2][-]{subsection.1.2.2}{Checklist}{section.1.2}% 13
-\BOOKMARK [2][-]{subsection.1.2.3}{El motor de videojuegos Unity}{section.1.2}% 14
-\BOOKMARK [1][-]{section.1.3}{Estado del Arte}{chapter.1}% 15
-\BOOKMARK [2][-]{subsection.1.3.1}{Motores de videojuegos}{section.1.3}% 16
-\BOOKMARK [2][-]{subsection.1.3.2}{Motores de desarrollo de Aventuras Gr\341ficas}{section.1.3}% 17
-\BOOKMARK [2][-]{subsection.1.3.3}{eAdventure Android y Mokap}{section.1.3}% 18
-\BOOKMARK [1][-]{section.1.4}{Metodolog\355a de desarrollo}{chapter.1}% 19
-\BOOKMARK [0][-]{chapter.2}{Objetivos}{}% 20
-\BOOKMARK [0][-]{chapter.3}{Comenzando con el Proyecto}{}% 21
-\BOOKMARK [0][-]{chapter.4}{Primera Iteraci\363n: Prototipo inicial}{}% 22
-\BOOKMARK [1][-]{section.4.1}{Arquitectura del Proyecto}{chapter.4}% 23
-\BOOKMARK [2][-]{subsection.4.1.1}{Controlador Principal de Juego}{section.4.1}% 24
-\BOOKMARK [2][-]{subsection.4.1.2}{Clases de Datos}{section.4.1}% 25
-\BOOKMARK [2][-]{subsection.4.1.3}{Clases de Comportamiento}{section.4.1}% 26
-\BOOKMARK [1][-]{section.4.2}{Detalles de la implementaci\363n}{chapter.4}% 27
-\BOOKMARK [2][-]{subsection.4.2.1}{Sobre la clase Game}{section.4.2}% 28
-\BOOKMARK [2][-]{subsection.4.2.2}{Sobre las Clases de Datos}{section.4.2}% 29
-\BOOKMARK [2][-]{subsection.4.2.3}{Sobre las Clases de Comportamiento}{section.4.2}% 30
-\BOOKMARK [1][-]{section.4.3}{Sobre las Clases de Utilidad}{chapter.4}% 31
-\BOOKMARK [2][-]{subsection.4.3.1}{La clase Texture2DHolder}{section.4.3}% 32
-\BOOKMARK [2][-]{subsection.4.3.2}{La interfaz Sequence: Effect, Conversation y Condition}{section.4.3}% 33
-\BOOKMARK [2][-]{subsection.4.3.3}{La clase Action}{section.4.3}% 34
-\BOOKMARK [1][-]{section.4.4}{Acerca de los elementos de Adaptaci\363n}{chapter.4}% 35
-\BOOKMARK [0][-]{chapter.5}{Segunda Iteraci\363n: Versi\363n final e Integraci\363n}{}% 36
-\BOOKMARK [1][-]{section.5.1}{Arquitectura del Proyecto}{chapter.5}% 37
-\BOOKMARK [1][-]{section.5.2}{El n\372cleo de Ejecuci\363n: Runner}{chapter.5}% 38
-\BOOKMARK [2][-]{subsection.5.2.1}{El estado del juego: GameState}{section.5.2}% 39
-\BOOKMARK [2][-]{subsection.5.2.2}{El Controlador del Juego: Game}{section.5.2}% 40
-\BOOKMARK [2][-]{subsection.5.2.3}{La escena y sus elementos}{section.5.2}% 41
-\BOOKMARK [2][-]{subsection.5.2.4}{Las secuencias: Effect y GraphConversation}{section.5.2}% 42
-\BOOKMARK [2][-]{subsection.5.2.5}{El controlador de los temporizadores: TimerController}{section.5.2}% 43
-\BOOKMARK [2][-]{subsection.5.2.6}{El gestor de interfaz: GUIManager}{section.5.2}% 44
-\BOOKMARK [2][-]{subsection.5.2.7}{El gestor de recursos: ResourceManager}{section.5.2}% 45
-\BOOKMARK [1][-]{section.5.3}{El modelo de Datos: Core}{chapter.5}% 46
-\BOOKMARK [1][-]{section.5.4}{La comunicaci\363n con RAGE: RAGETracker}{chapter.5}% 47
-\BOOKMARK [0][-]{chapter.6}{Tercera Iteraci\363n: El Emulador y los editores}{}% 48
-\BOOKMARK [1][-]{section.6.1}{El Emulador de Juegos}{chapter.6}% 49
-\BOOKMARK [1][-]{section.6.2}{Los Editores de Secuencias}{chapter.6}% 50
-\BOOKMARK [2][-]{subsection.6.2.1}{El Editor de Efectos}{section.6.2}% 51
-\BOOKMARK [2][-]{subsection.6.2.2}{El Editor de Conversaciones}{section.6.2}% 52
-\BOOKMARK [1][-]{section.6.3}{El Editor de RAGE}{chapter.6}% 53
-\BOOKMARK [0][-]{chapter.7}{Conclusiones}{}% 54
-\BOOKMARK [0][-]{chapter.8}{Conclusions}{}% 55
-\BOOKMARK [0][-]{chapter.9}{Trabajo Futuro}{}% 56
-\BOOKMARK [0][-]{chapter*.27}{Bibliograf\355a}{}% 57
-\BOOKMARK [0][-]{chapter*.27}{Bibliography}{}% 58
+\BOOKMARK [0][-]{chapter.2}{Introduction}{}% 10
+\BOOKMARK [0][-]{chapter.3}{Los videojuego educativos y el E-Learning}{}% 11
+\BOOKMARK [0][-]{chapter.4}{El Objeto de Trabajo}{}% 12
+\BOOKMARK [1][-]{section.4.1}{eAdventure}{chapter.4}% 13
+\BOOKMARK [1][-]{section.4.2}{El videojuego Checklist}{chapter.4}% 14
+\BOOKMARK [1][-]{section.4.3}{El motor de videojuegos Unity}{chapter.4}% 15
+\BOOKMARK [0][-]{chapter.5}{Metodolog\355a de desarrollo}{}% 16
+\BOOKMARK [0][-]{chapter.6}{Estado del Arte}{}% 17
+\BOOKMARK [1][-]{section.6.1}{Motores de videojuegos}{chapter.6}% 18
+\BOOKMARK [2][-]{subsection.6.1.1}{Unreal Engine}{section.6.1}% 19
+\BOOKMARK [2][-]{subsection.6.1.2}{GameMaker: Studio}{section.6.1}% 20
+\BOOKMARK [1][-]{section.6.2}{Motores de desarrollo de Aventuras Gr\341ficas}{chapter.6}% 21
+\BOOKMARK [2][-]{subsection.6.2.1}{Adventure Game Studio}{section.6.2}% 22
+\BOOKMARK [2][-]{subsection.6.2.2}{Open SLUDGE}{section.6.2}% 23
+\BOOKMARK [2][-]{subsection.6.2.3}{WinterMute Engine}{section.6.2}% 24
+\BOOKMARK [1][-]{section.6.3}{eAdventure Android y Mokap}{chapter.6}% 25
+\BOOKMARK [0][-]{chapter.7}{Objetivos}{}% 26
+\BOOKMARK [0][-]{chapter.8}{Comenzando con el Proyecto}{}% 27
+\BOOKMARK [0][-]{chapter.9}{Primera Iteraci\363n: Prototipo inicial}{}% 28
+\BOOKMARK [1][-]{section.9.1}{Arquitectura del Proyecto}{chapter.9}% 29
+\BOOKMARK [2][-]{subsection.9.1.1}{Controlador Principal de Juego}{section.9.1}% 30
+\BOOKMARK [2][-]{subsection.9.1.2}{Clases de Datos}{section.9.1}% 31
+\BOOKMARK [2][-]{subsection.9.1.3}{Clases de Comportamiento}{section.9.1}% 32
+\BOOKMARK [1][-]{section.9.2}{Detalles de la implementaci\363n}{chapter.9}% 33
+\BOOKMARK [2][-]{subsection.9.2.1}{Sobre la clase Game}{section.9.2}% 34
+\BOOKMARK [2][-]{subsection.9.2.2}{Sobre las Clases de Datos}{section.9.2}% 35
+\BOOKMARK [2][-]{subsection.9.2.3}{Sobre las Clases de Comportamiento}{section.9.2}% 36
+\BOOKMARK [1][-]{section.9.3}{Sobre las Clases de Utilidad}{chapter.9}% 37
+\BOOKMARK [2][-]{subsection.9.3.1}{La clase Texture2DHolder}{section.9.3}% 38
+\BOOKMARK [2][-]{subsection.9.3.2}{La interfaz Sequence: Effect, Conversation y Condition}{section.9.3}% 39
+\BOOKMARK [2][-]{subsection.9.3.3}{La clase Action}{section.9.3}% 40
+\BOOKMARK [0][-]{chapter.10}{Segunda Iteraci\363n: Versi\363n final e Integraci\363n}{}% 41
+\BOOKMARK [1][-]{section.10.1}{Arquitectura del Proyecto}{chapter.10}% 42
+\BOOKMARK [1][-]{section.10.2}{El n\372cleo de Ejecuci\363n: Runner}{chapter.10}% 43
+\BOOKMARK [2][-]{subsection.10.2.1}{El estado del juego: GameState}{section.10.2}% 44
+\BOOKMARK [2][-]{subsection.10.2.2}{El Controlador del Juego: Game}{section.10.2}% 45
+\BOOKMARK [2][-]{subsection.10.2.3}{La escena y sus elementos}{section.10.2}% 46
+\BOOKMARK [2][-]{subsection.10.2.4}{Las secuencias: Effect y GraphConversation}{section.10.2}% 47
+\BOOKMARK [2][-]{subsection.10.2.5}{El controlador de los temporizadores: TimerController}{section.10.2}% 48
+\BOOKMARK [2][-]{subsection.10.2.6}{El gestor de interfaz: GUIManager}{section.10.2}% 49
+\BOOKMARK [2][-]{subsection.10.2.7}{El gestor de recursos: ResourceManager}{section.10.2}% 50
+\BOOKMARK [1][-]{section.10.3}{El modelo de Datos: Core}{chapter.10}% 51
+\BOOKMARK [1][-]{section.10.4}{La comunicaci\363n con RAGE: RAGETracker}{chapter.10}% 52
+\BOOKMARK [0][-]{chapter.11}{Tercera Iteraci\363n: El Emulador y los editores}{}% 53
+\BOOKMARK [1][-]{section.11.1}{El Emulador de Juegos}{chapter.11}% 54
+\BOOKMARK [1][-]{section.11.2}{Los Editores de Secuencias}{chapter.11}% 55
+\BOOKMARK [2][-]{subsection.11.2.1}{El Editor de Efectos}{section.11.2}% 56
+\BOOKMARK [2][-]{subsection.11.2.2}{El Editor de Conversaciones}{section.11.2}% 57
+\BOOKMARK [1][-]{section.11.3}{El Editor de RAGE}{chapter.11}% 58
+\BOOKMARK [0][-]{chapter.12}{El editor de uAdventure}{}% 59
+\BOOKMARK [0][-]{chapter.13}{Conclusiones}{}% 60
+\BOOKMARK [0][-]{chapter.14}{Conclusions}{}% 61
+\BOOKMARK [0][-]{chapter.15}{Trabajo Futuro}{}% 62
+\BOOKMARK [0][-]{chapter.16}{Future Work}{}% 63
+\BOOKMARK [0][-]{chapter*.22}{Bibliograf\355a}{}% 64

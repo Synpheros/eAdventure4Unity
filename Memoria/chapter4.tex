@@ -1,21 +1,23 @@
 \chapter{Segunda Iteración: Versión final e Integración}
 \label{it2}
 
-Como se explica en el la subsección \ref{metodologiadedesarrollo}, en la que se expone la metodología de desarrollo utilizada para el proyecto, este sufre de tres grandes iteraciones para su completitud. En esta sección se explican los detalles implementados en la segunda iteración, es decir, la generación de un mejor diseño de la aplicación, nuevas interfaces, refactorización de clases y código replicado, así como mejoras gráficas visuales dentro de la aplicación, incluyendo referencias a la sección \ref{primeraiteracion}, explicando los cambios en diseño y comportamiento.
+Como se explica en el el apartado \ref{metodologiadedesarrollo}, en la que se expone la metodología de desarrollo utilizada para el proyecto, este sufre de tres grandes iteraciones a lo largo de su desarrollo. En este apartado se explican los detalles implementados en la segunda iteración, es decir, la generación de un mejor diseño de la aplicación, nuevas interfaces, refactorización de clases y código replicado, así como mejoras gráficas visuales dentro de la aplicación, incluyendo referencias al capítulo \ref{primeraiteracion}, explicando los cambios en diseño y comportamiento.
 
 \section{Arquitectura del Proyecto}
 \label{it2arquitectura}
 
-La arquitectura del proyecto ha cambiado radicalmente desde la primera iteración, en la que estaba centrada en cómo se debería tratar el documento de especificación de juego, incluido dentro del paquete del juego, en forma de XML para que, cada elemento fuese lo más dinámico posible y sostenible. A su vez, estaba centrada en la clase Game, y existían multitud de clases, llamadas clases de utilidad, que contenían funcionalidad que debía ser accesible a través de una clase controladora de nivel superior.
+La arquitectura del proyecto ha cambiado radicalmente desde la primera iteración, en la que estaba centrada en cómo se debería tratar el documento de especificación de juego, incluido dentro del paquete del juego, en forma de XML para que cada elemento fuese lo más dinámico posible y sostenible. A su vez, estaba centrada en la clase Game, y existían multitud de clases, llamadas clases de utilidad, que contenían funcionalidad que debía ser accesible a través de una clase controladora de nivel superior.
 
-En esta arquitectura encontramos tres paquetes importantes que engloban la funcionalidad necesaria para la ejecución del proyecto. Están representados en la figura \ref{arquitecturait2} Estos tres paquetes son:
+Este cambio en la arquitectura se produce tras realizar un análisis de los resultados obtenidos en la primera iteración, debido al objetivo de generar un diseño de calidad, y la necesidad de preparar el proyecto para la posterior integración con la parte de edición de uAdventure desarrollada por Piotr Marszal.
+
+En esta arquitectura encontramos tres paquetes importantes que engloban la funcionalidad necesaria para la ejecución del proyecto. Están representados en la Figura \ref{arquitecturait2} Estos tres paquetes son:
 
 \begin{itemize}
 	\item \textbf{Core}: \textit{Core} contiene el núcleo de eAdventure portado a Unity. Este paquete está formado, a su vez, por varios subpaquetes. El primero de ellos es \textit{DataModel}, donde se encuentra todo el modelo de datos portado de eAdventure a Unity, siendo completamente fiel a la implementación realizada en Java, y soportando todas las funcionalidades que se soportaban en dicho editor. El segundo de ellos es \textit{Loader}, donde está contenido el nucleo de lectura y carga del fichero XML de especificación del juego. Este \textit{Loader}, recibe un XML y genera un objeto \textit{AdventureData} que contiene todos los datos del juego. Por último, dentro de \textit{Core} encontramos un paquete \textit{Auxiliar} con clases útiles para este modelo de datos.
 	
 	\item \textbf{RAGETracker}: que contiene los elementos necesarios para generar un registro de actividad de juego del usuario y comunicarse con RAGE a través de Unity. RAGE se encarga de realizar tareas de evaluación y \textit{Learning Analytics} mediante el análisis de las trazas producidas por el alumno mientras juega. Esto permite al profesor que esté utilizando un juego producido con uAdventure, que se beneficie de las ventajas de RAGE, pudiendo reforzar aquellos alumnos que estén teniendo un desarrollo insuficiente o anormal en el juego.
 	
-	\item \textbf{Runner}: que se encarga de la transformación desde la especificación una ruta donde hay un juego descomprimido, hasta la generación de un entorno gráfico interactivo que permite al usuario jugar al juego. Contiene 3 subpaquetes que se encargan de diferentes tareas. En primer lugar, el paquete ResourceManager, que se encarga de la carga transparente de recursos, ya sean imágenes, videos, botones, cursores, u otros elementos multimedia. En segundo lugar, el paquete Appearance, que se encarga de mejorar la visualización, mediante diferentes formas de mostrar burbujas de diálogo, o mediante el uso de Shaders. Por último, el paquete \textit{GameLogic and Representation} que se encarga de ejecutar la lógica del juego. Este contiene en su interior una serie de gestores y controladores que son capaces de controlar la ejecución del juego, junto a las secuencias, trayectorias, así como una serie de comportamientos que tomarán lugar dentro de la escena.
+	\item \textbf{Runner}: que se encarga de la transformación desde la especificación de una ruta donde hay un juego descomprimido, hasta la generación de un entorno gráfico interactivo que permite al usuario jugar al juego. Contiene tres subpaquetes que se encargan de diferentes tareas. En primer lugar, el paquete \textit{ResourceManager}, que se encarga de la carga transparente de recursos, ya sean imágenes, videos, botones, cursores, u otros elementos multimedia. En segundo lugar, el paquete \textit{Appearance}, que se encarga de mejorar la visualización, mediante diferentes formas de mostrar burbujas de diálogo, o mediante el uso de \textit{Shaders}. Por último, el paquete \textit{GameLogic and Representation} que se encarga de ejecutar la lógica del juego. Este contiene en su interior una serie de gestores y controladores que son capaces de controlar la ejecución del juego, junto a las secuencias, trayectorias, así como una serie de comportamientos que tomarán lugar dentro de la escena.
 \end{itemize}
 
 \begin{figure}[h!]
@@ -29,13 +31,13 @@ En esta arquitectura encontramos tres paquetes importantes que engloban la funci
 \section{El núcleo de Ejecución: Runner}
 \label{runnerit2}
 
-El núcleo de ejecución, también conocido como \textit{Runner}, está dividido en 3 subpaquetes, \textit{Apearance}, encargado de mejorar la representación visual, \textit{ResourceManager}, encargado de realizar la carga transparente de recursos, y \textit{GameLogic}, el cual podría considerarse el núcleo en si mismo, de lógica del juego. Estos tres paquetes surgen de la generalización de elementos que se encontraban, o bien en la antigua clase \textit{Game}, explicada en la sección \ref{gameit1}, o bien en alguna de las clases de utilidad, explicadas en la sección \ref{utilit1}.
+El núcleo de ejecución, también conocido como \textit{Runner}, está dividido en tres subpaquetes: \textit{Apearance}, encargado de mejorar la representación visual, \textit{ResourceManager}, encargado de realizar la carga transparente de recursos, y \textit{GameLogic}, el cual podría considerarse el núcleo en si mismo, de lógica del juego. Estos tres paquetes surgen de la generalización de elementos que se encontraban, o bien en la antigua clase \textit{Game}, explicada en el apartado \ref{gameit1}, o bien en alguna de las clases de utilidad, explicadas en el apartado \ref{utilit1}.
 
-De esta manera conseguimos que, la antigua clase controladora del juego \textit{Game}, y las Clases de Utilidad, ahora no tenga que realizar tantas tareas como realizaba anteriormente. En su lugar surgen 5 clases. Estas clases se encargan de hacer transparente la gestión de diversas tareas. Algunas de ellas realizan la gestión de un elemento en concreto, otras controlan la ejecución de otros elementos, y, por último otras se encargan de gestionar el estado del juego.
+De esta manera conseguimos que la antigua clase controladora del juego, \textit{Game}, y las Clases de Utilidad, ahora no tengan, que realizar tantas tareas como realizaban anteriormente. En su lugar surgen 5 clases. Estas clases se encargan de hacer transparente la gestión de diversas tareas. Algunas de ellas realizan la gestión de un elemento en concreto, otras controlan la ejecución de otros elementos y, por último, otras se encargan de gestionar el estado del juego.
 
 Estas 5 clases son:
 \begin{enumerate}
-	\item \textbf{Game}: La clase Game ha sido reducida para encargarse de tres tareas principales: En primer lugar, iniciar la carga y poner en funcionamiento el juego una vez esté cargado. En segundo lugar, controlar la interacción del usuario con los elementos del juego, ya sean elementos con representación, o elementos abstractos como secuencias. Y por último, ser la puerta de enlace que permite elegir qué escena se va a representar.
+	\item \textbf{Game}: La clase \textit{Game} ha sido reducida para encargarse de tres tareas principales: En primer lugar, iniciar la carga y poner en funcionamiento el juego una vez esté cargado. En segundo lugar, controlar la interacción del usuario con los elementos del juego, ya sean elementos con representación, o elementos abstractos como secuencias. Y por último, ser la puerta de enlace que permite elegir qué escena se va a representar.
 	
 	\item \textbf{GUIManager}: Este gestor se encarga de realizar la gestión de la interfaz que antes se realizaba en \textit{Game}. Permite la emisión de burbujas de diálogo y el control sobre ellas, la posibilidad de mostrar una lista de opciones entre las que el usuario debe seleccionar una respuesta, y por último, la representación de acciones, como botones, y la gestión del menú contextual.
 	
@@ -46,7 +48,7 @@ Estas 5 clases son:
 	\item \textbf{ResourceManager}: este gestor se encarga de facilitar un repositorio transparente a través del cual acceder a los recursos del juego. Añade funcionalidades adicionales que no estaban disponibles anteriormente, como la persistencia en memoria de recursos para agilizar los tiempos de carga, la carga de vídeos, así como la carga de archivos de sonido.
 \end{enumerate}
 
-La representación de las clases que se explican en esta sección está disponible en la figura \ref{runnerbigit2}, junto a todas sus funciones. En este diagrama no están representados todos los elementos, pero si aquellos que han surgido de la evolución de las clases que se especificaron al comienzo de la sección. Este diagrama es bastante específico, pues contiene datos acerca de todas las funciones disponibles en cada uno de los elementos.
+La representación de las clases que se explican en este apartado está disponible en la Figura \ref{runnerbigit2}, junto a todas sus funciones. En este diagrama no están representados todos los elementos, pero si aquellos que han surgido de la evolución de las clases que se especificaron al comienzo del apartado. Este diagrama es bastante específico, pues contiene datos acerca de todas las funciones disponibles en cada uno de los elementos.
 
 \newpage
 
@@ -77,13 +79,13 @@ Adicionalmente, se muestra en la figura \ref{gamestateit2} a una pequeña clase 
 \subsection{El Controlador del Juego: Game}
 \label{gamesectionit2}
 
-La clase \textit{Game}, ha evolucionado de la clase explicada en la sección \ref{gameit1}. Como se ha mencionado multitud de veces a lo largo de la sección \ref{arquitecturait2}, esta clase \textit{Game} ha evolucionado para delegar comportamientos en los 5 grandes gestores. Sin embargo, la funcionalidad que \textit{Game} aporta en el ciclo de vida y ejecución del juego sigue siendo de vital importancia.
+La clase \textit{Game}, ha evolucionado de la clase explicada en el apartado \ref{gameit1}. Como se ha mencionado multitud de veces a lo largo del apartado \ref{arquitecturait2}, esta clase \textit{Game} ha evolucionado para delegar comportamientos en los 5 grandes gestores. Sin embargo, la funcionalidad que \textit{Game} aporta en el ciclo de vida y ejecución del juego sigue siendo de vital importancia.
 
 Esta clase \textit{Game} ahora se encarga de 3 tareas: iniciar la carga y poner en funcionamiento el juego una vez esté cargado; controlar la interacción del usuario con los elementos del juego, así como con efectos y conversaciones; y ser la puerta de enlace que permite elegir qué escena se va a representar. No obstante estas tres tareas son vitales, pues en esencia, un juego sólo se puede jugar si se trata esta funcionalidad.
 
 Como la clase \textit{Game} es la puerta de enlace que transforma de una clase \textit{AventureData} a algo jugable, junto a la explicación de \textit{Game}, como subapartados, se presentarán los comportamientos encargados de enrolarse como los diferentes elementos que forman las escenas de eAdventure.
 
-Uno de los cambios más notorios en todo el núcleo de representación es la desaparición de las Clases de Datos explicadas en la sección \ref{dataclassesit1}. Esto es debido a la incorporación del modelo de datos original portado directamente de eAdventure.
+Uno de los cambios más notorios en todo el núcleo de representación es la desaparición de las Clases de Datos explicadas en el apartado \ref{dataclassesit1}. Esto es debido a la incorporación del modelo de datos original portado directamente de eAdventure.
 
 En la figura \ref{gameit2} se muestra un diagrama de clases que explica las relaciones de las clases que participan en esta representación del juego. Aunque \textit{SceneMB} tenga una relación de dependencia con \textit{Game}, la escena únicamente necesita acceder a \textit{GameState}, para obtener las especificaciones de los elementos que va a instanciar. \textit{SceneMB} a su vez mantiene relación de dependencia con \textit{PlayerMB}, \textit{CharacterMB}, \textit{ObjectMB}, etc... debido a que \textit{SceneMB} instancia todas estas clases como hijas suyas.
 
@@ -96,11 +98,11 @@ En la figura \ref{gameit2} se muestra un diagrama de clases que explica las rela
 
 \subsubsection{Representable, Interactuable, Movable y Transparent}
 
-Este grupo está compuesto por dos clases y dos interfaces, y permiten a la implementación de los comportamientos facilitar la definición de lo que pueden y no pueden hacer. Las dos interfaces son Interactuable y Movable. Tras esto encontramos Representable como clase abstracta que ayuda a la representación de todos los elementos que utilizan recursos, facilita la relación con el \textit{ResourceManager}, y, al extender la clase \textit{MonoBehaviour}, permite a todos los elementos que la extienden ser componentes a su vez. Por ultimo tenemos la clase \textit{Transparent} que, facilita la interacción con elementos que, por motivos de representación en su imagen, no ocupan toda la imagen, teniendo transparencia.
+Este grupo está compuesto por dos clases y dos interfaces, y permiten a la implementación de los comportamientos facilitar la definición de lo que pueden y no pueden hacer. Las dos interfaces son \textit{Interactuable} y \textit{Movable}. Tras esto encontramos \textit{Representable} como clase abstracta que ayuda a la representación de todos los elementos que utilizan recursos, facilita la relación con el \textit{ResourceManager}, y, al extender la clase \textit{MonoBehaviour}, permite a todos los elementos que la extienden ser componentes a su vez. Por ultimo tenemos la clase \textit{Transparent} que, facilita la interacción con elementos que, por motivos de representación en su imagen, no ocupan toda la imagen, teniendo transparencia.
 
 En primer lugar, hablando de \textit{Interactuable}, es la interfaz que permite a \textit{Game} la interacción entre el usuario y los elementos de la escena. \textit{Game}, cuando detecta una pulsación de ratón, lanza un rayo desde dicha posición, en dirección en la que mira la cámara, obtiene una lista de objetos, y, si implementan la interfaz \textit{Interactuable}, les notifica que se ha realizado una interacción con ellos. Estos tienen tres opciones que responder: que no van a hacer nada con la interacción, que hacen algo con ella, o que hacen algo y además esperan más por parte del usuario. En el momento en que \textit{Game} detecta alguna que hace algo, deja de notificar a los demás.
 
-En segundo lugar, hablando de \textit{Movable} es una interfaz sencilla que deben implementar todos aquellos elementos que deseen moverse. Y que únicamente tiene un método \textit{Move()}
+En segundo lugar, hablando de \textit{Movable}, es una interfaz sencilla que deben implementar todos aquellos elementos que deseen moverse. Y que únicamente tiene un método \textit{Move()}
 
 En tercer lugar, hablando de \textit{Representable}, encontramos la clase abstracta más compleja, pues permite a los elementos anteriormente citados representarse. Por si misma no realiza ninguna tarea, necesita que la clase que la extienda le indique lo que necesita. Por ejemplo, un objeto de Atrezzo, en su función \textit{Start()} realiza lo siguiente:
 
@@ -117,7 +119,7 @@ Además de esto, \textit{Representable}, se encarga de transformar esa línea de
 
 Finalmente, hablando de la clase \textit{Transparent} es una componente que se añade a los objetos de la escena, y tiene una relación de dependencia con ellos, ya que, sin esta clase, nunca se habilitarían dichos objetos para permitir la interacción con ellos. En \textit{Transparent} se analizan los píxeles de la textura activa en \textit{Representable}, y, si el píxel sobre el cual se tiene el ratón no es transparente, es decir, su componente \textit{Alpha} de color es mayor que 0, se accede a \textit{Interactuable} y se establece como que se puede realizar interacción con dicho elemento.
 
-Estos cuatro elementos de los que se componen los objetos de la escena están representados en la figura \ref{behavioursit2}, con sus relaciones.
+Estos cuatro elementos de los que se componen los objetos de la escena están representados en la Figura \ref{behavioursit2}, con sus relaciones.
 
 \begin{figure}[h!]
 	\centerline{\includegraphics[height=4in]{figures/it2/Behaviours.png}}
@@ -129,9 +131,9 @@ Estos cuatro elementos de los que se componen los objetos de la escena están re
 
 \subsection{La escena y sus elementos}
 
-La escena de eAdventure, además de poder ser de multitud de tipos diferentes, está llena de elementos, algunos de ellos que están "vivos", otros que permiten interacción, y otros que únicamente son elementos que mejoran la representación visual. En conjunto, todos estos elementos permiten representar lo que se desee dentro de un escenario. Los elementos que se presentan en esta sección evolucionan de los explicados en la sección \ref{behavioursit1}.
+La escena de eAdventure, además de poder ser de multitud de tipos diferentes, está llena de elementos, algunos de ellos que están ``vivos'', otros que permiten interacción, y otros que únicamente son elementos que mejoran la representación visual. En conjunto, todos estos elementos permiten representar lo que se desee dentro de un escenario. Los elementos que se presentan en este apartado evolucionan de los explicados en el apartado \ref{behavioursit1}.
 
-En esta sección se remarcan las diferencias entre las clases de comportamiento presentadas en la sección \ref{behavioursit1} y las actuales, especificando cómo han evolucionado estas. En esencia, su funcionalidad se ha mantenido, o delegado en otras clases, así como han ganado funcionalidad extraída de la clase \textit{Game}. Esto es debido a que siguen siendo los mismos elementos que conforman la escena.
+En este apartado se remarcan las diferencias entre las clases de comportamiento presentadas en el apartado \ref{behavioursit1} y las actuales, especificando cómo han evolucionado estas. En esencia, su funcionalidad se ha mantenido, o delegado en otras clases, así como han ganado funcionalidad extraída de la clase \textit{Game}. Esto es debido a que siguen siendo los mismos elementos que conforman la escena.
 
 Otro detalle es, para diferenciar más fácilmente entre las clases del modelo de datos y los comportamientos, se les han añadido las siglas MB de \textit{MonoBehaviour}, que identifican que son comportamientos y no clases de datos.
 
@@ -140,7 +142,7 @@ Otro detalle es, para diferenciar más fácilmente entre las clases del modelo d
 
 La escena ha sido refactorizada y ampliada para incluir más funcionalidad y facilitar el uso de otra. Detalles de esto se puede encontrar en la figura \ref{gameit2}.
 
-En primer lugar, ahora la escena da soporte a vídeos, aunque estos vídeos han de estar en formato OGV\footnote{El formato OGV es el contenedor de archivo de vídeo que utiliza el códec libre de video Theora.}. Se ha realizado una investigación para determinar si es posible realizar una conversión del formato de los vídeos y su explicación se encuentra en la sección dedicada a la tercera iteración del proyecto.
+En primer lugar, ahora la escena da soporte a vídeos, aunque estos vídeos han de estar en formato OGV\footnote{El formato OGV es el contenedor de archivo de vídeo que utiliza el códec libre de video Theora.}. Se ha realizado una investigación para determinar si es posible realizar una conversión del formato de los vídeos y su explicación se encuentra en el apartado dedicado a la tercera iteración del proyecto.
 
 En segundo lugar, la escena ha simplificado la instanciación de sus elementos, e implementa dos métodos para dicha tarea, los cuales son:
 
@@ -151,7 +153,7 @@ private void instanceRectangle<T>(Rectangle context) where T : Rectangle
 
 Estas funciones, pese a ser funciones tipadas, tienen la peculiaridad de delimitar el tipo de clases que admiten. Esto se consigue utilizando \textit{where T : Interface}.
 
-En tercer lugar, como ahora el juego tiene soporte a juegos en tercera persona, en los que el jugador forma parte de la escena, esta ahora puede contener trayectorias para que el jugador se pueda mover sobre ellas. El cálculo de estas trayectorias fue una de las tareas más complejas de implementar, y se explica en la sección \ref{trajectoryit2}.
+En tercer lugar, como ahora el juego tiene soporte a juegos en tercera persona, en los que el jugador forma parte de la escena, esta ahora puede contener trayectorias para que el jugador se pueda mover sobre ellas. El cálculo de estas trayectorias fue una de las tareas más complejas de implementar, y se explica en el apartado \ref{trajectoryit2}.
 
 Por último, ahora la escena gestiona la interacción que se realice sobre ella, aunque es diferente dependiendo de qué tipo de escena se esté mostrando:
 \begin{itemize}
@@ -165,22 +167,22 @@ Por último, ahora la escena gestiona la interacción que se realice sobre ella,
 \subsubsection{Los objetos del juego: ObjectMB}
 \label{itemsit2}
 
-Con respecto a lo explicado en la sección \ref{objectexitactiveareait1} acerca de la antigua clase \textit{eObject}, esta ha sufrido una evolución. Se ha simplificado mucho gracias al uso de \textit{Representable}, \textit{Interactuable} y \textit{Transparent}. Ahora únicamente reacciona si la componente \textit{Transparent} se lo permite, y gracias a \textit{Representable} y al \textit{ResourceManager} es mucho más sencillo cambiar entre la textura normal y la textura activa, que se debe mostrar cuando el ratón pasa por encima el objeto.
+Con respecto a lo explicado en el apartado \ref{objectexitactiveareait1} acerca de la antigua clase \textit{eObject}, esta ha sufrido una evolución. Se ha simplificado mucho gracias al uso de \textit{Representable}, \textit{Interactuable} y \textit{Transparent}. Ahora únicamente reacciona si la componente \textit{Transparent} se lo permite, y gracias a \textit{Representable} y al \textit{ResourceManager} es mucho más sencillo cambiar entre la textura normal y la textura activa, que se debe mostrar cuando el ratón pasa por encima el objeto.
 
-Por otra parte, los objetos implementan una nueva funcionalidad, que les permite ser arrastrados en vez de generar un menú contextual cuando se interactúa con ellos. La especificación de cuándo esto debe suceder se encuentra en la propia especificación del \textit{Item} que se está representando. Se remarca lo descrito en la sección \ref{gamesectionit2} acerca de la desaparición de las clases de datos descritas en la sección \ref{dataclassesit1}, y la sustitución de las mismas por el modelo de datos de eAdventure.
+Por otra parte, los objetos implementan una nueva funcionalidad, que les permite ser arrastrados en vez de generar un menú contextual cuando se interactúa con ellos. La especificación de cuándo esto debe suceder se encuentra en la propia especificación del \textit{Item} que se está representando. Se remarca lo descrito en el apartado \ref{gamesectionit2} acerca de la desaparición de las clases de datos descritas en el apartado \ref{dataclassesit1}, y la sustitución de las mismas por el modelo de datos de eAdventure.
 
 \subsubsection{Las deformables ActiveAreasMB}
 \label{activeareasectionit2}
 
-Como se ha mencionado en secciones anteriores, en la versión final, las \textit{ActiveAreas} adquieren la capacidad de deformarse. Esto se consigue gracias a la utilización del Área de Influencia facilitado en la especificación del \textit{ActiveArea}.
+Como se ha mencionado en apartados anteriores, en la versión final, las \textit{ActiveAreas} adquieren la capacidad de deformarse. Esto se consigue gracias a la utilización del Área de Influencia facilitado en la especificación del \textit{ActiveArea}.
 
 En la función \textit{adaptate()}, una \textit{ActiveArea} se encarga de leer esta \textit{InfluenceArea}, y transformar estos puntos, que se encuentran en coordenadas relativas a la escena, a puntos colocados alrededor del centro de ellos. Tras esto se utiliza la libreria \textit{LibTessDotNet} que genera una lista de triángulos a partir de esos puntos.
 
 Una vez se obtienen los puntos y la lista de triángulos, se genera una nueva malla tridimensional estableciendo los vértices en dicha malla, y los triángulos en forma de referencias a los índices de la lista de vértices. Una vez generada dicha malla, se intercambia la \textit{SharedMesh}\footnote{La SharedMesh es una componente de los objetos tridimensionales de Unity3D que contiene la malla tridimensional que lo representa.} por la nueva malla, consiguiendo como resultado un objeto tridimensional con la forma deseada.
 
-Finalmente, este elemento de la escena, como muchos otros elementos interactivos, tienen una componente \textit{AutoGlower}, la cual se explica en la sección \ref{apearanceseccionit2}, que hace que brillen durante un instante cada intervalo regular de tiempo.
+Finalmente, este elemento de la escena, como muchos otros elementos interactivos, tienen una componente \textit{AutoGlower}, la cual se explica en el apartado \ref{apearanceseccionit2}, que hace que brillen durante un instante cada intervalo regular de tiempo.
 
-Esto se ve representado en la figura \ref{activeareasit2}. Las figuras blancas son las áreas de influencia que dan forma a dichas areas activas. Estas capturas han sido obtenidas del juego utilizado para formar acerca de los primeros auxilios, desarrollado por Catedu.
+Esto se ve representado en la Figura \ref{activeareasit2}. Las figuras blancas son las áreas de influencia que dan forma a dichas areas activas. Estas capturas han sido obtenidas del juego utilizado para formar acerca de los primeros auxilios, desarrollado por CATEDU \cite{catedu}.
 
 \begin{figure}[h!]
 	\centerline{\includegraphics[height=3in]{figures/it2/Apearance/ActiveAreas.png}}
@@ -204,7 +206,7 @@ En segundo lugar, cuando una de estas es llamada a hablar, si esta tiene animaci
 
 La gestión de las trayectorias dentro de la escena es una de las labores más complejas de realizar, pues, en general, los algoritmos de búsqueda de rutas suelen ser algoritmos complejos, y la interacción con una trayectoria, que es algo simbólico, una lista de puntos en el espacio, unidos por líneas, es una tarea compleja.
 
-Por ello, para la gestión de trayectorias, se han implementado 3 clases necesarias para funcionalidades concretas:
+Por ello, para la gestión de trayectorias, se han implementado tres clases necesarias para funcionalidades concretas:
 
 \begin{enumerate}
 	\item \textbf{TrajectoryHandler}: esta clase es la encargada de proveer el manejo de una \textit{Trajectory} de eAdventure. Se genera a partir de una de estas, y facilita funciones capaces de generar rutas entre puntos que se encuentren en dichas trayectorias.
@@ -214,21 +216,27 @@ Por ello, para la gestión de trayectorias, se han implementado 3 clases necesar
 	\item \textbf{MathFunction}: esta clase, dados dos puntos de una recta, mediante el uso de funciones matemáticas, es capaz de generar un valor Y para una X dada, o un valor X para una Y dada, así como es capaz de generar puntos de contacto a partir de otro punto.
 \end{enumerate}
 
-El tratamiento de trayectorias comienza con la generación de un \textit{TrajectoryHandler}, este analiza dicha trayectoria, y para cada lado de esta genera un \textit{LineHandler}. Una vez que todos han sido generado, se llama a la función \textit{UpdateNeighbors()} que recorre esta lista de líneas y, si dos líneas contienen extremos comunes, se determina que estas son vecinas.
+El tratamiento de trayectorias comienza con la generación de un \textit{TrajectoryHandler}. Este analiza dicha trayectoria, y para cada lado de esta genera un \textit{LineHandler}. Una vez que todos han sido generados, se llama a la función \textit{UpdateNeighbors()} que recorre esta lista de líneas y, si dos líneas contienen extremos comunes, se determina que estas son vecinas.
 
 Las líneas, cuando son generadas, utilizan sus dos puntos para generar una \textit{MathFunction} que les ayudará a generar y a determinar puntos que estén en su línea.
 
-Lo complejo del tratamiento de trayectorias llega con el cálculo de rutas. Para ello se ha implementado una variante del algoritmo de Dijkstra para hallar caminos mínimos en grafos no direccionales con coste. La diferencia es que, debido a que en la ruta el nodo inicial y el nodo final no forman parte de la trayectoria en si misma, sino que son nodos nuevos que se generan en tiempo de ejecución, y únicamente se identifica en qué líneas de trayectoria están contenidos dichos puntos.
+Lo complejo del tratamiento de trayectorias llega con el cálculo de rutas. Para ello se ha implementado una variante del algoritmo de Dijkstra \cite{Bollobas1993} para hallar caminos mínimos en grafos no direccionales con coste. La diferencia es que, debido a que en la ruta el nodo inicial y el nodo final no forman parte de la trayectoria en si misma, sino que son nodos nuevos que se generan en tiempo de ejecución, y únicamente se identifica en qué líneas de trayectoria están contenidos dichos puntos. Esto se realiza de esta manera porque la Trayectoria es una clase extraída del videojuego, existente en el modelo de datos de eAdventure importado en C\# y no se debe modificar, pues su modificación cambiaría la especificación del juego y causaría errores e incoherencias a la larga.
 
 Tras esto se identifica que líneas contienen el punto de origen y el punto destino, y con esto se realiza el algoritmo de marcado de Dijkstra pero únicamente utilizando las líneas, sin los nodos. Y finalmente se ejecuta la función \textit{reach()} que prepara el lanzamiento de la función recursiva de mismo nombre encargada de recorrer el grafo siguiendo la especificación del algoritmo de Djikstra.
 
-No obstante, el funcionamiento de este algoritmo no es tan bueno como se desearía, pues le falta incluir la distancia que hay entre el punto de origen o destino, y el nodo inicial elegido de la línea de origen y destino. Asimismo, se pueden dar resultados no optimos. Como trabajo futuro se plantea implementar el algoritmo de Djikstra con nodos, e incluir los nodos origen y destino en la trayectoria.
+No obstante, el funcionamiento de este algoritmo no es tan bueno como se desearía, pues le falta incluir la distancia que hay entre el punto de origen o destino, y el nodo inicial elegido de la línea de origen y destino. Asimismo, se pueden dar resultados no óptimos. Como trabajo futuro se plantea implementar el algoritmo de Djikstra con nodos, e incluir los nodos origen y destino en la trayectoria.
+
+Las clases que participan en el manejo de trayectorias y en la generación de rutas están representadas en la Figura \ref{trajectoryfigit2}, donde se muestra un diagrama de clases con las dependencias y relaciones de las mismas. 
 
 \begin{figure}[h!]
 	\centerline{\includegraphics[height=3.7in]{figures/it2/TrajectoryHandler.png}}
 	\caption[TrajectoryHandler - Versión Final]{Diagrama de clases de las trayectorias, junto a LineHandler y MathFunction}
 	\label{trajectoryfigit2}
 \end{figure}
+
+\newpage
+ Por ello, se plantea como trabajo futuro una nueva versión de este algoritmo, utilizando nuevas estructuras que encapsulen y repliquen la funcionalidad de las trayectorias de eAdventure
+\newpage
 
 \subsection{Las secuencias: Effect y GraphConversation}
 \label{sequencesit2}
@@ -264,16 +272,16 @@ Se aprovecha de la función \textit{Update()} de \textit{MonoBehaviour} para con
 	\label{timercontrollerit2}
 \end{figure}
 
-la figura \ref{timercontrollerit2} muestra el diagrama de clases de lo descrito anteriormente. En este diagrama se ve como \textit{Game} establece los \textit{Timers} que deben ser controlados al inicio de cada capítulo, y \textit{TimerController} únicamente los gestiona. Cuando alguno de estos \textit{Timers} se completa, \textit{TimerController} le dice a \textit{Game} que ejecute los efectos de dicho temporizador.
+La Figura \ref{timercontrollerit2} muestra el diagrama de clases de lo descrito anteriormente. En este diagrama se ve como \textit{Game} establece los \textit{Timers} que deben ser controlados al inicio de cada capítulo, y \textit{TimerController} únicamente los gestiona. Cuando alguno de estos \textit{Timers} se completa, \textit{TimerController} le dice a \textit{Game} que ejecute los efectos de dicho temporizador.
 
 \newpage
 
 \subsection{El gestor de interfaz: GUIManager}
 \label{guimanagersectionit2}
 
-Como se explica en la sección superior a esta subsección, existe una clase gestora que se encarga de manejar la interfaz en su totalidad de forma transparente. Facilita una serie de funciones que permiten, de forma sencilla, mostrar burbujas de diálogo, cambiar el cursor, mostrar un menú contextual de acciones, o un menú de opciones.
+Como se explica en el apartado \ref{runnerit2}, existe una clase gestora que se encarga de manejar la interfaz en su totalidad de forma transparente. Facilita una serie de funciones que permiten, de forma sencilla, mostrar burbujas de diálogo, cambiar el cursor, mostrar un menú contextual de acciones, o un menú de opciones.
 
-Este gestor surge de la reducción de contenido de \textit{Game}, que antes realizaba estas tareas, y fue relevada de su función debido a que dicha clase comenzaba a tener una dimensión demasiado elevada. La figura \ref{guimanagerit2} muestra el diagrama de clases de la clase \textit{GUIManager} junto al paquete \textit{Apearance}, el paquete \textit{GUIProvider} que contiene todo lo necesario para acceder al \textit{ResourceManager} de forma automática y transparente, así como la carga de recursos por defecto y la gestión de nombres a constantes y viceversa, y el paquete \textit{Menu}, que contiene una serie de clases para la representación y animación del Menú.
+Este gestor surge de la reducción de contenido de \textit{Game}, que antes realizaba estas tareas, y fue relevada de su función debido a que dicha clase comenzaba a tener una dimensión demasiado elevada. La Figura \ref{guimanagerit2} muestra el diagrama de clases de la clase \textit{GUIManager} junto al paquete \textit{Apearance}, el paquete \textit{GUIProvider} que contiene todo lo necesario para acceder al \textit{ResourceManager} de forma automática y transparente, así como la carga de recursos por defecto y la gestión de nombres a constantes y viceversa, y el paquete \textit{Menu}, que contiene una serie de clases para la representación y animación del Menú.
 
 Este gestor hereda de \textit{MonoBehaviour}, por lo que es asignado como componente de un elemento dentro de la escena. En este caso se asigna a un objeto \textit{Canvas}, que permite la representación de elementos de interfaz. 
 
@@ -305,9 +313,9 @@ La interfaz es una capa de la vista que necesita representación, y por ello, ne
 Además de esto, eAdventure sigue una jerarquía a la hora de definir recursos para la interfaz, esta es la siguiente:
 
 \begin{enumerate}
-	\item Se cargan los recursos por defecto. Estos recursos están repartidos en dos directorios, el primero es la carpeta "~/gui/hud/contextual/" donde se encuentran los botones que representan los distintos tipos de acciones y que se obtienen utilizando la clase \textit{DefaultActionNameWrapper}. El segundo el la carpeta "~/gui/cursors/" donde se encuentran los cursores del juego, y que se obtienen utilizando la clase \textit{ActionNameWrapper}. Estas dos clases \textit{Wrapper} se encargan de transformar de Acción, o identificador de Acción a nombre, y viceversa.
+	\item Se cargan los recursos por defecto. Estos recursos están repartidos en dos directorios, el primero es la carpeta ``/gui/hud/contextual/'' donde se encuentran los botones que representan los distintos tipos de acciones y que se obtienen utilizando la clase \textit{DefaultActionNameWrapper}. El segundo es la carpeta ``/gui/cursors/'' donde se encuentran los cursores del juego, y que se obtienen utilizando la clase \textit{ActionNameWrapper}. Estas dos clases \textit{Wrapper} se encargan de transformar de Acción, o identificador de Acción a nombre, y viceversa.
 	
-	\item Se cargan los recursos especificados en la base del archivo "descriptor.xml". Tras la lectura de dicho archivo en \textit{Loader}, estos se encuentran en el objeto de datos \textit{AdventureData} que gestiona \textit{GameState}. Estos también se asignan utilizando los \textit{Wrappers} anteriormente especificados, y, sustituyen a los botones y cursores cargados en el apartado anterior con los que se hayan en esta especificación.
+	\item Se cargan los recursos especificados en la base del archivo ``descriptor.xml''. Tras la lectura de dicho archivo en \textit{Loader}, estos se encuentran en el objeto de datos \textit{AdventureData} que gestiona \textit{GameState}. Estos también se asignan utilizando los \textit{Wrappers} anteriormente especificados, y, sustituyen a los botones y cursores cargados en el apartado anterior con los que se hayan en esta especificación.
 	
 	\item Por último puede ocurrir una situación anómala, y es que un elemento tenga una acción personalizada en su interior. En este caso, y excepcionalmente, es el propio botón del menú el que se encarga de solicitar al \textit{ResourceManager} dichos recursos.
 	
@@ -319,7 +327,7 @@ Además de esto, eAdventure sigue una jerarquía a la hora de definir recursos p
 	\label{guiproviderit2}
 \end{figure}
 
-Las clases que participan en este proceso están representadas en la figura \ref{guiproviderit2}. En esta figura, aunque \textit{ResourceManager} esté sobrepuesto al paquete \textit{GUIProvider}, esto es debido a reducir el tamaño del diagrama, realmente este no forma parte de dicho paquete.
+Las clases que participan en este proceso están representadas en la Figura \ref{guiproviderit2}. En esta figura, aunque \textit{ResourceManager} esté sobrepuesto al paquete \textit{GUIProvider}, esto es debido a reducir el tamaño del diagrama, realmente este no forma parte de dicho paquete.
 
 \subsubsection{Las burbujas de diálogo: Bubble}
 
@@ -335,12 +343,12 @@ El proceso de mostrar una burbuja de diálogo comienza en \textit{GUIManager} y 
 
 La burbuja, en su función \textit{Start()}, establece su texto en la representación, se prepara para moverse, y se prepara para empezar a mostrarse, pues al principio es transparente. Poco a poco esta se va moviendo y haciéndose visible en su función \textit{FixedUpdate()}, y cuando termina, se queda quieta. Cuando es necesario que la burbuja desaparezca, se ejecuta la función \textit{destroy()} que la hace desaparecer poco a poco, haciéndose más pequeña y transparente.
 
-\subsubsection{Elementos de mejora visual: Apearance}
+\subsubsection{Elementos de mejora visual: Appearance}
 \label{apearanceseccionit2}
 
-Existen dos clases que, para mejorar la representación visual del juego, se han desarrollado en el proyecto. Cómo se explicó en el apartado \ref{eandroidmokap} del estado del arte, y visible en la figura \ref{eandroidlupa}, el proyecto eAdventure Android utilizaba mecanismos específicos para ayudar al usuario a encontrar elementos en un entorno táctil. En este proyecto, para ayudar al usuario a encontrar estos elementos, se realiza un brillo de los mismos.
+Existen dos clases que, para mejorar la representación visual del juego, se han desarrollado en el proyecto. Cómo se explicó en el apartado \ref{eandroidmokap} del estado del arte, y visible en la Figura \ref{eandroidlupa}, el proyecto eAdventure Android utilizaba mecanismos específicos para ayudar al usuario a encontrar elementos en un entorno táctil. En este proyecto, para ayudar al usuario a encontrar estos elementos, se realiza un brillo de los mismos.
 
-La clase componente \textit{AutoGlower} se encarga de realizar este brillo sobre los objetos que la contengan. Tiene varios modos, como simplemente hacer un flash, o aparecerse y desvanecerse y hacer un flash. Este \textit{AutoGlower} utiliza un \textit{Shader} que genera dicho flash y que es parametrizable para establecer tanto la posición del brillo, su color y su anchura. Este efecto es visible en las figuras \ref{autoglow1it2} y \ref{autoglow2it2};
+La clase componente \textit{AutoGlower} se encarga de realizar este brillo sobre los objetos que la contengan. Tiene varios modos, como simplemente hacer un flash, o aparecerse y desvanecerse y hacer un flash. Este \textit{AutoGlower} utiliza un \textit{Shader} que genera dicho flash y que es parametrizable para establecer tanto la posición del brillo, su color y su anchura. Este efecto es visible en las Figuras \ref{autoglow1it2} y \ref{autoglow2it2};
 
 \begin{figure}[h!]
 	\centerline{\includegraphics[height=3.5in]{figures/it2/Apearance.png}}
@@ -348,23 +356,23 @@ La clase componente \textit{AutoGlower} se encarga de realizar este brillo sobre
 	\label{apearanceit2}
 \end{figure}
 
-Por último, tenemos a la clase \textit{Blur}, que, al igual que la anterior utiliza un \textit{Shader} para conseguir su efecto visual. En este caso, \textit{Blur} lo que hace es volver borroso lo que hay detrás de ella. Es utilizada para generar un cuadrado borroso sobre el cual presentar las distintas opciones disponibles en la lista de opciones de una conversación. Este efecto se puede ver en la figura \ref{blurit2}.
+Por último, tenemos a la clase \textit{Blur}, que, al igual que la anterior utiliza un \textit{Shader} para conseguir su efecto visual. En este caso, \textit{Blur} lo que hace es volver borroso lo que hay detrás de ella. Es utilizada para generar un cuadrado borroso sobre el cual presentar las distintas opciones disponibles en la lista de opciones de una conversación. Este efecto se puede ver en la Figura \ref{blurit2}.
 
 \begin{figure}[h!]
 	\centerline{\includegraphics[width=4.3in]{figures/it2/apearance/checklist.png}}
-	\caption[Apearance - Versión Final]{Diagrama de clases de Apearance, sin incluir Bubble.}
+	\caption[Apearance - AutoGlower]{Brillo de los elementos causado por la componente de Appearance AutoGlower.}
 	\label{autoglow1it2}
 \end{figure}
 
 \begin{figure}[h!]
 	\centerline{\includegraphics[width=4.3in]{figures/it2/apearance/fire.png}}
-	\caption[Apearance - Versión Final]{Diagrama de clases de Apearance, sin incluir Bubble.}
+	\caption[Apearance - Progresión de AutoGlower]{Progresión de imágenes que muestra el brillo de los elementos.}
 	\label{autoglow2it2}
 \end{figure}
 
 \begin{figure}[h!]
 	\centerline{\includegraphics[width=4.3in]{figures/it2/apearance/blur.png}}
-	\caption[Apearance - Versión Final]{Diagrama de clases de Apearance, sin incluir Bubble.}
+	\caption[Apearance - Blur y opciones]{Captura de una lista de opciones entre las que el jugador puede elegir. Se muestra el fondo borroso causado por Blur.}
 	\label{blurit2}
 \end{figure}
 
@@ -372,7 +380,7 @@ Por último, tenemos a la clase \textit{Blur}, que, al igual que la anterior uti
 
 El menú contextual es uno de los elementos que existían antes y que ha sido recreado, añadiendo animación al mismo para que su representación visual sea más sencilla. La utilidad del menú contextual es mostrar acciones en forma de botones para que el usuario pueda pulsarlos y ejecutar las acciones que están detrás de los mismos.
 
-Este menú contextual se genera utilizando una de las funciones de \textit{GUIManager}, la función \textit{showActions(list<Action>)} que, inicializa el menú y utiliza su función \textit{regenerate()}, que lo que hace es, en función de los parámetros que se le hayan establecido, genera nuevos botones, y los coloca para que se animen correctamente. Tras esto la clase \textit{OptionMB} se encarga de ir colocando tanto la línea que une el centro del menú con el botón, como el botón en si mismo. Asimismo, esta clase establece la acción en \textit{ButtonMB}, clase que implementa la interfaz \textit{Interactuable}, y que permite al usuario interactuar con ella. Es la clase \textit{ButtonMB} la que se encarga de modificar su representación en función de la imagen que le provea el \textit{GUIManager}. Esto está representado en la figura \ref{menuit2}, donde participan \textit{MonoBehaviour} e \textit{Interactuable}.
+Este menú contextual se genera utilizando una de las funciones de \textit{GUIManager}, la función \textit{showActions(list<Action>)} que, inicializa el menú y utiliza su función \textit{regenerate()}, que lo que hace es, en función de los parámetros que se le hayan establecido, genera nuevos botones, y los coloca para que se animen correctamente. Tras esto la clase \textit{OptionMB} se encarga de ir colocando tanto la línea que une el centro del menú con el botón, como el botón en si mismo. Asimismo, esta clase establece la acción en \textit{ButtonMB}, clase que implementa la interfaz \textit{Interactuable}, y que permite al usuario interactuar con ella. Es la clase \textit{ButtonMB} la que se encarga de modificar su representación en función de la imagen que le provea el \textit{GUIManager}. Visible en la Figura \ref{menuit2}, donde participan \textit{MonoBehaviour} e \textit{Interactuable}.
 
 \begin{figure}[h!]
 	\centerline{\includegraphics[height=3.3in]{figures/it2/Menu.png}}
@@ -380,7 +388,7 @@ Este menú contextual se genera utilizando una de las funciones de \textit{GUIMa
 	\label{menuit2}
 \end{figure}
 
-Finalmente, en la figura \ref{menuvisualit2} muestra el menú generado en una situación en la que se pueden realizar cinco acciones sobre un elemento de la escena. 
+Finalmente, la Figura \ref{menuvisualit2} muestra el menú generado en una situación en la que se pueden realizar cinco acciones sobre un elemento de la escena. 
 
 \begin{figure}[h!]
 	\centerline{\includegraphics[height=3in]{figures/it2/apearance/menu.png}}
@@ -391,7 +399,7 @@ Finalmente, en la figura \ref{menuvisualit2} muestra el menú generado en una si
 \subsection{El gestor de recursos: ResourceManager}
 \label{resourcemanager}
 
-Como se ha comentado varias veces a lo largo de esta sección, para facilitar el acceso a los recursos desde cualquier parte del proyecto, existe un \textit{Singleton} llamado \textit{ResourceManager} que provee de elementos multimedia al que lo solicite.
+Como se ha comentado varias veces a lo largo de este apartado, para facilitar el acceso a los recursos desde cualquier parte del proyecto, existe un \textit{Singleton} llamado \textit{ResourceManager} que provee de elementos multimedia al que lo solicite.
 
 Este \textit{ResourceManager} es capaz de cargar múltiples tipos de recursos, y para ello utiliza métodos diferentes. Asimismo, existen dos formas de cargar recursos, y las clases que se encargan de acceder al sistema de archivos para cargar los recursos se adaptan a estos tipos.
 
@@ -403,31 +411,31 @@ Estos tipos de carga, o \textit{LoadingType}, son: utilizando el sistema de fich
 	\label{resourcemanagerit2}
 \end{figure}
 
-con respecto a los tipos de ficheros que se pueden cargar con \textit{ResourceManager},encontramos los siguientes tipos:
+Con respecto a los tipos de ficheros que se pueden cargar con \textit{ResourceManager}, encontramos los siguientes tipos:
+
 \begin{itemize}
 	\item \textit{Imágenes}: Para la carga de imágenes existe una clase llamada \textit{Texture2DHolder}. Dependiendo del tipo de carga que utilice \textit{ResourceManager}, o bien se carga la textura directamente con \textit{Resources.Load()}, o bien se leen los \textit{bytes} de dicho fichero, para más adelante transformarlos en una \textit{Texture2D}.
 	
-	\item \textit{Animaciones}: Las animaciones que se cargan son las de eAdventure, y están compuestas por una serie de imágenes, esto se hace en la clase \textit{eAnim}, la cual no ha cambiado mucho en su funcionamiento desde lo explicado en la sección \ref{dataclassesit1}. Para añadir soporte a \textit{Resources.Load()} ha sido necesario implementar un método que renombra todos los archivos ".eaa" a ".xml" pues Unity no reconoce dichos archivos como ficheros de texto y no permite cargarlos.
+	\item \textit{Animaciones}: Las animaciones que se cargan son las de eAdventure, y están compuestas por una serie de imágenes, esto se hace en la clase \textit{eAnim}, la cual no ha cambiado mucho en su funcionamiento desde lo explicado en el apartado \ref{dataclassesit1}. Para añadir soporte a \textit{Resources.Load()} ha sido necesario implementar un método que renombra todos los archivos ``.eaa'' a ``.xml'' pues Unity no reconoce dichos archivos como ficheros de texto y no permite cargarlos.
 	
-	\item \textit{Vídeos}: La carga de vídeos se realiza almacenándolos en una \textit{MovieTexture}. Para la carga de estos desde el sistema de ficheros se utiliza la clase \textit{www}, que permite hacer solicitudes POST y GET, ya sea en local, al sistema de ficheros, o a un servidor. Esta carga requiere la utilización de corrutinas, pues sin ellas el juego se quedaría completamente congelado hasta que el recurso estuviera cargado. Finalmente mencionar que los vídeos únicamente pueden estar en formato ".ogv" bajo el codec OGG Theora.
+	\item \textit{Vídeos}: La carga de vídeos se realiza almacenándolos en una \textit{MovieTexture}. Para la carga de estos desde el sistema de ficheros se utiliza la clase \textit{www}, que permite hacer solicitudes POST y GET, ya sea en local, al sistema de ficheros, o a un servidor. Esta carga requiere la utilización de corrutinas, pues sin ellas el juego se quedaría completamente congelado hasta que el recurso estuviera cargado. Finalmente mencionar que los vídeos únicamente pueden estar en formato ``.ogv'' bajo el codec OGG Theora.
 	
 	\item \textit{Audio}: De manera similar a los vídeos, se utiliza la clase \textit{www} para su carga, aunque en esta ocasión son almacenados en \textit{AudioClip}.
 	
-	\item \textit{Archivos Zip}: Estos ficheros técnicamente no son cargados en tiempo de ejecución, sino que son extraídos bajo demanda del emulador para importar juegos. Estos juegos deben estar en formato ".jar", y únicamente se extrae de ellos la parte necesaria. Más detalles acerca de este proceso están disponibles en la sección \ref{emulatorit3}.
+	\item \textit{Archivos Zip}: Estos ficheros técnicamente no son cargados en tiempo de ejecución, sino que son extraídos bajo demanda del emulador para importar juegos. Estos juegos deben estar en formato ".jar", y únicamente se extrae de ellos la parte necesaria. Más detalles acerca de este proceso están disponibles en el apartado \ref{emulatorit3}.
 \end{itemize}
 
 Acerca de los vídeos, y de la importación de los juegos que se realiza en la tercera iteración del proyecto, se realizó una investigación acerca de la posibilidad de transformar dichos vídeos en el proceso de importación del juego. Los resultados no fueron satisfactorios, pero abrieron varias puertas para abordar este problema.
 
-En primer lugar, se probaron multitud de librerías que facilitaban la conversión de vídeos a sistemas .NET, sin embargo, ya que Unity utiliza una versión reducida del mismo, dichas librerías fallaban en tiempo de ejecución y no completaban la conversión del vídeo. Por otra parte, algunas personas que se han enfrentado al mismo problema, han generado \textit{Wrappers} que utilizan un ejecutable del proyecto de software libre \textit{FFMPEG}, que provee de una serie de utilidades para transformar vídeos fácilmente.
+En primer lugar, se probaron multitud de librerías que facilitaban la conversión de vídeos a sistemas .NET \cite{Middleware2003}. Sin embargo, ya que Unity utiliza una versión reducida del mismo, dichas librerías fallaban en tiempo de ejecución y no completaban la conversión del vídeo. Por otra parte, algunas personas que se han enfrentado al mismo problema, han generado \textit{Wrappers} que utilizan un ejecutable del proyecto de software libre FFMPEG \cite{ffmpeg}, que provee de una serie de utilidades para transformar vídeos fácilmente.
 
-Se intentaron incorporar dichos \textit{Wrappers} en el proyecto, pero ninguno de ellos funcionó. Finalmente se decidió que la alternativa de implementar un \textit{Wrapper} muy sencillo, con únicamente la funcionalidad de transformar a OGV, sería la opción mas viable. en windows, esto se haría de la siguiente manera:
+Se intentaron incorporar dichos \textit{Wrappers} en el proyecto, pero ninguno de ellos funcionó. Finalmente se decidió que la alternativa de implementar un \textit{Wrapper} muy sencillo, con únicamente la funcionalidad de transformar al formato OGV, sería la opción mas viable. en windows, esto se haría de la siguiente manera:
 
 \begin{lstlisting}
-String path = @"f:\temp\data.txt";
+string path = " -i \"" + video + "\" -codec:v libtheora -qscale:v 7 -codec:a libvorbis -qscale:a 5 \"" + video.Remove(video.Length-4, 4) + ".ogv\"";
 Process foo = new Process();
-foo.StartInfo.FileName = "Notepad.exe";
+foo.StartInfo.FileName = System.IO.Directory.GetCurrentDirectory() + "/ffmpeg/ffmpeg.exe";
 foo.StartInfo.Arguments = path;
-foo.Start();
 \end{lstlisting}
 
 También existe una manera de lanzar clases Java directamente desde Unity, pudiendo realizar este proceso también en Android, de la siguiente manera:
@@ -444,15 +452,15 @@ Por lo que, como trabajo futuro del proyecto, queda pendiente implementar dicho 
 \section{El modelo de Datos: Core}
 \label{coreit2}
 
-En el proceso de integración del proyecto de Piotr Marszal que consiste en reconstruir el editor de eAdventure dentro de Unity, se decidió unificar el modelo de datos. En vista de que, para una implementación al completo de todos los elementos del editor, el modelo de datos planteado en la sección \ref{dataclassesit1}, con las clases de datos que eran capaz de generarse a si mismas, era insuficiente para satisfacer las necesidades del proyecto, se decidió invertir mucho tiempo en portar al completo el modelo de datos de las clases Java a Unity.
+En el proceso de integración del proyecto de Piotr Marszal \ref{piotr} que consiste en reconstruir el editor de eAdventure dentro de Unity, se decidió unificar el modelo de datos. En vista de que, para una implementación al completo de todos los elementos del editor, el modelo de datos planteado en el apartado \ref{dataclassesit1}, con las clases de datos que eran capaz de generarse a si mismas, era insuficiente para satisfacer las necesidades del proyecto, se decidió invertir mucho tiempo en portar al completo el modelo de datos de las clases Java a Unity.
 
-Esta tediosa y repetitiva labor fue realizada casi en su totalidad por Piotr, quien copiaba el código Java en c\# y se encargaba de sustituir las librerías problemáticas por librerías análogas de .NET. Dentro de mi aportación, se realizaron tareas de corrección de errores y de pruebas para comprobar que todo funcionaba correctamente.
+Esta tediosa y repetitiva labor fue realizada casi en su totalidad por Piotr, quien copiaba el código Java en C\# y se encargaba de sustituir las librerías problemáticas por librerías análogas de .NET. Dentro de mi aportación, se realizaron tareas de corrección de errores y de pruebas para comprobar que todo funcionaba correctamente.
 
-De esta misma manera, Piotr importó el \textit{Loader} original de eAdventure, y, no fue hasta que se comenzó a utilizar en este proyecto, que no se identificó que dicho cargador era inviable de utilizar pues tardaba entre medio y un minuto en leer el documento de especificación del juego; además de que lo hacía con errores que, pese a intentos de arreglarlos, debido a que la implementación de dicho \textit{Loader} fue realizada por uno de los desarrolladores de eAdventure, la complejidad del funcionamiento del mismo se escapaba a nuestra comprensión.
+De esta misma manera, Piotr importó el \textit{Loader} original de eAdventure, y no fue hasta que se comenzó a utilizar en este proyecto que no se identificó que dicho cargador era inviable de utilizar pues tardaba entre medio y un minuto en leer el documento de especificación del juego; además de que lo hacía con errores que, pese a intentos de arreglarlos, debido a que la implementación de dicho \textit{Loader} fue realizada por uno de los desarrolladores de eAdventure, la complejidad del funcionamiento del mismo se escapaba a nuestra comprensión.
 
 Como estos problemas con el \textit{Loader} continuaban, se decidió crear una nueva implementación del cargador del modelo de datos utilizando la librería \textit{System.XML} que se utilizó para las Clases de datos de la primera iteración, y que ya se conocía que era fácil de utilizar, pues permite utilizar sintaxis de XPath\footnote{XPath (XML Path Language) es un lenguaje declarativo que permite construir expresiones regulares que recorren, procesan y seleccionan elementos de un documento XML}, y acceder al contenido del documento XML de forma sencilla.
 
-Esta segunda implementación la comenzó Piotr, recodificando la mayor parte de \textit{subparsers} del cargador. Sin embargo, el no pudo probar las nuevas clases que estaba implementando, por lo que no pudo darse cuenta de que muchas de ellas, debido a que la base que aplicaba para la transformación no era del todo correcta, no funcionaban. Los grandes \textit{subparsers} como el cargador de escenas, efectos, conversaciones, areas activas, etc... tuvieron que ser nuevamente implementados desde cero por mi. Finalmente, en mi labor se realizó la tarea de implementar los cargadores principales de \textit{AdventureData} y \textit{Chapter}. haciendo estos funcionales al sistema de cargado de ficheros de \textit{System.IO}, así como el de \textit{Resources.Load()}.
+Esta segunda implementación la comenzó Piotr, recodificando la mayor parte de \textit{subparsers} del cargador. Sin embargo, él no pudo probar las nuevas clases que estaba implementando, por lo que no pudo darse cuenta de que muchas de ellas, debido a que la base que aplicaba para la transformación no era del todo correcta, no funcionaban. Los grandes \textit{subparsers} como el cargador de escenas, efectos, conversaciones, areas activas, etc... tuvieron que ser nuevamente implementados desde cero en este proyecto. Finalmente, dentro de este proyecto se realizó la tarea de implementar los cargadores principales de \textit{AdventureData} y \textit{Chapter}, haciendo estos funcionales al sistema de cargado de ficheros de \textit{System.IO}, así como el de \textit{Resources.Load()}.
 
 Una vez construido el nuevo \textit{Loader}, los tiempos fueron reducidos en un 90\%, pasando de tardar 45 segundos de tiempo de carga en el videojuego \textit{Checklist}, a alrededor de 4 segundos. No obstante esta medida no puede realizarse con precisión debido a que en dichos tiempos de carga se incluye el tiempo que utiliza Unity para inicializarse y ponerse en funcionamiento.
 
@@ -471,18 +479,18 @@ Pese a que uno de los objetivos principales de este proyecto es el de garantizar
 
 Una de las partes que, por tener un grado de dificultad muy elevado de incluir en Unity, debido a que las librerías que se utilizaban no dan soporte a .NET, y se debe construir una nueva infraestructura para soportarlo, es la parte de \textit{Assessment}. Estas partes, que además no tenían toda la funcionalidad deseada, van a ser sustituidas por \textit{Assessment} con RAGE.
 
-RAGE, Realising an Applied Gaming Eco-system, es un proyecto que apunta a desarrollar, transformar y enriquecer tecnologías específicas para la industria de los videojuegos serios, en forma de paquetes autocontenidos para juegos que ayudan a los estudios de videojuegos en el desarrollo de juegos serios, haciéndolo más sencillo, rápido y eficiente económicamente.
+RAGE, Realising an Applied Gaming Eco-system \cite{Steiner2016}, es un proyecto que apunta a desarrollar, transformar y enriquecer tecnologías específicas para la industria de los videojuegos serios, en forma de paquetes autocontenidos para juegos que ayudan a los estudios de videojuegos en el desarrollo de juegos serios, haciéndolo más sencillo, rápido y eficiente económicamente.
 
 En RAGE hay una parte específica dedicada a la evaluación de videojuegos, y esta parte provee una API para los profesores que deseen crear perfiles de evaluación y progreso, así como otros elementos de utilidad que se deseen monitorizar, como el numero de veces que una pregunta ha sido respondida de forma incorrecta, o los días que los estudiantes han sido más activos jugando a un videojuego.
 
 En eAdventure, este proceso de evaluación se realiza mediante la especificación de una serie de frases de evaluación, en lenguaje natural, que, cuando se den una serie de condiciones, serán incluidas en un registro de evaluación. Este registro se muestra al jugador al terminar el juego, y este debe enviar dicho registro al profesor, o debe ser revisado por el profesor al terminar la clase.
 
-Este proceso tiene multitud de problemas, entre los cuales podemos encontrar: casos como que, el profesor nunca llegue a ver dicho registro de evaluación, ya sea porque el alumno decida no enviar dicho registro al profesor, o porque el alumno lo cierre sin querer; problemas a la hora de evaluar porque no sea suficientemente específico en el desarrollo del juego; o el gran problema de que, para poder realizar la evaluación, es el propio desarrollador el que tiene que incluir elementos de evaluación dentro del juego. Sin embargo, todos estos problemas son asumibles, porque se entiende que el profesor va a tener tiempo para dedicar a cada alumno, hablar con él en caso de que tenga dudas acerca del desarrollo del juego, y que los juegos desarrollados, en general, son de corta duración, y pueden ser completados de inicio a fin en una sesión.
+Este proceso tiene multitud de problemas, entre los cuales podemos encontrar: casos como que el profesor nunca llegue a ver dicho registro de evaluación, ya sea porque el alumno decida no enviar dicho registro al profesor, o porque el alumno lo cierre sin querer; problemas a la hora de evaluar porque no sea suficientemente específico en el desarrollo del juego; o el gran problema de que, para poder realizar la evaluación, es el propio desarrollador el que tiene que incluir elementos de evaluación dentro del juego. Sin embargo, todos estos problemas son asumibles, porque se entiende que el profesor va a tener tiempo para dedicar a cada alumno, hablar con él en caso de que tenga dudas acerca del desarrollo del juego, y que los juegos desarrollados, en general, son de corta duración, y pueden ser completados de inicio a fin en una sesión.
 
-Pero, ¿Qué ocurre si pasamos de tener el ámbito de una clase, a una cantidad de alumnos que sobrepasa el límite del profesor? ¿Podría leer los registros de todos los alumnos y evaluar uno por uno? La respuesta es no, o al menos no de forma apropiada. Por ello, es necesario que este proceso de evaluación sea rediseñado y reconstruido utilizando las ventajas que RAGE provee a los desarrolladores de juegos. Delegando este proceso de evaluación, y únicamente monitorizando las desviaciones que sufren los alumnos, se podrá conseguir que el proceso de evaluación de un número de alumnos elevado, mediante el uso de un juego generado por uAdventure, se realice de forma sencilla y cómoda.
+Pero, ¿qué ocurre si pasamos de tener el ámbito de una clase, a una cantidad de alumnos que sobrepasa el límite del profesor? ¿Podría leer los registros de todos los alumnos y evaluar uno por uno? La respuesta es no, o al menos no de forma apropiada. Por ello, es necesario que este proceso de evaluación sea rediseñado y reconstruido utilizando las ventajas que RAGE provee a los desarrolladores de juegos. Delegando este proceso de evaluación, y únicamente monitorizando las desviaciones que sufren los alumnos, se podrá conseguir que el proceso de evaluación de un número de alumnos elevado, mediante el uso de un juego generado por uAdventure, se realice de forma sencilla y cómoda.
 
 Además de las ventajas que RAGE proveerá a uAdventure, el segundo se encargará de facilitar la generación de estos perfiles de evaluación desde el propio editor de uAdventure. Un ejemplo de este proceso automatizado sería, la generación del progreso del usuario dentro del juego a través del árbol de escenas que comunica la escena inicial con la escena final. También se podrían marcar variables importantes para el desarrollo del juego, para su monitorización, y se generarían gráficas de su evolución, así como poder generar alertas si una de dichas variables se saliese de un rango apropiado. Finalmente, se intentaría preservar el antiguo sistema de alertas de eAdventure, utilizando el sistema de alertas de RAGE.
 
-Recalcar también que, RAGE no únicamente permite facilitar la evaluación al profesorado, sino que también ayuda a investigadores y desarrolladores, permitiendo generar estadísticas como las preguntas más falladas, y la opción más elegida dentro de ellas; generación de mapas de calor dentro de una escena, para saber las zonas donde más interactúa el usuario, o saber las escenas donde el jugador pierde más el tiempo, o le resultan más complejas de superar.
+Recalcar también que RAGE no permite únicamente facilitar la evaluación al profesorado, sino que también ayuda a investigadores y desarrolladores, permitiendo generar estadísticas como las preguntas más falladas, y la opción más elegida dentro de ellas; generación de mapas de calor dentro de una escena, para saber las zonas donde más interactúa el usuario, o saber las escenas donde el jugador pierde más el tiempo, o le resultan más complejas de superar.
 
 En cuanto a la funcionalidad que \textit{RAGETracker} aporta en si mismo, únicamente facilita el proceso de comunicación con RAGE. Implementa unas clases que realizan la conexión con el API, autorizan al usuario mediante un \textit{Token} de identificación, y relacionan el juego al que se está jugando, con un juego dado de alta en RAGE. La implementación de dicho \textit{Tracker} está disponible en \url{https://github.com/e-ucm/unity-tracker}.

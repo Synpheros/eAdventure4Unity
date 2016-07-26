@@ -10,7 +10,7 @@ Esta lista contiene:
 	
 	\item Implementar todos los tipos de efectos disponibles, pues, aunque los efectos más utilizados tienen soporte, aún existen determinados efectos que su soporte es nulo o parcial.
 	
-	\item Mejorar el soporte a las transiciones, así como implementar la necesidad de que el jugador se encuentre cerca de un elemento de la escena para para poder interactúar con el.
+	\item Mejorar el soporte a las trayectorias, así como implementar la necesidad de que el jugador se encuentre cerca de un elemento de la escena para para poder interactúar con el.
 	
 	\item Implementar el inventario, pues el jugador no dispone de inventario de objetos.
 	
@@ -30,3 +30,36 @@ Esta lista contiene:
 \end{itemize}
 
 Sin embargo, este listado de trabajo futuro no es más que un listado de características que mejorarían la experiencia de usuario de uAdventure, por lo que, cualquier característica adicional que se le desee incorporar al editor que mejore esta experiencia puede considerarse como trabajo futuro del proyecto. Conocer este listado de características será determinado por el uso que los usuarios den al proyecto, mediante la obtención de retroalimentación por su parte.
+
+\chapter{Future Work}
+
+For improving the project, a small list of future work is proposed. This list ensures that, if it's correctly satisfied, the objetives shown in this project will also get satisfied.
+
+In the list it is:
+\begin{itemize}
+	\item Improve the graphic details, giving support to all the cursors and pointers, because currently only regular and hand cursor are supported.
+	
+	\item Give full support to transitions. Currently only fade transition is supported by overlaying two scenes with different opacity. Thats because fade transition is the most common transition.
+	
+	\item Supporting all the available effect types. Although the most used effect have been supported in uAdventure, they still are some effects with null or partial support.
+	
+	\item Improve trajectory support, and implement the need that the player must be near an item in the scene to interact with it.
+	
+	\item Implement inventory because currently player doesn't have one.
+	
+	\item Add the possibility to load an save game using the class \textit{GameState} and a serialization tool.
+	
+	\item Implement a halfway screen in the emulator for showing details about the imported games to the player, and giving some abilities like removing the game or the different saves.
+	
+	\item Improve RAGE support, developing proccess for automatic progress and evaluation calculation. This can be made by using the scene progression that connects the initial and end scenes. Evaluation can be made by letting the developer set a list of variables that define a score.
+	
+	\item Transparently integrate RAGE with the editor allowing to select form the menus what elements the developer wants to monitorize just by clicking a few buttons.
+	
+	\item Improve code documentation, because currently most of the code doesn't have comments or documentation. Although all the class diagrams generated for this document, a better inline documentation improves the software quality.
+	
+	\item Redesign Piotr's editor, for a better integration with Unity. Although the current UI allows the users to interact in a similar way as they are used to do in eAdventure. In any case, That UI is very old and can be improved by Unity integration, creating an hybrid editor.
+	
+	\item Supporting Unity prefabs, allowing the user to add 3D elements to the scene.
+\end{itemize}
+
+But nevertheless, this future work list is nothing but a list of features that will improve user experiencie in uAdventure, so every new feature that improves that experience can be considered as future work. Knowing this feature list will be determined by the feedback users give about the project.

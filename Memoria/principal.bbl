@@ -11,13 +11,86 @@ Roberto {Baelo {\'{A}}lvarez}.
 \newblock {\em Pixel-Bit: Revista de medios y educaci{\'{o}}n}, (35):87--96,
   2009.
 
+\bibitem{Beck2001}
+K~Beck.
+\newblock {Agile Manifesto}, 2001.
+
+\bibitem{Bollobas1993}
+B{\'{e}}la Bollob{\'{a}}s and Oliver Riordan.
+\newblock {Dijkstra ' s Algorithm}.
+\newblock {\em Network}, 69(1959):036114, 1993.
+
+\bibitem{masseffect}
+Jorge Cano.
+\newblock {Análisis de Mass Effect Trilogía para PlayStation 3)}, 2012.
+
+\bibitem{ffmpeg}
+FFmpeg Community).
+\newblock {About FFmpeg}, 2016.
+
+\bibitem{gameguru}
+The~Game Creators.
+\newblock {GameGuru, Create, play and share fun games on your PC with
+  absolutely no technical knowledge needed}, 2016.
+
+\bibitem{catedu}
+Centro~Aragonés de~Tecnologías para~la Educación~(CATEDU).
+\newblock {Página principal del Centro Aragonés de Tecnologías para la
+  Educación}, 2016.
+
+\bibitem{runaway}
+Alberto de~Vega~Luna.
+\newblock {Runaway: A Road Adventure.}, 2001.
+
+\bibitem{Dickey2006}
+Michele~D. Dickey.
+\newblock Game design narrative for learning: Appropriating adventure game
+  design narrative devices and techniques for the design of interactive
+  learning environments.
+\newblock {\em Educational Technology Research and Development},
+  54(3):245--263, 2006.
+
+\bibitem{dayofthetentacle}
+Inc Double Fine~Productions.
+\newblock {Dr. Fred’s mutated purple tentacle is about to take over the
+  world, and only you can stop him!}, 2016.
+
 \bibitem{checklisteucm}
 e~UCM.
 \newblock {Checklist (game abouth safe surgery checklist)}.
 
+\bibitem{unrealgame}
+Santiago~Lamelo Fagilde.
+\newblock {Unreal Tournament, El Redenetor, Vuelve Unreal más multijugador que
+  nunca, nuevas armas, nuevos estilos de juego para reforzar de nuevo la
+  acción y adicción del universo Unreal.}, 2016.
+
 \bibitem{gamemaker}
 Javier Fugitivo.
 \newblock {Game Maker Studio: Primeros pasos}, 2013.
+
+\bibitem{cryengine}
+Crytek GmbH.
+\newblock {CryEngine Features, Achieve your Vision using our cutting-edge, 100%
+  royalty-free technology}, 2016.
+
+\bibitem{agsmanual}
+Chris Jones.
+\newblock {Adventure Game Studio Manual - Introduction}, 2010.
+
+\bibitem{Levin}
+Jonathan Levin.
+\newblock {Dalvik and ART}.
+
+\bibitem{Lindholm2014}
+Tim Lindholm, Frank Yellin, Gilad Bracha, and Alex Buckley.
+\newblock {\em {The Java{\textregistered} Virtual Machine Specification}}.
+\newblock 2014.
+
+\bibitem{quintus}
+Cykod LLC.
+\newblock {Quintus is an easy-to-learn, fun-to-use JavaScript HTML5 game engine
+  for mobile, desktop and beyond}, 2013.
 
 \bibitem{baltaslide}
 Baltasar~Fernández Manjón.
@@ -30,9 +103,45 @@ D~R Michael and S~L Chen.
 \newblock {Serious Games: Games That Educate, Train, and Inform}.
 \newblock {\em Education}, October 31:1--95, 2005.
 
+\bibitem{Middleware2003}
+V~I Middleware.
+\newblock {Microsoft . NET}.
+\newblock {\em Framework}, pages 65--85, 2003.
+
+\bibitem{turok}
+Greg Miller.
+\newblock {Turok Review for IGN}, 2008.
+
+\bibitem{gearsofwar}
+Jonathan Miller.
+\newblock {Gears of War review for IGN - One year in, the Xbox 360 has its
+  Killer App. And we mean killer.}, 2006.
+
+\bibitem{bioshock}
+Wikipedia Multiple~Authors.
+\newblock {BioShock (Series)}, 2016.
+
+\bibitem{doom}
+Wikipedia Multiple~Authors.
+\newblock {Doom}, 2016.
+
+\bibitem{monkeyisland}
+Wikipedia Multiple~Authors.
+\newblock {Monkey Island (Series)}, 2016.
+
+\bibitem{rpgmaker}
+Wikipedia Multiple~Authors.
+\newblock {RPG Maker}, 2016.
+
 \bibitem{adventuregamestudio}
 Juan Ignacio~Rodriguez Navarro.
 \newblock {Introducción al manual de Adventure Game Studio (AGS)}, 2008.
+
+\bibitem{Pearcy2012}
+M~Pearcy.
+\newblock {Americas Army: "Playful hatred" in the social studies classroom}.
+\newblock {\em International Journal of Gaming and Computer-Mediated
+  Simulations}, 4(2):19--36, 2012.
 
 \bibitem{Reina2012}
 Laura~Arjona Reina and Gregorio Robles.
@@ -45,10 +154,34 @@ Technical Report.
 \newblock {Analysis of Dalvik Virtual Machine and Class Path Library}.
 \newblock {\em Management}, pages 1 -- 42, 2009.
 
+\bibitem{wintermuteengine}
+Dead:Code Software.
+\newblock {Some of the notable WME features}, 2010.
+
+\bibitem{spine}
+Esoteric Software.
+\newblock {Spine is 2D animation, Spine website}, 2016.
+
+\bibitem{opensludge}
+Hungry Software and contributors.
+\newblock {Introduction to SLUDGE Concepts}, 2002.
+
+\bibitem{Steiner2016}
+Christina Steiner, Alexander Nussbaumer, Eric Kluijfhout, Rob Nadolski, Samuel
+  Mscarenhas, Moreno Ger, Mihai Dascalu, Stefan Trausan, and Christina Steiner.
+\newblock {Realising an Applied Gaming Eco-system D8 . 1 – RAGE Evaluation
+  Framework and Guidelines Name of Author}.
+\newblock (644187):1--86, 2016.
+
 \bibitem{unitymanual}
 Unity Technologies.
 \newblock {Manual: Execution Order of Event Functions (Orden de Ejecución de
   Funciones de Evento)}.
+
+\bibitem{unity}
+Unity Technologies.
+\newblock {Create games, connect with your audience, and achieve success -
+  Unity 3D}, 2016.
 
 \bibitem{unrealengine}
 Mike Thomsen.
@@ -61,10 +194,23 @@ Javier Torrente, {\'{A}}ngel {Del Blanco}, Eugenio~J. Marchiori, Pablo
 \newblock In {\em IEEE Education Engineering (EDUCON) 2010 Conference}, pages
   1121--1126, Madrid, Spain, 2010. IEEE.
 
+\bibitem{Torrente2015}
+Javier Torrente, {\'{A}}ngel Serrano-laguna, Conor Fisk, Breid~O Brien, Wanda
+  Aleksy, Baltasar~Fern{\'{a}}ndez Manj{\'{o}}n, and Patty Kostkova.
+\newblock {Introducing Mokap: a novel approach to creating serious games}.
+\newblock {\em 5th International Conference on Digital Health}, 1(1):17--24,
+  2015.
+
 \bibitem{TorresMolina2007}
 Yolanda {Torres Molina}.
 \newblock {Localizaci{\'{o}}n de juegos para m{\'{o}}vil}.
 \newblock {\em Tradum{\`{a}}tica: traducci{\'{o}} i tecnologies de la
   informaci{\'{o}} i la comunicaci{\'{o}}}, (5), 2007.
+
+\bibitem{quake}
+Trent Ward.
+\newblock {Quake Review - If you're into action games, or even if you're not,
+  you should be playing Quake right now - it's as good as PC gaming gets.},
+  1996.
 
 \end{thebibliography}

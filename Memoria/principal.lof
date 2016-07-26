@@ -1,54 +1,63 @@
 \select@language {spanish}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Introducci\IeC {\'o}n uAdventure}}{3}{figure.1.1}
-\contentsline {figure}{\numberline {1.2}{\ignorespaces Unreal Engine 4 - London Apartment}}{12}{figure.1.2}
-\contentsline {figure}{\numberline {1.3}{\ignorespaces Adventure Game Studio}}{15}{figure.1.3}
-\contentsline {figure}{\numberline {1.4}{\ignorespaces Open SLUDGE}}{17}{figure.1.4}
-\contentsline {figure}{\numberline {1.5}{\ignorespaces WinterMute Engine}}{17}{figure.1.5}
-\contentsline {figure}{\numberline {1.6}{\ignorespaces eAdventure Android - Lupa}}{18}{figure.1.6}
-\contentsline {figure}{\numberline {1.7}{\ignorespaces eAdventure Android - Menu}}{19}{figure.1.7}
-\contentsline {figure}{\numberline {1.8}{\ignorespaces Mokap - eAdventure Editor}}{20}{figure.1.8}
-\contentsline {figure}{\numberline {1.9}{\ignorespaces Mokap - \IeC {\'U}ltima Versi\IeC {\'o}n}}{21}{figure.1.9}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Arquitectura simplificada - Prototipo 1}}{33}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Clases de Datos - Prototipo 1}}{39}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Clases de Comportamiento - Prototipo 1}}{41}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Clases de Utilidad - Prototipo 1}}{45}{figure.4.4}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Arquitectura - Versi\IeC {\'o}n Final}}{53}{figure.5.1}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces GameLogic Grandes Gestores - Versi\IeC {\'o}n Final}}{56}{figure.5.2}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces GameState - Versi\IeC {\'o}n Final}}{57}{figure.5.3}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Game - Versi\IeC {\'o}n Final}}{59}{figure.5.4}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Representable, Interactuable, Movable y Transparent - Versi\IeC {\'o}n Final}}{61}{figure.5.5}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces ActiveAreas - Versi\IeC {\'o}n Final}}{65}{figure.5.6}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces TrajectoryHandler - Versi\IeC {\'o}n Final}}{67}{figure.5.7}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Sequences - Versi\IeC {\'o}n Final}}{68}{figure.5.8}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces TimerController - Versi\IeC {\'o}n Final}}{70}{figure.5.9}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces GameLogic Grandes Gestores - Versi\IeC {\'o}n Final}}{72}{figure.5.10}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces GUIProvider - Versi\IeC {\'o}n Final}}{74}{figure.5.11}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Bubble - Versi\IeC {\'o}n Final}}{75}{figure.5.12}
-\contentsline {figure}{\numberline {5.13}{\ignorespaces Apearance - Versi\IeC {\'o}n Final}}{76}{figure.5.13}
-\contentsline {figure}{\numberline {5.14}{\ignorespaces Apearance - Versi\IeC {\'o}n Final}}{77}{figure.5.14}
-\contentsline {figure}{\numberline {5.15}{\ignorespaces Apearance - Versi\IeC {\'o}n Final}}{77}{figure.5.15}
-\contentsline {figure}{\numberline {5.16}{\ignorespaces Apearance - Versi\IeC {\'o}n Final}}{78}{figure.5.16}
-\contentsline {figure}{\numberline {5.17}{\ignorespaces Menu - Versi\IeC {\'o}n Final}}{79}{figure.5.17}
-\contentsline {figure}{\numberline {5.18}{\ignorespaces Visual Menu - Versi\IeC {\'o}n Final}}{79}{figure.5.18}
-\contentsline {figure}{\numberline {5.19}{\ignorespaces ResourceManager - Versi\IeC {\'o}n Final}}{80}{figure.5.19}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Primer prototipo - Emulador}}{89}{figure.6.1}
-\contentsline {figure}{\numberline {6.2}{\ignorespaces Menu Principal - Emulador}}{90}{figure.6.2}
-\contentsline {figure}{\numberline {6.3}{\ignorespaces Explorador de Archivos - Emulador}}{91}{figure.6.3}
-\contentsline {figure}{\numberline {6.4}{\ignorespaces Importador de Juegos - Emulador}}{91}{figure.6.4}
-\contentsline {figure}{\numberline {6.5}{\ignorespaces Configuraci\IeC {\'o}n - Emulador}}{92}{figure.6.5}
-\contentsline {figure}{\numberline {6.6}{\ignorespaces Cr\IeC {\'e}ditos - Emulador}}{92}{figure.6.6}
-\contentsline {figure}{\numberline {6.7}{\ignorespaces Ventana Principal - Editor de Efectos}}{95}{figure.6.7}
-\contentsline {figure}{\numberline {6.8}{\ignorespaces Editor de Nodo con condiciones - Editor de Efectos}}{95}{figure.6.8}
-\contentsline {figure}{\numberline {6.9}{\ignorespaces Peque\IeC {\~n}o di\IeC {\'a}logo - Editor de Di\IeC {\'a}logos}}{96}{figure.6.9}
-\contentsline {figure}{\numberline {6.10}{\ignorespaces Anillo de nodos - Editor de Di\IeC {\'a}logos}}{97}{figure.6.10}
-\contentsline {figure}{\numberline {6.11}{\ignorespaces Gran di\IeC {\'a}logo - Editor de Di\IeC {\'a}logos}}{98}{figure.6.11}
-\contentsline {figure}{\numberline {6.12}{\ignorespaces Diagrama de Clases - Editor de RAGE}}{99}{figure.6.12}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Unreal Engine 4 - London Apartment}}{20}{figure.6.1}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Adventure Game Studio}}{23}{figure.6.2}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Open SLUDGE}}{24}{figure.6.3}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces WinterMute Engine}}{25}{figure.6.4}
+\contentsline {figure}{\numberline {6.5}{\ignorespaces eAdventure Android - Lupa}}{26}{figure.6.5}
+\contentsline {figure}{\numberline {6.6}{\ignorespaces eAdventure Android - Menu}}{26}{figure.6.6}
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Mokap - eAdventure Editor}}{28}{figure.6.7}
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Mokap - \IeC {\'U}ltima Versi\IeC {\'o}n}}{29}{figure.6.8}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {9.1}{\ignorespaces Arquitectura simplificada - Prototipo 1}}{38}{figure.9.1}
+\contentsline {figure}{\numberline {9.2}{\ignorespaces Clases de Datos - Prototipo 1}}{44}{figure.9.2}
+\contentsline {figure}{\numberline {9.3}{\ignorespaces Clases de Comportamiento - Prototipo 1}}{46}{figure.9.3}
+\contentsline {figure}{\numberline {9.4}{\ignorespaces Clases de Utilidad - Prototipo 1}}{50}{figure.9.4}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {10.1}{\ignorespaces Arquitectura - Versi\IeC {\'o}n Final}}{58}{figure.10.1}
+\contentsline {figure}{\numberline {10.2}{\ignorespaces GameLogic Grandes Gestores - Versi\IeC {\'o}n Final}}{61}{figure.10.2}
+\contentsline {figure}{\numberline {10.3}{\ignorespaces GameState - Versi\IeC {\'o}n Final}}{62}{figure.10.3}
+\contentsline {figure}{\numberline {10.4}{\ignorespaces Game - Versi\IeC {\'o}n Final}}{64}{figure.10.4}
+\contentsline {figure}{\numberline {10.5}{\ignorespaces Representable, Interactuable, Movable y Transparent - Versi\IeC {\'o}n Final}}{66}{figure.10.5}
+\contentsline {figure}{\numberline {10.6}{\ignorespaces ActiveAreas - Versi\IeC {\'o}n Final}}{70}{figure.10.6}
+\contentsline {figure}{\numberline {10.7}{\ignorespaces TrajectoryHandler - Versi\IeC {\'o}n Final}}{73}{figure.10.7}
+\contentsline {figure}{\numberline {10.8}{\ignorespaces Sequences - Versi\IeC {\'o}n Final}}{74}{figure.10.8}
+\contentsline {figure}{\numberline {10.9}{\ignorespaces TimerController - Versi\IeC {\'o}n Final}}{76}{figure.10.9}
+\contentsline {figure}{\numberline {10.10}{\ignorespaces GameLogic Grandes Gestores - Versi\IeC {\'o}n Final}}{78}{figure.10.10}
+\contentsline {figure}{\numberline {10.11}{\ignorespaces GUIProvider - Versi\IeC {\'o}n Final}}{80}{figure.10.11}
+\contentsline {figure}{\numberline {10.12}{\ignorespaces Bubble - Versi\IeC {\'o}n Final}}{81}{figure.10.12}
+\contentsline {figure}{\numberline {10.13}{\ignorespaces Apearance - Versi\IeC {\'o}n Final}}{82}{figure.10.13}
+\contentsline {figure}{\numberline {10.14}{\ignorespaces Apearance - AutoGlower}}{83}{figure.10.14}
+\contentsline {figure}{\numberline {10.15}{\ignorespaces Apearance - Progresi\IeC {\'o}n de AutoGlower}}{84}{figure.10.15}
+\contentsline {figure}{\numberline {10.16}{\ignorespaces Apearance - Blur y opciones}}{84}{figure.10.16}
+\contentsline {figure}{\numberline {10.17}{\ignorespaces Menu - Versi\IeC {\'o}n Final}}{85}{figure.10.17}
+\contentsline {figure}{\numberline {10.18}{\ignorespaces Visual Menu - Versi\IeC {\'o}n Final}}{86}{figure.10.18}
+\contentsline {figure}{\numberline {10.19}{\ignorespaces ResourceManager - Versi\IeC {\'o}n Final}}{87}{figure.10.19}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {11.1}{\ignorespaces Primer prototipo - Emulador}}{95}{figure.11.1}
+\contentsline {figure}{\numberline {11.2}{\ignorespaces Menu Principal - Emulador}}{96}{figure.11.2}
+\contentsline {figure}{\numberline {11.3}{\ignorespaces Explorador de Archivos - Emulador}}{97}{figure.11.3}
+\contentsline {figure}{\numberline {11.4}{\ignorespaces Importador de Juegos - Emulador}}{97}{figure.11.4}
+\contentsline {figure}{\numberline {11.5}{\ignorespaces Configuraci\IeC {\'o}n - Emulador}}{98}{figure.11.5}
+\contentsline {figure}{\numberline {11.6}{\ignorespaces Cr\IeC {\'e}ditos - Emulador}}{99}{figure.11.6}
+\contentsline {figure}{\numberline {11.7}{\ignorespaces Ventana Principal - Editor de Efectos}}{101}{figure.11.7}
+\contentsline {figure}{\numberline {11.8}{\ignorespaces Editor de Nodo con condiciones - Editor de Efectos}}{102}{figure.11.8}
+\contentsline {figure}{\numberline {11.9}{\ignorespaces Peque\IeC {\~n}o di\IeC {\'a}logo - Editor de Di\IeC {\'a}logos}}{103}{figure.11.9}
+\contentsline {figure}{\numberline {11.10}{\ignorespaces Anillo de nodos - Editor de Di\IeC {\'a}logos}}{103}{figure.11.10}
+\contentsline {figure}{\numberline {11.11}{\ignorespaces Gran di\IeC {\'a}logo - Editor de Di\IeC {\'a}logos}}{104}{figure.11.11}
+\contentsline {figure}{\numberline {11.12}{\ignorespaces Diagrama de Clases - Editor de RAGE}}{105}{figure.11.12}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {12.1}{\ignorespaces uAdventure editor - eAdventure}}{107}{figure.12.1}
+\contentsline {figure}{\numberline {12.2}{\ignorespaces uAdventure editor - uAdventure}}{107}{figure.12.2}
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

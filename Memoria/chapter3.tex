@@ -3,9 +3,9 @@
 
 \section{Arquitectura del Proyecto}
 \label{it1arquitectura}
-La arquitectura del proyecto está caracterizada por la dinamicidad y capacidad para adaptarse de sus clases. Permitiendo que tomen un rol u otro dependiendo de las clases que las definan. Es decir, una clase personaje debe adaptarse al rol de personaje que le toque interpretar, y al contexto que le pone dentro de la escena. Además, debe seleccionar el recurso que lo represente que cumpla con las condiciones que se den en ese momento dentro de la escena. Finalmente debe permitir la interactuación y ejecución de efectos que están asignados a si mismo.
+La arquitectura del proyecto está caracterizada por la dinamicidad y capacidad para adaptarse de sus clases, permitiendo que tomen un rol u otro dependiendo de las clases que las definan. Es decir, una clase personaje debe adaptarse al rol de personaje que le toque interpretar, y al contexto que le pone dentro de la escena. Además, debe seleccionar el recurso que lo represente que cumpla con las condiciones que se den en ese momento dentro de la escena. Finalmente debe permitir la interacción y ejecución de efectos que están asignados a sí mismo.
 
-En esencial, esto se puede explicar con el diagrama de clases muy simplificado de la figura 3. Este diagrama fue generado en esta iteración del proyecto, por lo que su formato es muy diferente al resto de diagramas que se muestran en posteriores iteraciones.
+En esencia, esto se puede explicar con el diagrama de clases muy simplificado de la Figura 3. Este diagrama fue generado en esta iteración del proyecto, por lo que su formato es muy diferente al resto de diagramas que se muestran en posteriores iteraciones.
 
 \begin{figure}[htb]
 	\centerline{\includegraphics[height=3.5in]{figures/arquitecturait1.png}}
@@ -13,9 +13,9 @@ En esencial, esto se puede explicar con el diagrama de clases muy simplificado d
 	\label{arquitecturait1}
 \end{figure}
 
-En la figura \ref{arquitecturait1} hay varios elementos que no son comunes en un diagrama de clases. El primero de ellos es la "Cara sonriente" que aparece a la izquierda con el texto \textit{Prefab} debajo de el. Este \textit{Prefab} es un elemento en Unity3D que resume el concepto de Objeto Prefabricado, y que, contiene, una representación tridimensional, junto a todas las componentes y comportamientos que definen dicho objeto. Por otra parte la interfaz \textit{MonoBehabiour} no es una interfaz, sino una clase abstracta, y esta, provee a los elementos que la extienden de la habilidad de ser componentes para los objetos de la escena. Dicha clase contiene varios métodos como Start(), Awake() o Update() que permiten a estos comportamientos inicializarse, actuar, y en esencia, tener una fracción de tiempo para realizar acciones dentro de la escena de Unity3D.
+En la Figura \ref{arquitecturait1} hay varios elementos que no son comunes en un diagrama de clases. El primero de ellos es la ``Cara sonriente'' que aparece a la izquierda con el texto \textit{Prefab} debajo de él. Este \textit{Prefab} es un elemento en Unity3D que resume el concepto de Objeto Prefabricado, y que contiene una representación tridimensional, junto a todas las componentes y comportamientos que definen dicho objeto. Por otra parte, la interfaz \textit{MonoBehabiour} no es una interfaz, sino una clase abstracta, y esta provee a los elementos que la extienden de la habilidad de ser componentes para los objetos de la escena. Dicha clase contiene varios métodos como \textit{Start()}, \textit{Awake()} o \textit{Update()} que permiten a estos comportamientos inicializarse, actuar, y en esencia, tener una fracción de tiempo para realizar acciones dentro de la escena de Unity3D.
 
-En la figura \ref{arquitecturait1} encontramos cuatro tipos de clases:
+En la Figura \ref{arquitecturait1} encontramos cuatro tipos de clases:
 
 \begin{itemize}
 	\item El controlador principal del juego.
@@ -24,11 +24,11 @@ En la figura \ref{arquitecturait1} encontramos cuatro tipos de clases:
 	\item Las Clases de Utilidad: Acciones, Efectos, Macros, Secuencias, Diálogos, etc...
 \end{itemize}
 
-Todas las clases que se presentan en este primer prototipo han sufrido cambios muy grandes o totales tanto en su código, como en su funcionalidad. Algunas de ellas han desaparecido, surgiendo clases nuevas que realizan su funcionalidad, otras se han transformado completamente o han sido asumidas por otras, y finalmente, otras han surgido de la generalización y refactorización de código.
+Todas las clases que se presentan en este primer prototipo han sufrido cambios muy grandes o totales tanto en su código, como en su funcionalidad. Algunas de ellas han desaparecido, surgiendo clases nuevas que realizan su funcionalidad. Otras se han transformado completamente o han sido asumidas por otras, y finalmente, otras han surgido de la generalización y refactorización de código.
 
 \subsection{Controlador Principal de Juego}
 
-El controlador principal de juego, implementado con una clase de nombre Game, se encarga de, en primer lugar, comenzar la carga del juego, comenzando a explorar el XML y delegando en las Clases de Datos su propia interpretación, así como orquestar lo que sucede dentro del juego, detecta la interacción por parte del jugador y notifica a aquellos elementos cuando se interactúa con ellos, realiza la navegación entre escenas cuando es necesario, y controla el estado de los interruptores que controlan las condiciones para la contextualización de cada escena en su momento apropiado.
+El controlador principal de juego, implementado con una clase de nombre \textit{Game}, se encarga de, en primer lugar, comenzar la carga del juego, comenzando a explorar el XML y delegando en las Clases de Datos su propia interpretación, así como orquestar lo que sucede dentro del juego, detecta la interacción por parte del jugador y notifica a aquellos elementos cuando se interactúa con ellos, realiza la navegación entre escenas cuando es necesario, y controla el estado de los interruptores que controlan las condiciones para la contextualización de cada escena en su momento apropiado.
 
 
 Implementa el patrón Singleton, pues sólo una instancia es necesaria para el control.
@@ -43,7 +43,7 @@ Existe una clase de datos por cada Clase de Comportamiento, aunque también exis
 
 Las clases de comportamiento son aquellas clases que juegan un papel dentro del videojuego y participan de forma activa en la representación del mismo. Dentro de esta categoría encontramos a las Escenas, los Personajes, los Objetos, las Salidas de las escenas, así como los objetos de atrezo y todos aquellos elementos que tienen una representación virtual en el videojuego. 
 
-Cada una de estas clases heredará de la clase de Unity \textit{MonoBehabiour}, que indica, como se explica en la sección \ref{it1arquitectura}, que dicha clase es un comportamiento y se puede asignar como componente a un elemento de la escena. Cada una de ellas tiene un objeto de datos que debe interpretar. Esta clase de comportamiento recibirá estímulos por parte del controlador principal del juego cuando el jugador interactue con ellas. Este paso intermedio es necesario ya que hay momentos en los que el controlado principal debe evitar la interacción del jugador con dichos elementos por encontrarse en mitad de un diálogo. Con este estímulo, la clase de comportamiento gestiona las diferentes interacciones que tenga el usuario con si mismo.
+Cada una de estas clases heredará de la clase de Unity \textit{MonoBehabiour}, que indica, como se explica en el apartado \ref{it1arquitectura}, que dicha clase es un comportamiento y se puede asignar como componente a un elemento de la escena. Cada una de ellas tiene un objeto de datos que debe interpretar. Esta clase de comportamiento recibirá estímulos por parte del controlador principal del juego cuando el jugador interactue con ellas. Este paso intermedio es necesario ya que hay momentos en los que el controlado principal debe evitar la interacción del jugador con dichos elementos por encontrarse en mitad de un diálogo. Con este estímulo, la clase de comportamiento gestiona las diferentes interacciones que tenga el usuario con si mismo.
 
 Finalmente, estas clases se encapsulan dentro de un \textit{Prefab}, formando parte como componente de un objeto tridimensional, junto a otras componentes.
 
@@ -51,7 +51,7 @@ Finalmente, estas clases se encapsulan dentro de un \textit{Prefab}, formando pa
 
 Existen algunas cuestiones cruciales y generales acerca de cómo se realizó la implementación de diversas mecánicas que eran necesarias para que el juego funcionase.
 
-Algunas de estas decisiones cruciales son, por ejemplo, la decisión de \textit{reRenderizar}\footnote{Renderizar es el proceso de generar una imagen, mediante el cálculo de la iluminación, a partir de un modelo 3D. En este caso se refiere a regenerar la representación de la escena.} la escena junto con todos sus elementos cada vez que un \textit{Flag}\footnote{Una Flag, bandera en Inglés, es un elemento que se utiliza para establecer hitos dentro del juego, como haber hablado con un personaje, o haber fallado una respuesta.} o una Variable de entorno cambia. Esto puede tener efectos devastadores si nuestra escena tiene elementos que han sido modificados por el jugador en un momento determinado, pero en el caso del videojuego Checklist, no existen dichos elementos, por lo que, cada vez que se activa un flag, en lugar de notificar a cada uno de los elementos, se \textit{renderiza} de nuevo la escena entera.
+Algunas de estas decisiones cruciales son, por ejemplo, la decisión de \textit{reRenderizar}\footnote{Renderizar es el proceso de generar una imagen, mediante el cálculo de la iluminación, a partir de un modelo 3D. En este caso se refiere a regenerar la representación de la escena.} la escena junto con todos sus elementos cada vez que un \textit{Flag}\footnote{Una \textit{Flag}, bandera en Inglés, es un elemento que se utiliza para establecer hitos dentro del juego, como haber hablado con un personaje, o haber fallado una respuesta.} o una Variable de entorno cambia. Esto puede tener efectos devastadores si nuestra escena tiene elementos que han sido modificados por el jugador en un momento determinado, pero en el caso del videojuego Checklist, no existen dichos elementos, por lo que, cada vez que se activa un \textit{flag}, en lugar de notificar a cada uno de los elementos, se \textit{renderiza} de nuevo la escena entera.
 
 Esta decisión se tomó debido a que, pese a que existía la opción de implementar el patrón Observador-Observable, y hacer que todos los elementos de la escena fueran observadores y fuesen notificados cuando el estado del juego cambie, es frecuente que ocurra que, un elemento de la escena que en ese momento no tiene representación física, deba de reaccionar a este cambio en el estado del juego, y debido a que nunca recibirá la notificación, porque no existe, nunca aparecería.
 
@@ -61,12 +61,12 @@ Otra de las decisiones cruciales de la implementación consistió en decidir si 
 
 Después de comenzar con la implementación del \textit{SecuenceManager}, y construir una pila de secuencias, se vió que sería considerablemente complejo recordar datos contextuales acerca del estado de cada secuencia en caso de que fuese necesario parar la ejecución, y se decidió que era más sencillo que cada secuencia recordase por sí misma su posición.
 
-En una sección posterior se detallan en profundidad los detalles de la implementación de las clases Conversation y Effect, dos clases que implementan la interfaz Secuence, y que permiten ser ejecutadas por si mismas.
+En un apartado posterior se detallan en profundidad los detalles de la implementación de las clases \textit{Conversation} y \textit{Effect}, dos clases que implementan la interfaz \textit{Secuence}, y que permiten ser ejecutadas por si mismas.
 
 \subsection{Sobre la clase Game}
 \label{gameit1}
 
-La clase Game es el Controlador principal del juego, y por ello realiza todas las funciones anteriormente descritas.
+La clase \textit{Game} es el Controlador principal del juego, y por ello realiza todas las funciones anteriormente descritas.
 
 Sus funcionalidades se podrían categorizar en 4 apartados:
 
@@ -80,12 +80,12 @@ Sus funcionalidades se podrían categorizar en 4 apartados:
 	
 	\item En tercer lugar, se encuentran determinadas funciones útiles que realizan tareas variadas como \textit{RenderScene}, para pintar una escena o \textit{Execute} para comenzar la ejecución de una secuencia, junto con la función \textit{Update()} donde se realiza parte del control del juego, junto con la gestión del click del usuario, donde bloquearemos dicho click, notificaremos al elemento clicado o simplemente extraemos las acciones disponibles de dicho elemento, dependiendo del estado del juego.
 	
-	\item Por último, y al final del código, se encuentra otra parte de interacción, junto con el pintado de la interfaz. Para la interfaz se ha generado una \textit{GUISkin}\footnote{Una GUISkin es un fichero de especificación de datos de Unity que contiene datos acerca de los elementos de la interfaz, como el tamaño de la fuente, colores de los fondos, o imágenes de los botones.} propia que se modifica en función del tamaño de la pantalla para hacerse más grande o pequeña dependiendo de su proporción. Para el pintado de la interfaz se ha utilizado \textit{GUILayout}, clase que facilita métodos para representar una interfaz, ya que se conocía su funcionamiento de haberla utilizado en proyectos anteriores, y era sencillo de implementar.
+	\item Por último, y al final del código, se encuentra otra parte de interacción, junto con el pintado de la interfaz. Para la interfaz se ha generado una \textit{GUISkin}\footnote{Una \textit{GUISkin} es un fichero de especificación de datos de Unity que contiene datos acerca de los elementos de la interfaz, como el tamaño de la fuente, colores de los fondos, o imágenes de los botones.} propia que se modifica en función del tamaño de la pantalla para hacerse más grande o pequeña dependiendo de su proporción. Para el pintado de la interfaz se ha utilizado \textit{GUILayout}, clase que facilita métodos para representar una interfaz, ya que se conocía su funcionamiento de haberla utilizado en proyectos anteriores, y era sencillo de implementar.
 	
-	Esta GUI, además de adaptarse, se ha preparado para que se posicione correctamente utilizando \textit{Camera.current.WorldToScreenPoint()}, es decir, que transforma los puntos del mundo tridimensional, a unas coordenadas de cámara, y mediante una serie de transformaciones, se colocan los cuadros en su lugar, evitando que estos cuadros de diálogo se salgan de la pantalla cuando un personaje habla desde uno de los extremos.
+	Esta \textit{GUI}, además de adaptarse, se ha preparado para que se posicione correctamente utilizando \textit{Camera.current.WorldToScreenPoint()}, es decir, que transforma los puntos del mundo tridimensional, a unas coordenadas de cámara, y mediante una serie de transformaciones, se colocan los cuadros en su lugar, evitando que estos cuadros de diálogo se salgan de la pantalla cuando un personaje habla desde uno de los extremos.
 \end{itemize}
 
-Esta explicación cierra, por encima, todos los elementos importantes de la implementación de la clase Game. Debido a que esta implementación no es la final, no se incluyen explicaciones más detalladas ni diagramas.
+Esta explicación cierra, por encima, todos los elementos importantes de la implementación de la clase \textit{Game}. Debido a que esta implementación no es la final, no se incluyen explicaciones más detalladas ni diagramas.
 
 Esta clase es una de las clases que ha sufrido una mayor evolución en la segunda iteración, ya que, pese a que sigue controlando la interacción por parte del usuario, ya no realiza la lógica de dicha interacción en el bucle \textit{Update()}, sino que, simplemente delega en los diferentes elementos interactuados para que sean ellos los que realicen la lógica de su interacción. Asimismo, la gestión de la interfaz ha sido delegada en la clase \textit{GUIManager}, con un nuevo y rediseñado sistema de burbujas.
 
@@ -104,7 +104,7 @@ Estas clases se auto-generan analizando un \textit{XmlElement} que reciben en su
 
 La mayor parte de clases de datos contienen:
 \begin{itemize}
-	\item Una serie de Recursos: con soporte de videos y animaciones (implementadas con la clase eAnim y eFrame). Algunas clases implementan su propia clase para manejar sus recursos con Condiciones, como CharacterData con su CharacterResource, o SceneData con su SceneResource, aunque muchas otras simplemente utilizan diccionarios de tipo Dictionary<string,Texture2DHolder> Resources.
+	\item Una serie de recursos: con soporte de videos y animaciones (implementadas con la clase eAnim y eFrame). Algunas clases implementan su propia clase para manejar sus recursos con Condiciones, como CharacterData con su CharacterResource, o SceneData con su SceneResource, aunque muchas otras simplemente utilizan diccionarios de tipo \textit{Dictionary<string,Texture2DHolder> Resources}.
 	
 	\item También tienen una serie de condiciones ante las que decidiran representarese o no, estas condiciones son gestionadas mediante la clase Condition.
 	
@@ -113,15 +113,15 @@ La mayor parte de clases de datos contienen:
 
 Particularmente, existen algunas anomalías en las clases de datos, como son las clases que implementan la interfaz \textit{SceneData} la cual contiene, además de Recursos como todas las demás, gran variedad de objetos \textit{ItemReference}, los cuales contienen una referencia a un elemento de la escena (ya sea un personaje, objeto o una salida) y la contextualización del mismo, es decir, su posición en ese momento, las condiciones que tienen que darse para que ese elemento aparezca o no, etc.
 
-La creación de dicha interfaz fué necesaria debido a que existen multitud de tipos de escenas. En este caso se han implementado 2 tipos de escenas que eran necesarias para el videojuego \textit{Checklist}, las \textit{RScene}, abreviando \textit{Regular Scene}, que son escenas normales sobre las que jugar, donde se representan personajes, objetos, salidas, áreas activas; y las \textit{Slidescene}, que son escenas con una sucesión de imágenes en su interior a modo de \textit{Slides} como si de una presentación se tratase.
+La creación de dicha interfaz fué necesaria debido a que existen multitud de tipos de escenas. En este caso se han implementado dos tipos de escenas que eran necesarias para el videojuego \textit{Checklist}, las \textit{RScene}, abreviando \textit{Regular Scene}, que son escenas normales sobre las que jugar, donde se representan personajes, objetos, salidas, áreas activas; y las \textit{Slidescene}, que son escenas con una sucesión de imágenes en su interior a modo de \textit{Slides} como si de una presentación se tratase.
 
-Finalmente comentar que, algunas clases de datos como los \textit{ObjectData} o los \textit{ActiveAreaData} tienen un elemento llamado \textit{InfluenceArea} el cual no se ha implementado, y que permite que un objeto o un active área sea mucho más grande que su area de interacción, la cual está formada por una sucesión de puntos que generan al final un polígono. Esto permite que pueda haber un objeto con formas irregulares e interactuar con él sólo en las zonas de real contacto con la imagen. Por lo que todas nuestras áreas de influencia serán rectangulares.
+Finalmente, comentar que algunas clases de datos como los \textit{ObjectData} o los \textit{ActiveAreaData} tienen un elemento llamado \textit{InfluenceArea} el cual no se ha implementado, y que permite que un objeto o un área activa sea mucho más grande que su area de interacción, la cual está formada por una sucesión de puntos que generan al final un polígono. Esto permite que pueda haber un objeto con formas irregulares e interactuar con él sólo en las zonas de real contacto con la imagen. Por lo que todas nuestras áreas de influencia serán rectangulares.
 
 Esta Área de Influencia, sin embargo, en la siguiente iteración del proyecto sí que ha sido implementada, mediante la utilización de librerías de triangulación de polígonos irregulares de cualquier tipo, y la transformación de dichos polígonos en Mallas tridimensionales. La explicación de dicha transformación será realizada en la siguiente iteración.
 
 Finalmente, la clase eAnim tiene una peculiaridad, y es que en versiones antiguas de eAdventure, las animaciones se generaban a partir de secuencias de imágenes en la carpeta animations, carpeta utilizada para el almacenamiento de las imágenes que forman las animaciones.
 
-Es decir, existen animaciones formadas de la siguiente manera: “anim\_01.png”, “anim\_02.png” y estas están especificadas en el fichero de especificación del juego de eAdventure como “/animaciones/anim”. Esto supone dos problemas. El primero consiste en identificar cuál es el formato del fichero de imagen, por lo que existe una lista de tipos disponibles y se intenta encontrar un archivo que satisfaga tanto el nombre de la animación, como el formato correspondiente. Y en segundo lugar, no se sabe cuántos archivos hay, lo que hace que debas iterar hasta que no encuentres fichero.
+Es decir, existen animaciones cuyos nombre se presentan de la siguiente manera en secuencia: ``anim\_01.png'', ``anim\_02.png'' y estas están especificadas en el fichero de especificación del juego de eAdventure como “/animaciones/anim”. Esto supone dos problemas. El primero consiste en identificar cuál es el formato del fichero de imagen, por lo que existe una lista de tipos disponibles y se intenta encontrar un archivo que satisfaga tanto el nombre de la animación, como el formato correspondiente. Y en segundo lugar, no se sabe cuántos archivos hay, lo que hace que debas iterar hasta que no encuentres fichero.
 
 Por otra parte, el nuevo formato de animaciones está definido en ficheros XML llamados “.eaa” que son mucho más sencillos de recorrer y contienen más información acerca de cada fotograma de la animación.
 
@@ -136,7 +136,7 @@ De manera similar al apartado anterior, se explicará el funcionamiento de la ma
 	\label{behaviourclassesit1}
 \end{figure}
 
-Las clases de comportamiento son todas herederas de \textit{MonoBehabiour} por lo que se asignan a objetos dentro de la escena, y luego estos objetos se guardan en forma de \textit{Prefabs}, cada una a uno individualmente. Estos \textit{Prefabs} suelen ser muy sencillos, en su mayoría constituidos únicamente por un \textit{Quad}\footnote{Un Quad es una malla tridimensional compuesta por un plano, una de las mallas más simples.}, al cual se le cambia la textura con \textit{this.GetComponent<Renderer>().material.mainTexture}, y posteriormente, mediante la información de dicha textura, se aplican modificaciones escalando el Quad. 
+Las clases de comportamiento son todas herederas de \textit{MonoBehabiour} por lo que se asignan a objetos dentro de la escena, y luego estos objetos se guardan en forma de \textit{Prefabs}, cada una a uno individualmente. Estos \textit{Prefabs} suelen ser muy sencillos, en su mayoría constituidos únicamente por un \textit{Quad}\footnote{Un Quad es una malla tridimensional compuesta por un plano, una de las mallas más simples.}, al cual se le cambia la textura con la propiedad del material \textit{this.GetComponent<Renderer>().material.mainTexture}, y posteriormente, mediante la información de dicha textura, se aplican modificaciones escalando el Quad. 
 
 Todas estas clases de comportamiento son la representación de algún elemento de la escena, y por ello tienen en su interior los siguientes elementos:
 
@@ -157,7 +157,7 @@ Esta función \textit{ChangeFrame()} accede al \textit{renderer}\footnote{El ren
 \subsubsection{Detalles de la clase eObject, Exit y ActiveArea}
 \label{objectexitactiveareait1}
 
-Estas tres clases tienen la peculiaridad de que deben ser reactivas a interacción por parte del jugador, y mostrar algún cambio en su representación cada vez que el jugador pase el puntero del ratón por encima de ellas. Esto se implementó utilizando las funciones que facilita la clase \textit{MonoBehaviour}, I y \textit{OnMouseExit()} y que reciben el evento del puntero cuando este entra en su área de reacción y cuando sale de la misma.
+Estas tres clases tienen la peculiaridad de que deben ser reactivas a interacción por parte del jugador, y mostrar algún cambio en su representación cada vez que el jugador pase el puntero del ratón por encima de ellas. Esto se implementó utilizando las funciones que facilita la clase \textit{MonoBehaviour}: \textit{OnMouseEnter()} y \textit{OnMouseExit()} y que reciben el evento del puntero cuando este entra en su área de reacción y cuando sale de la misma.
 
 Cada una de las tres clases que son reactivas a este evento realiza una acción diferente, donde, el \textit{eObject} cambia su imagen y, por otra parte, \textit{Exit} y \textit{ActiveArea}, acceden a su material para cambiar su color, volviéndose de color rojo la representación de \textit{Exit}, y de color verde la representación de una \textit{ActiveArea}.
 
@@ -169,15 +169,15 @@ Por otra parte, y como ya se mencionó en un apartado anterior, las \textit{Acti
 
 \subsubsection{Detalles específicos de Scene}
 
-La clase Scene supone un reto más complejo de abordar, en comparación con todas las demás clases de comportamiento, pues su clase de datos puede ser de diferentes tipos dependiendo de qué clase implementa la interfaz. Es decir, una \textit{Scene} puede ser a su vez una \textit{VideoScene}, una \textit{CutScene}, una \textit{SlideScene}, o cualquier otro tipo de escena que exista. Cada una de estas escenas tiene comportamientos individuales, pero para la gestión de los mismos, surgen una serie de problemas de implementación.
+La clase \textit{Scene} es la base que construye las diferentes ``pantallas'' que se mostraran al jugador a lo largo de la aventura. Supone un reto más complejo de abordar, en comparación con todas las demás clases de comportamiento, pues su clase de datos puede ser de diferentes tipos dependiendo de qué clase implementa la interfaz. Es decir, una \textit{Scene} puede ser a su vez una \textit{VideoScene}, una \textit{CutScene}, una \textit{SlideScene}, o cualquier otro tipo de escena que exista. Cada una de estas escenas tiene comportamientos individuales, pero para la gestión de los mismos, surgen una serie de problemas de implementación.
 
-Cambiar las componentes de un Prefab en ejecución no es una práctica recomendada en Unity3D, además de que existen problemas a la hora de realizar una herencia de la clase MonoBehaviour en una subclase, y extender esta subclase en más clases aún, pues siempre se deben invocar desde la clase hija, los métodos implementados de la clase MonoBehabiour en la clase padre. Es decir, una clase hija debe ejecutar, por ejemplo el metodo \textit{base.Start()}, antes de continuar con la ejecución de su código.
+Cambiar las componentes de un \textit{Prefab} en ejecución no es una práctica recomendada en Unity3D, además de que existen problemas a la hora de realizar una herencia de la clase \textit{MonoBehaviour} en una subclase, y extender esta subclase en más clases aún, pues siempre se deben invocar desde la clase hija, los métodos implementados de la clase \textit{MonoBehabiour} en la clase padre. Es decir, una clase hija debe ejecutar, por ejemplo el metodo \textit{base.Start()}, antes de continuar con la ejecución de su código.
 
 La implementación de la escena, por lo tanto, se realizó mediante una bifurcación en los comportamientos utilizando como elemento bifurcador el tipo de escena que la escena está almacenando para su representación. En esencia, se programan delimitadores con \textit{Switch(sceneData.type)}, para ejecutar una labor determinada en función del tipo de escena que se desee.
 
-Esto le permite a una escena normal, Renderizar todos los personajes de la escena, o, a una \textit{SlideScene}, establecer su fondo y animarse cuando el jugador realice una interacción para cambiar de diapositiva.
+Esto le permite a una escena normal, renderizar todos los personajes de la escena, o, a una \textit{SlideScene}, establecer su fondo y animarse cuando el jugador realice una interacción para cambiar de diapositiva.
 
-Asimismo, las escenas tienen una función Interacted que hace que las escenas en sí mismas puedan ser interactivas cuando no contienen ningún elemento como las Slidescenes que han de cambiar al hacer click, o como, por ejemplo las VideoScenes (que no se han implementado), que tienen una secuencia en su interior y debe ejecutarse al interactuar.
+Asimismo, las escenas tienen una función \textit{Interacted()} que hace que las escenas en sí mismas puedan ser interactivas cuando no contienen ningún elemento como las \textit{Slidescenes} que han de cambiar al hacer click, o como, por ejemplo las \textit{VideoScenes} (que no se han implementado), que tienen una secuencia en su interior y debe ejecutarse al interactuar.
 
 Esta función \textit{Interacted} será refactorizada en la última versión, generando al interfaz \textit{Interactuable}, que permite ejecutar la función \textit{Interacted}, y otras funciones, sobre los objetos que tengan que ser reactivos a interacción, para poder así delegar esta funcionalidad en las clases interactuadas, en lugar de extraer la funcionalidad y ejecutarla en el bucle principal de juego.
 
@@ -199,11 +199,11 @@ La explicación de las clases de utilidad se realiza de forma separada debido a 
 
 \subsection{La clase Texture2DHolder}
 
-La clase Texture2DHolder surge debido a la necesidad de realizar carga de imágenes de manera transparente al usuario, solicitando únicamente al Texture2DHolder que realice la carga de una imagen, a partir de un directorio o unos bytes. Asimismo, esta ayuda a la carga y transformación de imágenes en hilos, ya que Unity3D no permite la carga mediante el método que facilita para carga de recursos, \textit{Resources.Load()}, fuera del bucle principal de ejecución.
+La clase \textit{Texture2DHolder} surge debido a la necesidad de realizar carga de imágenes de manera transparente al usuario, solicitando únicamente al \textit{Texture2DHolder} que realice la carga de una imagen, a partir de un directorio o unos bytes. Asimismo, esta ayuda a la carga y transformación de imágenes en hilos, ya que Unity no permite la carga mediante el método que facilita para carga de recursos, \textit{Resources.Load()}, fuera del bucle principal de ejecución.
 
-Para solventar el problema de la carga paralela de recursos, en lugar de utilizar \textit{Resources.Load()}, se utiliza la librería de sistema, System.IO, utilizando carga de bytes directamente, almacenándolos temporalmente en un \textit{array} de \textit{bytes} dentro de si mismo. para obtener los datos de los ficheros directamente.
+Para solventar el problema de la carga paralela de recursos, en lugar de utilizar \textit{Resources.Load()}, se utiliza la librería de sistema, \textit{System.IO}, utilizando carga de bytes directamente, almacenándolos temporalmente en un \textit{array} de \textit{bytes} dentro de si mismo. para obtener los datos de los ficheros directamente.
 
-Esto causa un pequeño problema a la hora de generar un paquete, y es que, si se desea generar un juego con los recursos incluidos dentro del sistema de empaquetado de Unity, no se podrá acceder a estos recursos, ya que la librería System.IO busca los ficheros en el sistema de ficheros, y \textit{Resources.Load()}, en su lugar, obtiene dichos recursos de los paquetes comprimidos de recursos generados. En la versión final del proyecto, ambos tipos de cargas están permitidos.
+Esto causa un pequeño problema a la hora de generar un paquete, y es que, si se desea generar un juego con los recursos incluidos dentro del sistema de empaquetado de Unity, no se podrá acceder a estos recursos, ya que la librería \textit{System.IO} busca los ficheros en el sistema de ficheros, y \textit{Resources.Load()}, en su lugar, obtiene dichos recursos de los paquetes comprimidos de recursos generados. En la versión final del proyecto, ambos tipos de cargas están permitidos.
 
 Asimismo, Unity no permite generar una \textit{Texture2D}\footnote{Una Texture2D es la clase que se utiliza para guardar texturas bidimensionales en Unity3D, como imágenes, fotografias, o sprites.} si no es en tiempo de ejecución, por lo que, en el momento de la carga sólo se obtienen los bytes, y no es hasta el momento en el que la textura se utiliza por primera vez.
 
@@ -218,7 +218,7 @@ public Texture2D LoadTexture(bytes[] fileData)
 
 Tras esto la textura queda guardada y no se vuelve a generar, por lo que se reduce el tiempo de ejecución del programa, a coste de sacrificar memoria. En este caso, como las texturas de los videojuegos generados con eAdventure no ocupan más que el propio juego en sí mismas, se asume que, el coste en memoria de la aplicación no será muy elevado.
 
-\subsection{La interfaz Sequence: Effect, Conversation y Condition})
+\subsection{La interfaz Sequence: Effect, Conversation y Condition}
 \label{sequencessecit2}
 
 La interfaz \textit{Sequence} surge de la necesidad de generar una interfaz para interactuar con los efectos y las conversaciones, elementos que son capaces de ejecutarse y realizar tareas que pueden tener alto nivel de complejidad. Esta interfaz, en esencia, provee de un método \textit{public bool execute()}, la cual ejecuta el contenido de si mismas, y devuelve verdadero en caso de que, la secuencia necesite esperar, ya sea por la necesidad de interacción del usuario, o por que un elemento debe ejecutarse un tiempo determinado.
@@ -238,7 +238,7 @@ Los \textit{EffectNode} realizan tareas como activar una \textit{Flag}, poner un
 
 Estas clases son las más extensibles de todas las clases que se implementaron en la primera iteración del proyecto. Ambas tienen una factoría para generarse, ya sea \textit{ConditionFactory} y \textit{DialogNodeFactory}, y se generan automáticamente a partir de un \textit{XmlElement}, que contiene la especificación extraída del archivo de especificación del juego.
 
-Por su parte \textit{GraphConversation} solicita a \textit{DialogNodeFactory} un nuevo \textit{DialogNode} por cada uno de sus hijos, y así se genera el diálogo. La “magia” de \textit{DialogNodeFactory} y de \textit{ConditionFactory} es que utilizan \textit{System.Linq}\footnote{El espacio de nombres System.Linq proporciona clases e interfaces que admiten consultas que utilizan Language-integrated query (LINQ)} para examinar el espacio de nombres y obtener de ahí todas las clases que implementan la interfaz \textit{DialogNode} o \textit{Condition}. Esto se realiza de la siguiente manera:
+Por su parte \textit{GraphConversation} solicita a \textit{DialogNodeFactory} un nuevo \textit{DialogNode} por cada uno de sus hijos, y así se genera el diálogo. El aspecto más llamativo de \textit{DialogNodeFactory} y de \textit{ConditionFactory} es que utilizan \textit{System.Linq}\footnote{El espacio de nombres System.Linq proporciona clases e interfaces que admiten consultas que utilizan Language-integrated query (LINQ)} para examinar el espacio de nombres y obtener de ahí todas las clases que implementan la interfaz \textit{DialogNode} o \textit{Condition}. Esto se realiza de la siguiente manera:
 \begin{lstlisting}
 types = System.AppDomain.CurrentDomain.GetAssemblies ().SelectMany (s => s.GetTypes ()).Where (p => typeof(ConversationNode).IsAssignableFrom (p)).ToList();
 
@@ -267,11 +267,6 @@ Si se desea entender o extender el conocimiento de la implementación de estas c
 
 \subsection{La clase Action}
 
-Esta clase es tan simple como un efecto con representación. Está compuesta por un Effect que se ejecuta cuando se realiza la acción, una Condition que determina cuando esa acción está disponible, y una serie de recursos que se utilizan para su representación.
-La gestión de la visualización de las acciones se realiza en Game, en la funcion OnGUI().
-
-\section{Acerca de los elementos de Adaptación}
-
-El juego Checklist cuenta con un elemento adicional para el jugador, las Adaptation estas no son más que una serie de estados iniciales del juego para que, el juego pueda adaptarse al jugador, ya sea por motivos de accesibilidad o por motivos de nivel.
-Las Adaptation se han implementado, pero no existe ningún mecanismo que permite decidir cuál Adaptation se selecciona en cada momento, sino que se selecciona una aleatoriamente al comienzo del juego, y tras esto se trabaja siempre con la misma.
+Esta clase es tan simple como un efecto con representación. Está compuesta por un \textit{Effect} que se ejecuta cuando se realiza la acción, una \textit{Condition} que determina cuando esa acción está disponible, y una serie de recursos que se utilizan para su representación.
+La gestión de la visualización de las acciones se realiza en \textit{Game}, en la funcion \textit{OnGUI()}.
 

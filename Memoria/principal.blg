@@ -2,6 +2,11 @@ This is BibTeX, Version 0.99dThe top-level auxiliary file: principal.aux
 The style file: styles/plain.bst
 Database file #1: references.bib
 Warning--there's a number but no volume in BaeloAlvarez2009
+Warning--empty journal in Levin
+Warning--empty year in Levin
+Warning--empty publisher in Lindholm2014
 Warning--empty journal in baltaslide
+Warning--empty journal in Steiner2016
+Warning--there's a number but no volume in Steiner2016
 Warning--there's a number but no volume in TorresMolina2007
-(There were 3 warnings)
+(There were 8 warnings)
