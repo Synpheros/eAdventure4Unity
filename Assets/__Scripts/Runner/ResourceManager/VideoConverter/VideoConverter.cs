@@ -22,5 +22,9 @@ public class VideoConverter {
         foo.StartInfo.UseShellExecute = false;
         foo.StartInfo.CreateNoWindow = true;
         foo.Start();
+
+        while (!foo.HasExited)
+        {
+        }
     }
 }
