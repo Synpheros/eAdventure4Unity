@@ -37,17 +37,30 @@ public class GameState {
 	}
 
 	public void setFlag(string name, int state){
+
 		if(flags.ContainsKey(name)){
 			flags [name] = state;
 		}else{
 			flags.Add (name, state);
 		}
 
-		//Debug.Log ("Flag '" + name + " puesta a " + state);
-		Tracker.T ().Var (name, (state == FlagCondition.FLAG_ACTIVE ? 1 : 0));
-		Tracker.T ().RequestFlush ();
+        //Debug.Log ("Flag '" + name + " puesta a " + state);
+        bool bstate = state == FlagCondition.FLAG_ACTIVE;
+        Tracker.T.setExtension(name,bstate);
 
-		TimerController.Instance.checkTimers();
+        foreach (GeneralScene scene in Game.Instance.getTrackedScenes())
+        {
+            foreach(GeneralScene.Milestone milestone in scene.getProgress())
+            {
+                if (milestone.type == GeneralScene.Milestone.MilestoneType.FLAG && name == milestone.id && milestone.value == bstate)
+                {
+                    Tracker.T.completable.Progressed(scene.getId(), Game.ParseEnum<CompletableTracker.Completable>(scene.getXApiType()), milestone.progress);
+                    break;
+                }
+            }
+        }
+
+        TimerController.Instance.checkTimers();
 		Game.Instance.reRenderScene ();
 	}
 
@@ -66,10 +79,11 @@ public class GameState {
 			variables.Add (name, value);
 		}
 
-		Tracker.T ().Var (name, value);
-		Tracker.T ().RequestFlush ();
+		Tracker.T.setExtension(name, value);
 
-		Game.Instance.reRenderScene ();
+        
+
+        Game.Instance.reRenderScene ();
 	}
 
 	public int checkGlobalState(string global_state){
@@ -125,7 +139,12 @@ public class GameState {
 		return data.getChapters () [current_chapter].getGeneralScene (scene_id);
 	}
 
-	public GeneralScene getInitialScene(){
+    public bool isCutscene(string scene_id)
+    {
+        return data.getChapters()[current_chapter].getGeneralScene(scene_id).getType() != GeneralScene.GeneralSceneSceneType.SCENE;
+    }
+
+    public GeneralScene getInitialScene(){
 		return data.getChapters () [current_chapter].getInitialGeneralScene ();
 	}
 

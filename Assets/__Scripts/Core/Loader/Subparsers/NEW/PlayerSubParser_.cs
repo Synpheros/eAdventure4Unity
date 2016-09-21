@@ -109,7 +109,7 @@ public class PlayerSubParser_ : Subparser_
                 player.setBubbleBorderColor(tmpArgVal);
             }
 
-            frontcolors = element.SelectNodes("frontcolor");
+            frontcolors = el.SelectNodes("frontcolor");
             foreach (XmlElement ell in frontcolors)
             {
                 string color = "";
@@ -123,7 +123,7 @@ public class PlayerSubParser_ : Subparser_
                 player.setTextFrontColor(color);
             }
 
-            bordercolos = element.SelectNodes("bordercolor");
+            bordercolos = el.SelectNodes("bordercolor");
             foreach (XmlElement ell in bordercolos)
             {
                 string color = "";

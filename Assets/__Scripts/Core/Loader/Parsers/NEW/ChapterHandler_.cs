@@ -59,7 +59,9 @@ public class ChapterHandler_{
 				xml = ta.text;
 			break;
 		case ResourceManager.LoadingType.SYSTEM_IO:
+#if !(UNITY_WEBPLAYER || UNITY_WEBGL)
 			xml = System.IO.File.ReadAllText(path);
+#endif
 			break;
 		}
 

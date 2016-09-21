@@ -57,6 +57,8 @@ public class ActiveAreaMB : MonoBehaviour, Interactuable {
                 }
             }
             ret = InteractuableResult.DOES_SOMETHING;
+            Tracker.T.trackedGameObject.Interacted(aad.getId(), GameObjectTracker.TrackedGameObject.Npc);
+            Tracker.T.RequestFlush();
             break;
         case Item.BehaviourType.NORMAL:
             List<Action> available = new List<Action> ();
@@ -103,7 +105,11 @@ public class ActiveAreaMB : MonoBehaviour, Interactuable {
             if (available.Count > 0) {
                 Game.Instance.showActions (available, Input.mousePosition);
                 ret = InteractuableResult.DOES_SOMETHING;
+                Tracker.T.trackedGameObject.Interacted(aad.getId(), GameObjectTracker.TrackedGameObject.Npc);
+                Tracker.T.RequestFlush();
             }
+
+            
             break;
         case Item.BehaviourType.ATREZZO:
         default:
@@ -157,7 +163,6 @@ public class ActiveAreaMB : MonoBehaviour, Interactuable {
 			tess.AddContour(contour, LibTessDotNet.ContourOrientation.CounterClockwise);
 			tess.Tessellate(WindingRule.EvenOdd, LibTessDotNet.ElementType.Polygons,3);
 
-			Debug.Log("Output triangles:");
 			List<int> triangles = new List<int> ();
 			int numTriangles = tess.ElementCount;
 			for (i = 0; i < numTriangles; i++){

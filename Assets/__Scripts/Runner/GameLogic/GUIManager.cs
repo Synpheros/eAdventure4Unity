@@ -5,7 +5,7 @@ public class GUIManager : MonoBehaviour {
 	
 	private static GUIManager instance;
 	private Vector2 DEFORMATION = new Vector2 (40, 30);
-	public GameObject Bubble_Prefab;
+	public GameObject Bubble_Prefab, Think_Prefab, Yell_Prefab, Config_Menu_Ref;
 	GameObject bubble;
 	private bool get_talker = false;
 	private string talker_to_find, last_text;
@@ -95,7 +95,22 @@ public class GUIManager : MonoBehaviour {
 		if (bubble != null) {
 			bubble.GetComponent<Bubble> ().destroy ();
 		}
-		bubble = GameObject.Instantiate (Bubble_Prefab);
+        if(data.Line[0] == '#')
+        {
+            if(data.Line[1] == 'O')
+            {
+                bubble = GameObject.Instantiate(Think_Prefab);
+            }
+            else if (data.Line[1] == '!')
+            {
+                bubble = GameObject.Instantiate(Yell_Prefab);
+            }
+
+            data.Line = data.Line.Substring(3, data.Line.Length - 3);
+        }
+        else
+		    bubble = GameObject.Instantiate (Bubble_Prefab);
+
 		bubble.GetComponent<Bubble> ().Data = data;
 		bubble.transform.parent = this.transform;
 	}
@@ -155,9 +170,22 @@ public class GUIManager : MonoBehaviour {
 	private GameObject getTalker(string talker){
 		GameObject ret = GameObject.Find (talker);
 
-		if (ret == null) 
-			get_talker = true;
+        if (ret == null)
+        {
+            talker_to_find = talker;
+            get_talker = true;
+        }
 		
 		return ret;
 	}
+
+    public void showConfigMenu()
+    {
+        this.Config_Menu_Ref.SetActive(!this.Config_Menu_Ref.active);
+    }
+
+    public void exitApplication()
+    {
+        Application.Quit();
+    }
 }

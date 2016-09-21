@@ -146,7 +146,10 @@ public class ObjectMB : Representable, Interactuable {
 					ret = InteractuableResult.DOES_SOMETHING;
 				}
 			}
-		}
+
+            Tracker.T.trackedGameObject.Interacted(((Item)Element).getId(), GameObjectTracker.TrackedGameObject.Item);
+            Tracker.T.RequestFlush();
+        }
 
         return ret;
     }

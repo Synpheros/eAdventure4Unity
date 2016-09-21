@@ -10,19 +10,22 @@ public class BatchRenamer
 	{
 		string[] games = Directory.GetDirectories ("Assets/Resources/");
 
-		foreach (string game in games) 
-		{
-			DirectoryInfo info = new DirectoryInfo (game + "/assets/animation/");
-			FileInfo[] fileInfo = info.GetFiles ();
+        foreach (string game in games)
+        {
+            if (Directory.Exists(game + "/assets/animation/")) {
+                DirectoryInfo info = new DirectoryInfo(game + "/assets/animation/");
+                FileInfo[] fileInfo = info.GetFiles();
 
-			foreach (FileInfo file in fileInfo) {
-				if (file.Extension.ToLower () == ".eaa") {
-					string newname = game + "/assets/animation/" + file.Name.Substring (0, file.Name.Length - 3) + "xml";
+                foreach (FileInfo file in fileInfo) {
+                    if (file.Extension.ToLower() == ".eaa") {
+                        string newname = game + "/assets/animation/" + file.Name.Substring(0, file.Name.Length - 3) + "xml";
 
-					FileUtil.DeleteFileOrDirectory (newname);
-					FileUtil.CopyFileOrDirectory (file.ToString (), newname);
-				}
-			}
-		}
+                        FileUtil.DeleteFileOrDirectory(newname);
+                        FileUtil.CopyFileOrDirectory(file.ToString(), newname);
+                        FileUtil.DeleteFileOrDirectory(file.ToString());
+                    }
+                }
+            }
+        }
 	}
 }

@@ -80,6 +80,11 @@ public class ConversationLine : Named, ICloneable
     public const string PLAYER = Player.IDENTIFIER;
 
     /**
+     * xapi is correct
+     */
+    public bool xapiCorrect = false;
+
+    /**
      * string that holds the name of the character.
      */
     private string name;
@@ -129,6 +134,17 @@ public class ConversationLine : Named, ICloneable
     }
 
     /**
+     * Returns true if the xapi question is a correct option
+     * 
+     * @return true if the xapi question is a correct option
+     */
+
+    public bool getXApiCorrect()
+    {
+        return xapiCorrect;
+    }
+
+    /**
      * Returns the name of the character.
      * 
      * @return The name of the character
@@ -162,6 +178,18 @@ public class ConversationLine : Named, ICloneable
     {
 
         return name.Equals(PLAYER);
+    }
+
+    /**
+     * Sets if the option is correct
+     * 
+     * @param if the option is correct
+     */
+
+    public void setXApiCorrect(bool xapiCorrect)
+    {
+
+        this.xapiCorrect = xapiCorrect;
     }
 
     /**

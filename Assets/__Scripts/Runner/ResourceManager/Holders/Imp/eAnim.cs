@@ -26,6 +26,7 @@ public class eAnim : Resource {
 
 	public eAnim(string path, ResourceManager.LoadingType type){
 		frames = new List<eFrame> ();
+        this.type = type;
 
 		Regex pattern = new Regex("[óñ]");
 		this.path = pattern.Replace(path, "+¦");
@@ -36,9 +37,14 @@ public class eAnim : Resource {
 
 			switch (ResourceManager.Instance.getLoadingType ()) {
 			case ResourceManager.LoadingType.SYSTEM_IO:
+#if !(UNITY_WEBPLAYER || UNITY_WEBGL)
 				eaaText = System.IO.File.ReadAllText (path);
+#endif
 				break;
 			case ResourceManager.LoadingType.RESOURCES_LOAD:
+                if (path.Contains(".eaa")) ;
+                    path = path.Substring(0, path.Length - 4);
+
 				TextAsset ta = Resources.Load (path) as TextAsset;
 				if(ta!=null)
 					eaaText = ta.text;
@@ -101,6 +107,7 @@ public class eAnim : Resource {
 			}
 			break;
 		case ResourceManager.LoadingType.SYSTEM_IO:
+#if !(UNITY_WEBPLAYER || UNITY_WEBGL)
 			ruta = path + "_" + intToStr (num);
 			string working_extension = "";
 			
@@ -121,7 +128,8 @@ public class eAnim : Resource {
 				num++;
 				ruta = path + "_" + intToStr (num) + working_extension;
 			}
-			break;
+#endif
+                break;
 		}
 
 	}

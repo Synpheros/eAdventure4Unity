@@ -23,8 +23,8 @@ public class VideoConverter {
         foo.StartInfo.CreateNoWindow = true;
         foo.Start();
 
-        while (!foo.HasExited)
-        {
-        }
+#if !(UNITY_WEBPLAYER || UNITY_WEBGL)
+        while (!foo.HasExited){}
+#endif
     }
 }

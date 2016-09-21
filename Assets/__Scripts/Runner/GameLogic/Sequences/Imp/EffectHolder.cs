@@ -47,13 +47,25 @@ public class EffectHolderNode{
                         break;
                     case EffectType.TRIGGER_SCENE:
                         runs_once = false;
-                        Game.Instance.renderScene (((TriggerSceneEffect)effect).getTargetId ());
+                        TriggerSceneEffect tse = ((TriggerSceneEffect)effect);
+                        Game.Instance.renderScene (tse.getTargetId (), tse.getTransitionTime(), tse.getTransitionType());
                         break;
                     case EffectType.TRIGGER_CUTSCENE: 
                         runs_once = false;
                         TriggerCutsceneEffect tce = (TriggerCutsceneEffect)effect;
                         if (times_runed > 0) {
-                            forcewait = ((SceneMB)aditional_info ["scene"]).Interacted () == InteractuableResult.REQUIRES_MORE_INTERACTION;
+                            if (!aditional_info.ContainsKey("cutscene_effect"))
+                            {
+                                InteractuableResult res = ((SceneMB)aditional_info["scene"]).Interacted();
+                                if (res == InteractuableResult.REQUIRES_MORE_INTERACTION)
+                                    forcewait = true;
+                                else if (res == InteractuableResult.DOES_SOMETHING)
+                                {
+                                    forcewait = true;
+                                    aditional_info.Add("cutscene_effect", Game.Instance.getNextInteraction());
+                                }
+                            }else
+                                forcewait = ((Interactuable)aditional_info["cutscene_effect"]).Interacted() == InteractuableResult.REQUIRES_MORE_INTERACTION;
                         } else {
                             aditional_info = new Dictionary<string, object> ();
 							aditional_info.Add ("lastscene", Game.Instance.GameState.CurrentScene);
@@ -61,7 +73,7 @@ public class EffectHolderNode{
                             forcewait = true; 
                         }
 
-                        if (!forcewait && ((Slidescene)((SceneMB)aditional_info ["scene"]).sceneData).getNext () == Slidescene.GOBACK) {
+                        if (!forcewait && ((Cutscene)((SceneMB)aditional_info ["scene"]).sceneData).getNext () == Cutscene.GOBACK) {
                             string last = (string)aditional_info ["lastscene"];
                             Game.Instance.renderScene (last);
                         }

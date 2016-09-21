@@ -28,17 +28,14 @@ public sealed class ResourceManager{
 	//################# IMPLEMENTATION #################
 	//##################################################
 
-	private class MovieHolder{
-		public MovieTexture movie;
-	}
-
 	private string path = "";
 	private string name = "";
 	LoadingType type = LoadingType.SYSTEM_IO;
     private Dictionary<string,Texture2DHolder> images;
 	private Dictionary<string,eAnim> animations;
+    private Dictionary<string, MovieHolder> videos;
 
-	public string Path{
+    public string Path{
 		get { 
 			string ret = "";
 
@@ -68,8 +65,9 @@ public sealed class ResourceManager{
     private ResourceManager (){
         this.images = new Dictionary<string, Texture2DHolder> ();
 		this.animations = new Dictionary<string, eAnim> ();
+        this.videos = new Dictionary<string, MovieHolder>();
 
-		if (Game.Instance != null) {
+        if (Game.Instance != null) {
 			type = Game.Instance.getLoadingType ();
 		} else
 			type = LoadingType.SYSTEM_IO;
@@ -105,47 +103,26 @@ public sealed class ResourceManager{
 		}
 	}
 
-	public MovieTexture getVideo(string uri){
-		MovieHolder holder = new MovieHolder ();
-
-		Game.Instance.StartCoroutine (loadMovie (uri,holder));
-
-		while (!movieLoaded (holder)) {
-		}
-
-		return holder.movie;
-	}
-
-	IEnumerator loadMovie(string uri, MovieHolder holder){
-		string url_prefix = "file:///";
-		string videoname = uri;
-		string dir = "";
-		if (System.IO.File.Exists (Game.Instance.getSelectedGame() + videoname.Split ('.') [0] + ".ogv"))
-			dir = url_prefix + Game.Instance.getSelectedGame() + videoname.Split ('.') [0] + ".ogv";
-		else
-			dir = url_prefix + Game.Instance.getSelectedGame() + videoname;
-
-		WWW www = new WWW (dir);
-		yield return www;
-		if (www.error != null) {
-			Debug.Log ("Error: Can't laod movie! - " + www.error);
-			yield break;
-
-		} else {
-			MovieTexture video = www.movie as MovieTexture;
-			Debug.Log("Movie loaded");
-			Debug.Log(www.movie);
-			holder.movie = video;
-		}
-	}
-
-	bool movieLoaded(MovieHolder holder){
-		return holder.movie == null;
+	public MovieHolder getVideo(string uri){
+        if (videos.ContainsKey(uri))
+            return videos[uri];
+        else
+        {
+            MovieHolder holder = new MovieHolder(uri, type);
+            if (holder.Loaded())
+            {
+                videos.Add(uri, holder);
+                return holder;
+            }
+            else
+                return null;
+        }
 	}
 
 	public bool extracted = false;
 	public void extractFile(string file){
 		extracted = false;
+#if !(UNITY_WEBPLAYER || UNITY_WEBGL)
 		string[] dir = file.Split (System.IO.Path.DirectorySeparatorChar);
 		string filename = dir [dir.Length - 1].Split ('.') [0];
 			
@@ -172,6 +149,7 @@ public sealed class ResourceManager{
         }
 
             extracted = true;
+#endif
 	}
 
 	public string getCurrentDirectory(){

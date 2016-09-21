@@ -22,6 +22,16 @@ public class TriggerSceneEffect : AbstractEffect, HasTargetId
     private int y;
 
     /**
+     * Transition duration
+     */
+    private int transitionTime = 0;
+
+    /**
+     * Type of the transition
+     */
+    private int transitionType = 0;
+
+    /**
      * Creates a new TriggerSceneEffect
      * 
      * @param targetSceneId
@@ -31,11 +41,13 @@ public class TriggerSceneEffect : AbstractEffect, HasTargetId
      * @param y
      *            Y position of the player in the new scene
      */
-    public TriggerSceneEffect(string targetSceneId, int x, int y):base()
+    public TriggerSceneEffect(string targetSceneId, int x, int y, int transitionTime = 0, int transitionType = 0):base()
     {
         this.targetSceneId = targetSceneId;
         this.x = x;
         this.y = y;
+        this.transitionTime = transitionTime;
+        this.transitionType = transitionType;
     }
 
     public override EffectType getType()
@@ -114,4 +126,15 @@ public class TriggerSceneEffect : AbstractEffect, HasTargetId
         tse.y = y;
         return tse;
     }*/
+
+    public int getTransitionTime()
+    {
+
+        return transitionTime;
+    }
+    public int getTransitionType()
+    {
+
+        return transitionType;
+    }
 }

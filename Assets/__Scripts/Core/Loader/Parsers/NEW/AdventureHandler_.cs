@@ -68,6 +68,7 @@ public class AdventureHandler_
 				xml = ta.text;
 			break;
 		case ResourceManager.LoadingType.SYSTEM_IO:
+#if !(UNITY_WEBPLAYER || UNITY_WEBGL)
 			xml = System.IO.File.ReadAllText(path);
 
 			directory = "";
@@ -75,7 +76,7 @@ public class AdventureHandler_
 
 			for(int i = 0; i < parts.Length-1; i++)
 				directory += parts[i] + "/";
-
+#endif
 			break;
 		}
 

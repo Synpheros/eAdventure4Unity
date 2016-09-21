@@ -10,7 +10,6 @@ public class ConversationNodeHolder{
     private EffectHolder end_conversation_effects;
 
 
-
     public ConversationNodeHolder(ConversationNode node){
         this.node = node;
 
@@ -67,6 +66,9 @@ public class ConversationNodeHolder{
 
     public void clicked(int option) {
         this.child = option;
+        OptionConversationNode onode = ((OptionConversationNode)node);
+        Tracker.T.alternative.Selected(onode.getXApiQuestion(), onode.getLine(option).getText().Replace(","," "), onode.getLine(option).getXApiCorrect(), AlternativeTracker.Alternative.Question);
+        Tracker.T.RequestFlush();
     }
 
     public ConversationNodeHolder getChild(){

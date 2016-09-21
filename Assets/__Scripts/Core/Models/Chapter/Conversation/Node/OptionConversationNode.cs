@@ -17,6 +17,11 @@ public class OptionConversationNode : ConversationNode, ICloneable
     /* Attributes */
 
     /**
+     * xApi question
+     */
+    private string xapiQuestion;
+
+    /**
      * Conversational line's vector
      */
     private List<ConversationLine> options;
@@ -112,6 +117,17 @@ public class OptionConversationNode : ConversationNode, ICloneable
     public OptionConversationNode()
         : this(false, false, false, false, DEFAULT_OPTION_NODE_POSITION_X, DEFAULT_OPTION_NODE__BOTTOM_POSITION_Y)
     {
+    }
+
+    /*
+     * the xApi question for the option node
+     * 
+     * @return the xApi question for the option node
+     */
+
+    public string getXApiQuestion()
+    {
+        return xapiQuestion;
     }
 
     /*
@@ -362,6 +378,15 @@ ocn.random = random;
     {
 
         return keepShowing;
+    }
+
+    /*
+     * the xApi question for the option node
+     */
+
+    public void setXApiQuestion(string xapiQuestion)
+    {
+        this.xapiQuestion = xapiQuestion;
     }
 
     public void setKeepShowing(bool keepShowing)

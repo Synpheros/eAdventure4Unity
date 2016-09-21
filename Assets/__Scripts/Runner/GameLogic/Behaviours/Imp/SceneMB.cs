@@ -38,7 +38,17 @@ public class SceneMB : MonoBehaviour, Interactuable{
             }
         }
 
-		if (movieplayer != MovieState.NOT_MOVIE && movieplayer != MovieState.PLAYING) {
+        if(movieplayer == MovieState.LOADING)
+        {
+            if (movie.Loaded())
+            {
+                setMovie();
+                movie.Play();
+                interactuable = true;
+                movieplayer = MovieState.PLAYING;
+            }
+        }else if (movieplayer == MovieState.PLAYING && !movie.isPlaying()) {
+            movie.Stop();
             Interacted ();
         }
     }
@@ -71,11 +81,8 @@ public class SceneMB : MonoBehaviour, Interactuable{
         switch (sd.getType()) {
 		case GeneralScene.GeneralSceneSceneType.VIDEOSCENE:
 			movie = ResourceManager.Instance.getVideo (((Videoscene)sd).getResources () [0].getAssetPath (Videoscene.RESOURCE_TYPE_VIDEO));
-			Debug.Log ("back into scene");
-			setMovie ();
-			playMovie ();
+            movieplayer = MovieState.LOADING;
 			this.transform.FindChild ("Background").localPosition = new Vector3 (40, 30, 20);
-			interactuable = true;
             break;
 		case GeneralScene.GeneralSceneSceneType.SCENE: 
 			
@@ -276,8 +283,8 @@ public class SceneMB : MonoBehaviour, Interactuable{
 				}
 
                 e = ((Slidescene)sceneData).getEffects ();
-                if(e!= null)
-                    Game.Instance.Execute(new EffectHolder(e));
+                if (e != null && Game.Instance.Execute(new EffectHolder(e)))
+                        res = InteractuableResult.DOES_SOMETHING;
 				
 			}
 			break;
@@ -291,8 +298,15 @@ public class SceneMB : MonoBehaviour, Interactuable{
             }
 
             e = ((Videoscene)sceneData).getEffects ();
-            if(e!= null)
-                Game.Instance.Execute(new EffectHolder(e));
+            if (e != null && Game.Instance.Execute(new EffectHolder(e)))
+                res = InteractuableResult.DOES_SOMETHING;
+
+                if (movie.isPlaying())
+                {
+                    movie.Stop();
+                    Tracker.T.accessible.Skipped(sceneData.getId(), AccessibleTracker.Accessible.Cutscene);
+                }
+
             break;
 		}
 
@@ -314,32 +328,13 @@ public class SceneMB : MonoBehaviour, Interactuable{
     }
 
     // VIDEOSCENE FUNCTIONS
-private enum MovieState { NOT_MOVIE, LOADING, PLAYING, STOPPED };
-private MovieState movieplayer;
+    private enum MovieState { NOT_MOVIE, LOADING, PLAYING, STOPPED };
+    private MovieState movieplayer;
 
-#if UNITY_ANDROID
-	//Handheld.PlayFullScreenMovie("");
-	IEnumerator loadMovie(){
-	yield break;
-	}
-#else
-	MovieTexture movie;
+	MovieHolder movie;
 
 	public void setMovie(){
-		Debug.Log (movie.name + " ------");
-		this.transform.FindChild ("Background").GetComponent<Renderer>().material.mainTexture = movie;
+		this.transform.FindChild ("Background").GetComponent<Renderer>().material.mainTexture = movie.Movie;
 		//sound.clip = movie.audioClip;
 	}
-
-	public void playMovie(){
-		movie.Play ();
-		//sound.Play ();
-	}
-
-	public void pauseMovie(){
-		movie.Pause ();
-		//sound.Pause ();
-	}
-
-#endif
 }

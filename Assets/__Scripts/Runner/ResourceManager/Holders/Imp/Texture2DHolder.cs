@@ -89,9 +89,11 @@ public class Texture2DHolder : Resource {
 	private static byte[] LoadBytes(string filePath) {
 		byte[] fileData = null;
 
+#if !(UNITY_WEBPLAYER || UNITY_WEBGL)
 		if (System.IO.File.Exists(filePath))
 			fileData = System.IO.File.ReadAllBytes(filePath);
+#endif
 
-		return fileData;
+        return fileData;
 	}
 }

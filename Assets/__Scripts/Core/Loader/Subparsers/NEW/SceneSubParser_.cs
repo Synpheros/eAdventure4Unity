@@ -112,7 +112,62 @@ public class SceneSubParser_ : Subparser_
         if (element.SelectSingleNode("documentation") != null)
             scene.setDocumentation(element.SelectSingleNode("documentation").InnerText);
 
-        foreach (XmlElement el in resourcess)
+        //XAPI ELEMENTS
+        tmpArgVal = element.GetAttribute("class");
+        if (!string.IsNullOrEmpty(tmpArgVal))
+        {
+            scene.setXApiClass(tmpArgVal);
+        }
+        tmpArgVal = element.GetAttribute("type");
+        if (!string.IsNullOrEmpty(tmpArgVal))
+        {
+            scene.setXApiType(tmpArgVal);
+        }
+        tmpArgVal = element.GetAttribute("endsIn");
+        if (!string.IsNullOrEmpty(tmpArgVal))
+        {
+            scene.setXApiEndsIn(tmpArgVal);
+        }
+        tmpArgVal = element.GetAttribute("score");
+        if (!string.IsNullOrEmpty(tmpArgVal))
+        {
+            scene.setXApiScore(tmpArgVal);
+        }
+        //END OF XAPI
+
+        XmlNode progress = element.SelectSingleNode("progress");
+        if(progress!=null)
+        foreach (XmlElement xmilestone in progress)
+        {
+            GeneralScene.Milestone milestone = new GeneralScene.Milestone();
+
+            tmpArgVal = xmilestone.GetAttribute("flag");
+            if (!string.IsNullOrEmpty(tmpArgVal))
+            {
+                milestone.type = GeneralScene.Milestone.MilestoneType.FLAG;
+                milestone.id = tmpArgVal;
+            }
+            tmpArgVal = xmilestone.GetAttribute("scene");
+            if (!string.IsNullOrEmpty(tmpArgVal))
+            {
+                milestone.type = GeneralScene.Milestone.MilestoneType.SCENE;
+                milestone.id = tmpArgVal;
+            }
+            tmpArgVal = xmilestone.GetAttribute("value");
+            if (!string.IsNullOrEmpty(tmpArgVal))
+            {
+                milestone.value = tmpArgVal == "true";
+            }
+            tmpArgVal = xmilestone.GetAttribute("progress");
+            if (!string.IsNullOrEmpty(tmpArgVal))
+            {
+                milestone.progress = float.Parse(tmpArgVal);
+            }
+
+            scene.addMilestone(milestone);
+        }
+
+            foreach (XmlElement el in resourcess)
         {
             currentResources = new ResourcesUni();
             tmpArgVal = el.GetAttribute("name");

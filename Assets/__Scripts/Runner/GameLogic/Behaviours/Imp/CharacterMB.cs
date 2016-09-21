@@ -67,6 +67,9 @@ public class CharacterMB : Representable, Interactuable {
                 Game.Instance.showActions (available, Input.mousePosition);
                 res = InteractuableResult.DOES_SOMETHING;
             }
+
+            Tracker.T.trackedGameObject.Interacted(((NPC)Element).getId(), GameObjectTracker.TrackedGameObject.Npc);
+            Tracker.T.RequestFlush();
         }
 
         return res;

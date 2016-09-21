@@ -186,7 +186,7 @@ public class GraphConversationSubParser_ : Subparser_
                 editorX = editorY = int.MinValue;
 
                 //If there is a "waitUserInteraction" attribute, store if the lines will wait until user interacts
-                tmpArgVal = element.GetAttribute ("keepShowing");
+                tmpArgVal = el.GetAttribute ("keepShowing");
                 if (!string.IsNullOrEmpty (tmpArgVal)) {
                     if (tmpArgVal.Equals ("yes"))
                         keepShowingDialogue = true;
@@ -195,16 +195,16 @@ public class GraphConversationSubParser_ : Subparser_
                 }
 
                 //If there is a "editor-x" and "editor-y" attributes     
-                tmpArgVal = element.GetAttribute ("editor-x");
+                tmpArgVal = el.GetAttribute ("editor-x");
                 if (!string.IsNullOrEmpty (tmpArgVal)) {
                     editorX = Mathf.Max (0, int.Parse (tmpArgVal));
                 }
-                tmpArgVal = element.GetAttribute ("editor-y");
+                tmpArgVal = el.GetAttribute ("editor-y");
                 if (!string.IsNullOrEmpty (tmpArgVal)) {
                     editorY = Mathf.Max (0, int.Parse (tmpArgVal));
                 }
 
-                tmpArgVal = element.GetAttribute ("random");
+                tmpArgVal = el.GetAttribute ("random");
                 if (!string.IsNullOrEmpty (tmpArgVal)) {
                     if (tmpArgVal.Equals ("yes"))
                         random = true;
@@ -212,7 +212,7 @@ public class GraphConversationSubParser_ : Subparser_
                         random = false;
                 }
 
-                tmpArgVal = element.GetAttribute ("showUserOption");
+                tmpArgVal = el.GetAttribute ("showUserOption");
                 if (!string.IsNullOrEmpty (tmpArgVal)) {
                     if (tmpArgVal.Equals ("yes"))
                         showUserOption = true;
@@ -220,7 +220,7 @@ public class GraphConversationSubParser_ : Subparser_
                         showUserOption = false;
                 }
 
-                tmpArgVal = element.GetAttribute ("preListening");
+                tmpArgVal = el.GetAttribute ("preListening");
                 if (!string.IsNullOrEmpty (tmpArgVal)) {
                     if (tmpArgVal.Equals ("yes"))
                         preListening = true;
@@ -229,14 +229,14 @@ public class GraphConversationSubParser_ : Subparser_
                 }
 
                 //If there is a "x" and "y" attributes with the position where the option node has to be painted
-                tmpArgVal = element.GetAttribute ("x");
+                tmpArgVal = el.GetAttribute ("x");
                 if (!string.IsNullOrEmpty (tmpArgVal)) {
                     if (tmpArgVal.Equals ("yes"))
                         preListening = true;
                     else
                         preListening = false;
                 }
-                tmpArgVal = element.GetAttribute ("y");
+                tmpArgVal = el.GetAttribute ("y");
                 if (!string.IsNullOrEmpty (tmpArgVal)) {
                     if (tmpArgVal.Equals ("yes"))
                         preListening = true;
@@ -245,6 +245,15 @@ public class GraphConversationSubParser_ : Subparser_
                 }
 
                 currentNode = new OptionConversationNode (random, keepShowing, showUserOption, preListening, x, y);
+
+                //XAPI ELEMENTS
+                tmpArgVal = el.GetAttribute("question");
+                if (!string.IsNullOrEmpty(tmpArgVal))
+                {
+                    ((OptionConversationNode)currentNode).setXApiQuestion(tmpArgVal);
+                }
+                //END OF XAPI
+
                 if (editorX > int.MinValue) {
                     x = int.Parse (tmpArgVal);
                 }
@@ -342,7 +351,16 @@ public class GraphConversationSubParser_ : Subparser_
                     conversationLine.setSynthesizerVoice (synthesizerVoice);
 
                 conversationLine.setKeepShowing (keepShowingLine);
-            } else if (ell.Name == "speak-char") {
+
+                //XAPI ELEMENTS
+                tmpArgVal = ell.GetAttribute("correct");
+                if (!string.IsNullOrEmpty(tmpArgVal))
+                {
+                    conversationLine.setXApiCorrect(tmpArgVal == "true");
+                }
+                //END OF XAPI
+            }
+            else if (ell.Name == "speak-char") {
                 // If it is a non-player character line, store the character name and audio path (if present)
                 // Set default name to "NPC"
                 characterName = "NPC";

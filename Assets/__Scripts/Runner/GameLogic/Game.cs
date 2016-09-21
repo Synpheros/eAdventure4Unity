@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System;
 
 public enum guiState {
     GAME_SELECTION, LOADING_GAME,NOTHING,TALK_PLAYER,TALK_CHARACTER,OPTIONS_MENU,ANSWERS_MENU
@@ -64,7 +65,25 @@ public class Game : MonoBehaviour {
 
 	void Awake(){
 		Game.instance = this;
-		style = Resources.Load("basic") as GUISkin;
+        //Load tracker data
+        SimpleJSON.JSONNode hostfile = new SimpleJSON.JSONClass();
+
+#if !(UNITY_WEBPLAYER || UNITY_WEBGL)
+        if (!System.IO.File.Exists("host.cfg"))
+        {
+            hostfile.Add("host", new SimpleJSON.JSONData("http://192.168.175.117:3000/api/proxy/gleaner/collector/"));
+            hostfile.Add("trackingCode", new SimpleJSON.JSONData("57d81d5585b094006eab04d6ndecvjlvjss8aor"));
+            System.IO.File.WriteAllText("host.cfg", hostfile.ToString());
+        }
+        else
+            hostfile = SimpleJSON.JSON.Parse(System.IO.File.ReadAllText("host.cfg"));
+#endif
+
+        Tracker.T.host = hostfile["host"];
+        Tracker.T.trackingCode = hostfile["trackingCode"];
+        //End tracker data loading
+
+        style = Resources.Load("basic") as GUISkin;
 		optionlabel = new GUIStyle(style.label);
 
 		if (Game.GameToLoad != "") {
@@ -106,27 +125,45 @@ public class Game : MonoBehaviour {
 
     void Update () {
         if (Input.GetMouseButtonDown (0)) {
-            if (next_interaction != null && guistate != guiState.ANSWERS_MENU) {
-                Interacted ();
-            } else if(guistate == guiState.NOTHING){
-                Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-				List<RaycastHit> hits = new List<RaycastHit>( Physics.RaycastAll (ray));
-				//hits.Reverse ();
-
-                bool no_interaction = true;
-                foreach (RaycastHit hit in hits) {
-                    Interactuable interacted = hit.transform.GetComponent<Interactuable> ();
-                    if (interacted != null && InteractWith (interacted)) {
-                        no_interaction = false;
-                        break;
-                    }
+            if(Time.timeScale == 1) {
+                if (next_interaction != null && guistate != guiState.ANSWERS_MENU)
+                {
+                    Interacted();
                 }
+                else if (guistate == guiState.NOTHING)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    List<RaycastHit> hits = new List<RaycastHit>(Physics.RaycastAll(ray));
+                    //hits.Reverse ();
 
-                if(no_interaction)
-                    current_scene.GetComponent<SceneMB> ().Interacted ();
+                    bool no_interaction = true;
+                    foreach (RaycastHit hit in hits)
+                    {
+                        Interactuable interacted = hit.transform.GetComponent<Interactuable>();
+                        if (interacted != null && InteractWith(interacted))
+                        {
+                            no_interaction = false;
+                            break;
+                        }
+                    }
+
+                    if (no_interaction)
+                        current_scene.GetComponent<SceneMB>().Interacted();
+                }
             }
         } else if (Input.GetMouseButtonDown (1)) {
             MenuMB.Instance.hide ();
+        } else if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (Time.timeScale == 0)
+            {
+                Time.timeScale = 1;
+                GUIManager.Instance.showConfigMenu();
+            }
+            else
+            {
+                Time.timeScale = 0;
+                GUIManager.Instance.showConfigMenu();
+            }
         }
     }
 
@@ -148,30 +185,156 @@ public class Game : MonoBehaviour {
         return exit;
     }
 
-    public void Execute(Interactuable interactuable){
+    public bool Execute(Interactuable interactuable){
         MenuMB.Instance.hide (true);
         if (interactuable.Interacted() == InteractuableResult.REQUIRES_MORE_INTERACTION) {
             this.next_interaction = interactuable;
+            return true;
         }
+        return false;
     }
 
-    private void Interacted(){
+    private bool Interacted(){
         guistate = guiState.NOTHING;
 		GUIManager.Instance.destroyBubbles ();
         if (this.next_interaction != null) {
             Interactuable tmp = next_interaction;
             next_interaction = null;
-			Execute(tmp);
+			return Execute(tmp);
         }
+        return false;
     }
 
     public bool isSomethingRunning(){
         return next_interaction != null;
     }
 
+    public Interactuable getNextInteraction()
+    {
+        return next_interaction;
+    }
+
     //#################################################################
     //########################### RENDERING ###########################
     //#################################################################
+
+    List<GeneralScene> completables = new List<GeneralScene>();
+    Dictionary<GeneralScene, DateTime> times = new Dictionary<GeneralScene, DateTime>();
+    Stack<GeneralScene> toRemove = new Stack<GeneralScene>();
+    GeneralScene completeOnExit;
+    GeneralScene alternative;
+
+    List<GeneralScene> finalprogress = new List<GeneralScene>();
+
+    public List<GeneralScene> getTrackedScenes()
+    {
+        return completables;
+    }
+
+    public GeneralScene getAlternativeScene()
+    {
+        return alternative;
+    }
+
+    public static T ParseEnum<T>(string value)
+    {
+        return (T) System.Enum.Parse(typeof(T), value, true);
+    }
+
+    private void trackSceneChange(GeneralScene scene)
+    {
+        alternative = null;
+
+        //Completamos si alguna escena se completa al salir de ella.
+        if (completeOnExit != null)
+        {
+            float score = 1;
+            if (!string.IsNullOrEmpty(completeOnExit.getXApiScore()))
+                score = GameState.getVariable(completeOnExit.getXApiScore());
+            Tracker.T.completable.Completed(completeOnExit.getId(), CompletableTracker.Completable.Stage, true, score);
+            completeOnExit = null;
+        }
+
+        //Buscamos en nuestra lista de completables si algun completable se completa o progresa al llegar aquí
+        foreach(GeneralScene toComplete in completables)
+        {
+            foreach (GeneralScene.Milestone milestone in toComplete.getProgress())
+            {
+                if (milestone.type == GeneralScene.Milestone.MilestoneType.SCENE && milestone.id == scene.getId())
+                {
+                    if (toComplete.getId() == "JuegoCompleto")
+                    {
+                        if (!finalprogress.Contains(scene))
+                        {
+                            finalprogress.Add(scene);
+                            Tracker.T.completable.Progressed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), finalprogress.Count/3f);
+                            Tracker.T.RequestFlush();
+
+                            if (finalprogress.Count >= 3)
+                            {
+                                Tracker.T.setExtension("time", (DateTime.Now - times[toComplete]).TotalSeconds);
+
+                                float score = Mathf.Max(Mathf.Min((GameState.getVariable("NotaDT") + GameState.getVariable("NotaAT") + GameState.getVariable("NotaINC")) / 30f, 1f),0f);
+
+                                Tracker.T.completable.Completed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), true, score);
+                                toRemove.Push(toComplete);
+                            }
+                        }
+                    }
+                    else
+                        Tracker.T.completable.Progressed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), milestone.progress);
+                    break;
+                }
+            }
+
+            if (toComplete.getXApiEndsIn() == scene.getId())
+            {
+                float score = 1f;
+                if (!string.IsNullOrEmpty(toComplete.getXApiScore()))
+                    score = Mathf.Max(Mathf.Min(GameState.getVariable(toComplete.getXApiScore()) / 10f, 1f), 0f);
+
+                Tracker.T.completable.Completed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), true, score);
+                Tracker.T.setExtension("time", (DateTime.Now - times[toComplete]).TotalSeconds);
+                Tracker.T.completable.Completed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()),true, score);
+
+                toRemove.Push(toComplete);
+            }
+        }
+
+        GeneralScene tmp;
+        while (toRemove.Count > 0)
+        {
+            tmp = toRemove.Pop();
+            times.Remove(tmp);
+            completables.Remove(tmp);
+        }
+
+        if (!string.IsNullOrEmpty(scene.getXApiClass()))
+        {
+            if(scene.getXApiClass() == "accesible")
+            {
+                Tracker.T.accessible.Accessed(scene.getId(), ParseEnum<AccessibleTracker.Accessible>(scene.getXApiType()));
+            }
+            else if (scene.getXApiClass() == "completable" && !completables.Contains(scene) && completables.Count < 2)
+            {
+                if (!string.IsNullOrEmpty(scene.getXApiEndsIn()))
+                {
+                    completables.Add(scene);
+                    times.Add(scene, DateTime.Now);
+                    Tracker.T.completable.Initialized(scene.getId(), ParseEnum<CompletableTracker.Completable>(scene.getXApiType()));
+                    Tracker.T.completable.Progressed(scene.getId(), ParseEnum<CompletableTracker.Completable>(scene.getXApiType()), 0);
+                }
+                else
+                    completeOnExit = scene;
+            }
+            else if(scene.getXApiClass() == "alternative")
+            {
+                alternative = scene;
+            }
+        }
+
+        Tracker.T.RequestFlush();
+    }
 
     public GameObject renderScene(string scene_id, int transition_time = 0, int transition_type = 0){
         MenuMB.Instance.hide (true);
@@ -180,12 +343,12 @@ public class Game : MonoBehaviour {
         }
 
         GameObject ret = null;
+        GeneralScene toRender = GameState.getGeneralScene(scene_id);
         ret = GameObject.Instantiate (Scene_Prefab);
         ret.GetComponent<Transform> ().localPosition = new Vector2(0f,0f);
-		ret.GetComponent<SceneMB> ().sceneData = GameState.getGeneralScene (scene_id);
+        ret.GetComponent<SceneMB>().sceneData = toRender;
 
-		Tracker.T ().Screen (scene_id);
-		Tracker.T ().RequestFlush ();
+        trackSceneChange(toRender);
 
         current_scene = ret;
 		GameState.CurrentScene = scene_id;
@@ -240,39 +403,40 @@ public class Game : MonoBehaviour {
 	GUIStyle optionlabel;
 
     void OnGUI () {
-        float guiscale = Screen.width/800f;
-
+        float guiscale = Screen.width / 800f;
         style.box.fontSize = Mathf.RoundToInt(guiscale * 20);
         style.button.fontSize = Mathf.RoundToInt(guiscale * 20);
         style.label.fontSize = Mathf.RoundToInt(guiscale * 20);
-		optionlabel.fontSize = Mathf.RoundToInt (guiscale * 36);
+        optionlabel.fontSize = Mathf.RoundToInt(guiscale * 36);
         style.GetStyle("talk_player").fontSize = Mathf.RoundToInt(guiscale * 20);
-
         float rectwith = guiscale * 330;
 
-        switch (guistate) {
-		case guiState.ANSWERS_MENU:
-			GUILayout.BeginArea (new Rect (Screen.width * 0.1f, Screen.height * 0.1f, Screen.width * 0.8f, Screen.height * 0.8f));
-			GUILayout.BeginVertical ();
-			OptionConversationNode options = (OptionConversationNode)guioptions.getNode ();
+        switch (guistate)
+        {
+            case guiState.ANSWERS_MENU:
+                GUILayout.BeginArea(new Rect(Screen.width * 0.1f, Screen.height * 0.1f, Screen.width * 0.8f, Screen.height * 0.8f));
+                GUILayout.BeginVertical();
+                OptionConversationNode options = (OptionConversationNode)guioptions.getNode();
 
-			GUILayout.Label (GUIManager.Instance.Last, optionlabel);
-			for (int i = 0; i < options.getLineCount (); i++) {
-				ConversationLine ono = options.getLine (i);
-				if (ConditionChecker.check (options.getLineConditions (i)))
-				if (GUILayout.Button ((string)ono.getText (), style.button)) {
-					GameObject.Destroy (blur);
-					guioptions.clicked (i);
-					Tracker.T ().Choice (GUIManager.Instance.Last, ono.getText ());
-					Tracker.T ().RequestFlush ();
-					Interacted ();
-				}
-				;
-			}
-			GUILayout.EndVertical ();
-			GUILayout.EndArea ();
-			break;
-        default: break;
-        }
+                GUILayout.Label(GUIManager.Instance.Last, optionlabel);
+                for (int i = 0; i < options.getLineCount(); i++)
+                {
+                    ConversationLine ono = options.getLine(i);
+                    if (ConditionChecker.check(options.getLineConditions(i)))
+                        if (GUILayout.Button((string)ono.getText(), style.button))
+                        {
+                            GameObject.Destroy(blur);
+                            guioptions.clicked(i);
+                            /*Tracker.T ().Choice (GUIManager.Instance.Last, ono.getText ());
+                            Tracker.T ().RequestFlush ();*/
+                            Interacted();
+                        }
+                    ;
+                }
+                GUILayout.EndVertical();
+                GUILayout.EndArea();
+                break;
+            default: break;
+            }
     }
 }

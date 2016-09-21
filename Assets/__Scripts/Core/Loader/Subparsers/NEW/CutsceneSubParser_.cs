@@ -102,12 +102,68 @@ public class CutsceneSubParser_ : Subparser_
         {
             canSkip = tmpArgVal.Equals("yes");
         }
+
         if (element.Name.Equals("slidescene"))
             cutscene = new Slidescene(slidesceneId);
         else
             cutscene = new Videoscene(slidesceneId);
         if (initialScene)
             chapter.setTargetId(slidesceneId);
+
+        //XAPI ELEMENTS
+        tmpArgVal = element.GetAttribute("class");
+        if (!string.IsNullOrEmpty(tmpArgVal))
+        {
+            cutscene.setXApiClass(tmpArgVal);
+        }
+        tmpArgVal = element.GetAttribute("type");
+        if (!string.IsNullOrEmpty(tmpArgVal))
+        {
+            cutscene.setXApiType(tmpArgVal);
+        }
+        tmpArgVal = element.GetAttribute("endsIn");
+        if (!string.IsNullOrEmpty(tmpArgVal))
+        {
+            cutscene.setXApiEndsIn(tmpArgVal);
+        }
+        tmpArgVal = element.GetAttribute("score");
+        if (!string.IsNullOrEmpty(tmpArgVal))
+        {
+            cutscene.setXApiScore(tmpArgVal);
+        }
+        //END OF XAPI
+
+        XmlNode progress = element.SelectSingleNode("progress");
+        if (progress != null)
+            foreach (XmlElement xmilestone in progress)
+            {
+                GeneralScene.Milestone milestone = new GeneralScene.Milestone();
+
+                tmpArgVal = xmilestone.GetAttribute("flag");
+                if (!string.IsNullOrEmpty(tmpArgVal))
+                {
+                    milestone.type = GeneralScene.Milestone.MilestoneType.FLAG;
+                    milestone.id = tmpArgVal;
+                }
+                tmpArgVal = xmilestone.GetAttribute("scene");
+                if (!string.IsNullOrEmpty(tmpArgVal))
+                {
+                    milestone.type = GeneralScene.Milestone.MilestoneType.SCENE;
+                    milestone.id = tmpArgVal;
+                }
+                tmpArgVal = xmilestone.GetAttribute("value");
+                if (!string.IsNullOrEmpty(tmpArgVal))
+                {
+                    milestone.value = tmpArgVal == "true";
+                }
+                tmpArgVal = xmilestone.GetAttribute("progress");
+                if (!string.IsNullOrEmpty(tmpArgVal))
+                {
+                    milestone.progress = float.Parse(tmpArgVal);
+                }
+
+                cutscene.addMilestone(milestone);
+            }
 
         cutscene.setTargetId(idTarget);
         cutscene.setPositionX(x);

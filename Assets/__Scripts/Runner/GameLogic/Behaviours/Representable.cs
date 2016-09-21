@@ -11,10 +11,14 @@ public abstract class Representable : MonoBehaviour, Movable {
 	private Renderer rend;
 	private ElementReference context;
 	private ResourcesUni resource;
+    private float deformation;
 
 	public Element Element{
 		get { return element; }
-		set { element = value; }
+		set {
+            element = value;
+            deformation = -0.01f * FindObjectsOfType(this.GetType()).Length;
+        }
 	}
 	public ElementReference Context{
 		get { return context; }
@@ -42,7 +46,8 @@ public abstract class Representable : MonoBehaviour, Movable {
 
 	protected void Positionate(){
 		Vector2 tmppos = new Vector2(context.getX(),context.getY()) / DIVISOR +  (new Vector2 (0, -transform.localScale.y)) / 2;
-		transform.localPosition = new Vector3(tmppos.x,HEIGHT-tmppos.y,-context.getLayer());
+        
+		transform.localPosition = new Vector3(tmppos.x,HEIGHT-tmppos.y,-context.getLayer() + deformation);
 	}
 
 	public float getHeight(){

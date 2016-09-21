@@ -7,7 +7,42 @@ using UnityEngine;
  */
 public abstract class GeneralScene : Documented, Named, HasId, ICloneable {
 
+    public class Milestone
+    {
+        public enum MilestoneType { FLAG, SCENE };
+
+        public MilestoneType type;
+
+        public string id = "";
+
+        public bool value = true;
+
+        public float progress = 0;
+    }
+
     public enum GeneralSceneSceneType{SCENE = 0, SLIDESCENE = 1, VIDEOSCENE = 2};
+
+    private List<Milestone> progress = new List<Milestone>();
+
+    /**
+     * xApi Class
+     */
+    private string xapiClass = "accesible";
+
+    /**
+     * xApi Class type
+     */
+    private string xapiType = "area";
+
+    /**
+     * xApi completable ends in
+     */
+    private string xapiEndsIn;
+
+    /**
+     * xApi completable score.
+     */
+    private string xapiScore;
 
     /**
      * Type of the scene.
@@ -55,6 +90,57 @@ public abstract class GeneralScene : Documented, Named, HasId, ICloneable {
         name = "";
         documentation = null;
         resources = new List<ResourcesUni>();
+    }
+
+    /**
+     * Returns the progress
+     * 
+     * @return the progress
+     */
+    public List<Milestone> getProgress()
+    {
+        return progress;
+    }
+
+    /**
+     * Returns the xapi class.
+     * 
+     * @return the xapi class.
+     */
+    public string getXApiClass()
+    {
+
+        return xapiClass;
+    }
+    /**
+     * Returns the xapi type of the scene.
+     * 
+     * @return the xapi type of the scene
+     */
+    public string getXApiType()
+    {
+
+        return xapiType;
+    }
+    /**
+     * Returns the scene where the completable ends
+     * 
+     * @return the type of the scene
+     */
+    public string getXApiEndsIn()
+    {
+
+        return xapiEndsIn;
+    }
+    /**
+     * Returns the name of the variable that contains the score of the level
+     * 
+     * @return the name of the variable that contains the score of the level
+     */
+    public string getXApiScore()
+    {
+
+        return xapiScore;
     }
 
     /**
@@ -110,6 +196,64 @@ public abstract class GeneralScene : Documented, Named, HasId, ICloneable {
     {
 
         return resources;
+    }
+
+    /**
+     * sets the progress
+     * 
+     */
+    public void setProgress(List<Milestone> progress)
+    {
+        this.progress = progress;
+    }
+
+    /**
+     * adds a milestone to the progress
+     * 
+     */
+    public void addMilestone(Milestone milestone)
+    {
+        progress.Add(milestone);
+    }
+
+    /**
+     * Returns the xapi class.
+     * 
+     * @return the xapi class.
+     */
+    public void setXApiClass(string xapiClass)
+    {
+        this.xapiClass = xapiClass;
+    }
+    /**
+     * Returns the xapi type of the scene.
+     * 
+     * @return the xapi type of the scene
+     */
+    public void setXApiType(string xapiType)
+    {
+
+        this.xapiType = xapiType;
+    }
+    /**
+     * Returns the scene where the completable ends
+     * 
+     * @return the type of the scene
+     */
+    public void setXApiEndsIn(string xapiEndsIn)
+    {
+
+        this.xapiEndsIn = xapiEndsIn;
+    }
+    /**
+     * Returns the name of the variable that contains the score of the level
+     * 
+     * @return the name of the variable that contains the score of the level
+     */
+    public void setXApiScore(string xapiScore)
+    {
+
+        this.xapiScore = xapiScore;
     }
 
     /**

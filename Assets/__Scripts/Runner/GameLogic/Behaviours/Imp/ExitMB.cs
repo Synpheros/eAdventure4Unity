@@ -9,6 +9,8 @@ public class ExitMB : MonoBehaviour, Interactuable {
 		set { ed = value; }
 	}
 
+    bool executed = false;
+
 	// Use this for initialization
 	void Start () {
 
@@ -20,16 +22,48 @@ public class ExitMB : MonoBehaviour, Interactuable {
 	}
 
 	public void exit(){
-		//Game.Instance.hideMenu ();
-        if (ConditionChecker.check (ed.getConditions ())) {
-            Game.Instance.Execute (new EffectHolder (ed.getEffects ()));
-			GUIManager.Instance.setCursor ("default");
-            Game.Instance.renderScene (ed.getNextSceneId (), ed.getTransitionTime (), ed.getTransitionType ());
+        //Game.Instance.hideMenu ();
+        if (ConditionChecker.check(ed.getConditions()))
+        {
+            EffectHolder effect = new EffectHolder(ed.getEffects());
 
-            if (ed.getPostEffects () != null)
-                Game.Instance.Execute (new EffectHolder (ed.getPostEffects ()));
-        } else if (ed.isHasNotEffects ())
-            Game.Instance.Execute (new EffectHolder (ed.getNotEffects ()));
+            if (Game.Instance.GameState.isCutscene(ed.getNextSceneId()))
+                effect.effects.Add(new EffectHolderNode(new TriggerCutsceneEffect(ed.getNextSceneId())));
+            else
+                effect.effects.Add(new EffectHolderNode(new TriggerSceneEffect(ed.getNextSceneId(), 0, 0, ed.getTransitionTime(), ed.getTransitionType())));
+
+            if (ed.getPostEffects() != null)
+            {
+                EffectHolder eh = new EffectHolder(ed.getPostEffects());
+                foreach (EffectHolderNode ehn in eh.effects)
+                {
+                    effect.effects.Add(ehn);
+                }
+            }
+
+            if (Game.Instance.getAlternativeScene() != null)
+            {
+                if(Game.Instance.getAlternativeScene().getXApiType() == "menu")
+                    Tracker.T.alternative.Selected(Game.Instance.getAlternativeScene().getId(), ed.getNextSceneId(),AlternativeTracker.Alternative.Menu);
+                else
+                    Tracker.T.alternative.Selected(Game.Instance.getAlternativeScene().getId(), ed.getNextSceneId(), true);
+            }
+
+            Game.Instance.Execute(effect);
+            GUIManager.Instance.setCursor("default");
+        }
+        else
+        {
+            if (Game.Instance.getAlternativeScene() != null) {
+                if (Game.Instance.getAlternativeScene().getXApiType() != "menu")
+                    Tracker.T.alternative.Selected(Game.Instance.getAlternativeScene().getId(), "Incorrect", false);
+            }
+
+            if (ed.isHasNotEffects())
+                Game.Instance.Execute(new EffectHolder(ed.getNotEffects()));
+        }
+
+        Tracker.T.RequestFlush();
 	}
 
 	void OnMouseEnter(){
