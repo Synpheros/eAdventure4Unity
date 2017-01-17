@@ -525,7 +525,7 @@ public class Tracker : MonoBehaviour
         string result = "";
         foreach (string value in values)
         {
-            result += value + ",";
+            result += value.Replace(",",".") + ",";
         }
         Trace(result.TrimEnd(','));
     }
