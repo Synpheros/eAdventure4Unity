@@ -43,6 +43,7 @@ public class SceneMB : MonoBehaviour, Interactuable{
             if (movie.Loaded())
             {
                 setMovie();
+                Debug.Log("Seted movie, ready to play.");
                 movie.Play();
                 interactuable = true;
                 movieplayer = MovieState.PLAYING;
@@ -51,6 +52,10 @@ public class SceneMB : MonoBehaviour, Interactuable{
             movie.Stop();
             Interacted ();
         }
+#if UNITY_WEBGL
+        if(movie!=null)
+            movie.Movie.Update();
+#endif
     }
 
     public void destroy(float time = 0){
@@ -334,7 +339,10 @@ public class SceneMB : MonoBehaviour, Interactuable{
 	MovieHolder movie;
 
 	public void setMovie(){
-		this.transform.FindChild ("Background").GetComponent<Renderer>().material.mainTexture = movie.Movie;
-		//sound.clip = movie.audioClip;
-	}
+		//this.transform.FindChild ("Background").GetComponent<Renderer>().material.mainTexture =;
+
+        this.transform.FindChild("Background").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Diffuse"));
+        this.transform.FindChild("Background").GetComponent<MeshRenderer>().material.mainTexture = movie.Movie;
+        //sound.clip = movie.audioClip;
+    }
 }

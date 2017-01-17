@@ -50,7 +50,7 @@ public class MovieHolder
     public bool isPlaying()
     {
 #if !(UNITY_WEBPLAYER || UNITY_WEBGL)
-        return Movie.isPlaying();
+        return Movie.isPlaying;
 #else
         return true;
 #endif
@@ -61,6 +61,7 @@ public class MovieHolder
 #if !(UNITY_WEBPLAYER || UNITY_WEBGL)
         Movie.Play();
 #else
+        Debug.Log("playing");
         Movie.Play();
 #endif
     }
@@ -126,7 +127,7 @@ public class MovieHolder
             fullname += "." + splitted[i];
 
         fullname = Game.Instance.getGameName() + "/" + fullname;
-        Movie = Resources.Load(fullname) as WebGLMovieTexture;
+        Movie = Resources.Load(fullname) as MovieTexture;
 
         if (Movie == null)
         {
@@ -144,13 +145,17 @@ public class MovieHolder
     private WebGLMovieTexture LoadFromWebGL(string uri)
     {
         string videoname = uri;
-        string[] splitted = videoname.Split('.');
+        string[] splitted = videoname.Split('/');
+
+        splitted = splitted[splitted.Length-1].Split('.');
         string fullname = splitted[0];
 
         for (int i = 1; i < splitted.Length - 1; i++)
             fullname += "." + splitted[i];
 
-        fullname = Game.Instance.getGameName() + "/" + fullname + ".ogv";
+        fullname = "StreamingAssets/" + fullname + ".ogv";
+
+        Debug.Log(fullname);
         
         Movie = new WebGLMovieTexture(fullname);
         loaded = true;

@@ -67,8 +67,6 @@ public class CompletableTracker : Tracker.IGameObjectTracker
     {
         tracker.setProgress(value);
         tracker.Trace(Tracker.Verb.Progressed.ToString().ToLower(), type.ToString().ToLower(), completableId);
-
-        Debug.Log(completableId + " - " + value);
     }
 
     /// <summary>
