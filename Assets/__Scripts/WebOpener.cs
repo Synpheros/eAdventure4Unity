@@ -12,15 +12,23 @@ public class WebOpener : MonoBehaviour {
         Application.OpenURL(web);
     }
 
-    public void OpenSurvey(string type)
+    public void OpenSurvey()
     {
-        if(type == "pre")
-        {
-            string url = PlayerPrefs.GetString("LimesurveyHost") + PlayerPrefs.GetString("LimesurveyPre") + "?token=" + PlayerPrefs.GetString("LimesurveyToken");
-            if (!url.Contains("http://") && !url.Contains("https://"))
-                url = "http://" + url;
+		string survey = PlayerPrefs.GetString ("LimesurveyPre");
+		string type = "pre";
 
-            Application.OpenURL(url);
-        }
+		if (PlayerPrefs.HasKey ("CurrentSurvey"))
+			type = PlayerPrefs.GetString ("CurrentSurvey");
+
+		if(type == "pre")
+			survey = PlayerPrefs.GetString ("LimesurveyPre");
+		else if(type == "post")
+			survey = PlayerPrefs.GetString ("LimesurveyPost");
+		
+		string url = PlayerPrefs.GetString("LimesurveyHost") + "survey/" + survey + "?token=" + PlayerPrefs.GetString("LimesurveyToken");
+		if (!url.Contains("http://") && !url.Contains("https://"))
+			url = "http://" + url;
+
+		Application.OpenURL(url);
     }
 }

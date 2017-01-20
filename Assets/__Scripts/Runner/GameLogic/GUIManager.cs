@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GUIManager : MonoBehaviour {
 	
@@ -186,6 +187,10 @@ public class GUIManager : MonoBehaviour {
 
     public void exitApplication()
     {
-        Application.Quit();
+		if (PlayerPrefs.HasKey ("LimesurveyPost")) {
+			PlayerPrefs.SetString("CurrentSurvey","post");
+			SceneManager.LoadScene ("_Survey");
+		}else
+			Application.Quit();
     }
 }

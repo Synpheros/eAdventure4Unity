@@ -486,7 +486,9 @@ public class Tracker : MonoBehaviour
     /// <param name="trace">A comma separated string with the values of the trace</param>
     public void Trace(string trace)
     {
-
+		if (PlayerPrefs.HasKey ("name") && PlayerPrefs.GetString ("name") != "")
+			setExtension ("name", PlayerPrefs.GetString ("name"));
+		
         trace = Math.Round(System.DateTime.Now.ToUniversalTime().Subtract(START_DATE).TotalMilliseconds) + "," + trace;
         if (debug)
         {

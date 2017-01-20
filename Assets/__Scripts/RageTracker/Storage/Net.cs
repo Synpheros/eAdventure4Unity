@@ -86,13 +86,12 @@ public class Net
     {
         yield return www;
         // check for errors
-        if (www.error == null)
+		if (www.error == null && !www.text.Contains("error"))
         {
             requestListener.Result(www.text);
         }
         else
         {
-            Debug.LogError(www.error);
             requestListener.Error(www.error, www.text);
         }
     }
