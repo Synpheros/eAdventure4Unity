@@ -74,7 +74,7 @@ public class LimeSurveyValidator : MonoBehaviour {
 		connection.GET(host + "completed?survey=" + survey + ((token.Length > 0) ? "&token=" + token : ""), new CompleteListener(response, token));
     }
 
-    public class ValidateListener : Net.IRequestListenerErrorData
+    public class ValidateListener : Net.IRequestListener
     {
         Text response;
         string token;
@@ -85,10 +85,10 @@ public class LimeSurveyValidator : MonoBehaviour {
             this.token = token;
         }
 
-        public void Error(string error, string data)
+        public void Error(string error)
         {
-            SimpleJSON.JSONNode result = SimpleJSON.JSON.Parse(data);
-            response.text = result["message"];
+            /*SimpleJSON.JSONNode result = SimpleJSON.JSON.Parse(data);
+            response.text = result["message"];*/
         }
 
         public void Result(string data)
@@ -104,7 +104,7 @@ public class LimeSurveyValidator : MonoBehaviour {
         }
     }
 
-    public class CompleteListener : Net.IRequestListenerErrorData
+	public class CompleteListener : Net.IRequestListener
     {
         Text response;
         string token;
@@ -115,10 +115,10 @@ public class LimeSurveyValidator : MonoBehaviour {
             this.token = token;
         }
 
-        public void Error(string error, string data)
+        public void Error(string error)
         {
-            SimpleJSON.JSONNode result = SimpleJSON.JSON.Parse(data);
-			response.text = result["message"];
+            /*SimpleJSON.JSONNode result = SimpleJSON.JSON.Parse(data);
+			response.text = result["message"];*/
         }
 
         public void Result(string data)

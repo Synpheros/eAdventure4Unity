@@ -61,55 +61,12 @@ public class Net
 		}
 	}
 
-    public WWW GET(string url, IRequestListenerErrorData requestListener)
-    {
-
-        WWW www = new WWW(url);
-        behaviour.StartCoroutine(WaitForRequest(www, requestListener));
-        return www;
-    }
-
-    public WWW POST(string url, byte[] data, Dictionary<string, string> headers, IRequestListenerErrorData requestListener)
-    {
-        // Force post
-        if (data == null)
-        {
-            data = Encoding.UTF8.GetBytes(" ");
-        }
-        WWW www = new WWW(url, data, headers);
-
-        behaviour.StartCoroutine(WaitForRequest(www, requestListener));
-        return www;
-    }
-
-    private IEnumerator WaitForRequest(WWW www, IRequestListenerErrorData requestListener)
-    {
-        yield return www;
-        // check for errors
-		if (www.error == null && !www.text.Contains("error"))
-        {
-            requestListener.Result(www.text);
-        }
-        else
-        {
-            requestListener.Error(www.error, www.text);
-        }
-    }
-
-    public interface IRequestListener {
+	public interface IRequestListener {
 
 		void Result(string data);
 
 		void Error(string error);
 	}
-
-    public interface IRequestListenerErrorData
-    {
-
-        void Result(string data);
-
-        void Error(string error, string data);
-    }
 }
 
 
