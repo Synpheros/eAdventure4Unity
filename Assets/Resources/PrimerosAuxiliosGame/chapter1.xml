@@ -73,12 +73,20 @@
 					<condition/>
 				</effect>
 			</exit>
-			<exit destinyX="-2147483648" destinyY="-2147483648" hasInfluenceArea="no" height="57" idTarget="Inicio" not-effects="no" rectangular="yes" transitionTime="0" transitionType="0" width="230" x="6" y="474">
-				<exit-look text="Creditos"/>
+			<exit destinyX="-2147483648" destinyY="-2147483648" hasInfluenceArea="no" height="57" idTarget="Inicio" not-effects="yes" rectangular="yes" transitionTime="0" transitionType="0" width="230" x="6" y="474">
+				<exit-look text="Salir"/>
+				<condition>
+					<active flag="TerminoDT"/>
+					<active flag="TerminoAT"/>
+					<active flag="TerminoINC"/>
+				</condition>
 				<effect>
-					<trigger-cutscene idTarget="Creditos"/>
-					<condition/>
+					<trigger-scene idTarget="#exit_game"/>
 				</effect>
+				<not-effect>
+					<speak-player>#! Para poder salir debes completar el juego</speak-player>
+					<condition/>
+				</not-effect>
 			</exit>
 		</exits>
 		<atrezzo>
@@ -119,7 +127,7 @@
 				</condition>
 			</atrezzo-ref>
 			<atrezzo-ref idTarget="BotonComoJugar" layer="1" scale="1.0" x="120" y="590"/>
-			<atrezzo-ref idTarget="BotonCreditos" layer="0" scale="1.0" x="120" y="528"/>
+			<atrezzo-ref idTarget="BotonSalir" layer="0" scale="1.0" x="120" y="528"/>
 		</atrezzo>
 	</scene>
 	<scene id="Atragantamiento" class="completable" type="level" endsIn="FinAtragantamiento" score="NotaAT" playerLayer="-1" playerScale="1.0" start="no">
@@ -1583,6 +1591,8 @@
 					<condition>
 						<active flag="DT"/>
 					</condition>
+					<trigger-conversation idTarget="ConversacionBPM"/>
+					<condition/>
 				</effect>
 				<not-effect>
 					<speak-player>#! No, esa no es la forma de colocar las manos</speak-player>
@@ -1612,6 +1622,8 @@
 					<condition>
 						<active flag="DT"/>
 					</condition>
+					<trigger-conversation idTarget="ConversacionBPM"/>
+					<condition/>
 				</effect>
 				<not-effect>
 					<speak-player>#! No, esa no es la forma de colocar las manos</speak-player>
@@ -1641,6 +1653,8 @@
 					<condition>
 						<active flag="DT"/>
 					</condition>
+					<trigger-conversation idTarget="ConversacionBPM"/>
+					<condition/>
 				</effect>
 				<not-effect>
 					<speak-player>#! No, esa no es la forma de colocar las manos</speak-player>
@@ -1670,6 +1684,8 @@
 					<condition>
 						<active flag="DT"/>
 					</condition>
+					<trigger-conversation idTarget="ConversacionBPM"/>
+					<condition/>
 				</effect>
 				<not-effect>
 					<speak-player>#! No, esa no es la forma de colocar las manos</speak-player>
@@ -4053,6 +4069,53 @@
 			</end-conversation>
 		</dialogue-node>
 	</graph-conversation>
+	<graph-conversation id="ConversacionBPM">
+		<dialogue-node nodeindex="0">
+			<speak-player>¿Cuántas compresiones por minuto debemos realizar?</speak-player>
+			<condition/>
+			<child nodeindex="1"/>
+		</dialogue-node>
+		<option-node question="INCCompresiones" nodeindex="1" x="10" y="480">
+			<speak-player>50</speak-player>
+			<condition/>
+			<child nodeindex="2"/>
+			<speak-player correct="true">100</speak-player>
+			<condition/>
+			<child nodeindex="3"/>
+			<speak-player>150</speak-player>
+			<condition/>
+			<child nodeindex="4"/>
+			<speak-player>200</speak-player>
+			<condition/>
+			<child nodeindex="5"/>
+		</option-node>
+		<dialogue-node nodeindex="2">
+			<speak-player>¡Esas son muy pocas!</speak-player>
+			<condition/>
+			<child nodeindex="1"/>
+		</dialogue-node>
+		<dialogue-node nodeindex="3">
+			<speak-player>¡Perfecto!</speak-player>
+			<condition>
+				<inactive flag="TelEscondido"/>
+			</condition>
+			<speak-player>Una forma fácil de recordarlo es con la cancion Staying Alive de los Bee Gees</speak-player>
+			<condition>
+				<inactive flag="TelEscondido"/>
+			</condition>
+			<end-conversation/>
+		</dialogue-node>
+		<dialogue-node nodeindex="4">
+			<speak-player>¡Esas son demasiadas!</speak-player>
+			<condition/>
+			<child nodeindex="1"/>
+		</dialogue-node>
+		<dialogue-node nodeindex="5">
+			<speak-player>¡Esas son demasiadas!</speak-player>
+			<condition/>
+			<child nodeindex="1"/>
+		</dialogue-node>
+	</graph-conversation>
 	<timer countDown="yes" displayName="Conciencia..." multipleStarts="yes" runsInLoop="no" showTime="no" showWhenStopped="yes" time="9" usesEndCondition="no">
 		<documentation>Temporizador para que el paciente caiga inconsciente si tiene dolor toraxico</documentation>
 		<init-condition>
@@ -5444,6 +5507,17 @@
 		<resources name="No name">
 			<asset type="icon" uri="assets/special/EmptyIcon.png"/>
 			<asset type="image" uri="assets/image/creditos.png"/>
+		</resources>
+		<description>
+			<name/>
+			<brief/>
+			<detailed/>
+		</description>
+	</atrezzoobject>
+	<atrezzoobject id="BotonSalir">
+		<resources name="No name">
+			<asset type="icon" uri="assets/special/EmptyIcon.png"/>
+			<asset type="image" uri="assets/image/salir.png"/>
 		</resources>
 		<description>
 			<name/>

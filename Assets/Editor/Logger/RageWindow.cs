@@ -253,10 +253,10 @@ public class RageWindow : EditorWindow {
 		List<string> ids = new List<string> (),
 					titles = new List<string> ();
 
-		foreach (JSONNode child in games.Childs) {
+		/*foreach (JSONNode child in games.Childs) {
 			ids.Add (child["_id"]);
 			titles.Add (child ["title"]);
-		}
+		}*/
 
 		this.gameids = ids.ToArray ();
 		this.gametitles = titles.ToArray ();
@@ -269,10 +269,10 @@ public class RageWindow : EditorWindow {
 	public void setGameVersions(JSONNode versions){
 		List<string> vs = new List<string>();
 		configs = new List<GameConfiguration> ();
-		foreach (JSONNode child in versions.Childs) {
+		/*foreach (JSONNode child in versions.Childs) {
 			vs.Add (child["_id"]);
 			configs.Add (new GameConfiguration (child));
-		}
+		}*/
 		this.gameVersions = vs.ToArray ();
 	}
 

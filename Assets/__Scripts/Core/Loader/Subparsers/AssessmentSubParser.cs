@@ -8,11 +8,6 @@ public class AssessmentSubParser : SubParser
     /* Attributes */
 
     /**
-     * string to store the current string in the XML file
-     */
-    private string currentstring = string.Empty;
-
-    /**
      * Constant for reading nothing
      */
     private const int READING_NONE = 0;

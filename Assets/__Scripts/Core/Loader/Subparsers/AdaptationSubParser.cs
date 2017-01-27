@@ -24,11 +24,6 @@ public class AdaptationSubParser : SubParser
     private AdaptationRule rule_temp;
 
     /**
-     * string to store the current string in the XML file
-     */
-    private string currentstring;
-
-    /**
      * The adaptation profile to fill
      */
     private AdaptationProfile profile;

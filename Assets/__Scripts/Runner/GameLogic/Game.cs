@@ -121,6 +121,7 @@ public class Game : MonoBehaviour {
 
         TimerController.Instance.Timers = GameState.getTimers ();
         TimerController.Instance.Run ();
+
 	}
 
     void Update () {
@@ -337,6 +338,11 @@ public class Game : MonoBehaviour {
     }
 
     public GameObject renderScene(string scene_id, int transition_time = 0, int transition_type = 0){
+		if (scene_id == "#exit_game") {
+			GUIManager.Instance.exitApplication ();
+			return null;
+		}
+
         MenuMB.Instance.hide (true);
         if (current_scene != null) {
             current_scene.GetComponent<SceneMB> ().destroy (transition_time / 1000f);
