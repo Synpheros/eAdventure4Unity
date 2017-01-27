@@ -25,7 +25,7 @@ public class WebOpener : MonoBehaviour {
 		else if(type == "post")
 			survey = PlayerPrefs.GetString ("LimesurveyPost");
 		
-		string url = PlayerPrefs.GetString("LimesurveyHost") + "survey/" + survey + "?token=" + PlayerPrefs.GetString("LimesurveyToken");
+		string url = PlayerPrefs.GetString("LimesurveyHost") + "surveys/survey/" + survey + "?token=" + PlayerPrefs.GetString("LimesurveyToken");
 		if (!url.Contains("http://") && !url.Contains("https://"))
 			url = "http://" + url;
 

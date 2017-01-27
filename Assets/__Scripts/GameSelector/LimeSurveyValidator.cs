@@ -49,7 +49,7 @@ public class LimeSurveyValidator : MonoBehaviour {
         else if (PlayerPrefs.HasKey("LimesurveyToken"))
             token = PlayerPrefs.GetString("LimesurveyToken");
 
-        connection.GET(host + "validate?survey=" + survey_pre + ((token.Length>0)? "&token=" + token : ""), new ValidateListener(response, token));
+        connection.GET(host + "surveys/validate?survey=" + survey_pre + ((token.Length>0)? "&token=" + token : ""), new ValidateListener(response, token));
     }
 
     public void completed()
@@ -71,7 +71,7 @@ public class LimeSurveyValidator : MonoBehaviour {
 		else if(type == "post")
 			survey = PlayerPrefs.GetString ("LimesurveyPost");
 
-		connection.GET(host + "completed?survey=" + survey + ((token.Length > 0) ? "&token=" + token : ""), new CompleteListener(response, token));
+		connection.GET(host + "surveys/completed?survey=" + survey + ((token.Length > 0) ? "&token=" + token : ""), new CompleteListener(response, token));
     }
 
     public class ValidateListener : Net.IRequestListener
@@ -87,8 +87,8 @@ public class LimeSurveyValidator : MonoBehaviour {
 
         public void Error(string error)
         {
-            /*SimpleJSON.JSONNode result = SimpleJSON.JSON.Parse(data);
-            response.text = result["message"];*/
+            SimpleJSON.JSONNode result = SimpleJSON.JSON.Parse(error);
+            response.text = result["message"];
         }
 
         public void Result(string data)
@@ -117,8 +117,8 @@ public class LimeSurveyValidator : MonoBehaviour {
 
         public void Error(string error)
         {
-            /*SimpleJSON.JSONNode result = SimpleJSON.JSON.Parse(data);
-			response.text = result["message"];*/
+            SimpleJSON.JSONNode result = SimpleJSON.JSON.Parse(error);
+			response.text = result["message"];
         }
 
         public void Result(string data)

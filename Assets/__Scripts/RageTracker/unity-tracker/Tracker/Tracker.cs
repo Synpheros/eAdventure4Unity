@@ -509,6 +509,9 @@ public class Tracker : MonoBehaviour
 	/// <param name="values">Values of the trace.</param>
 	public void ActionTrace (string verb, string target_type, string target_id)
 	{
+		if (PlayerPrefs.HasKey ("name") && PlayerPrefs.GetString ("name") != "")
+			setExtension ("name", PlayerPrefs.GetString ("name"));
+			
 		EnqueueTrace (verb,target_type,target_id);
 	}
 
