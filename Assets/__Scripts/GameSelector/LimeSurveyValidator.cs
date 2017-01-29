@@ -8,7 +8,7 @@ public class LimeSurveyValidator : MonoBehaviour {
 
     Net connection;
     string host = "localhost";
-	string survey_pre = "", survey_post = "";
+	string survey_pre = "", survey_post = "", master_token_online = "", master_token_offline = "";
 
     public Text token, response;
     
@@ -27,6 +27,9 @@ public class LimeSurveyValidator : MonoBehaviour {
 	        host = hostfile["limesurvey_host"];
 	        survey_pre = hostfile["limesurvey_pre"];
 			survey_post = hostfile["limesurvey_post"];
+			master_token_online = hostfile["master_token_online"];
+			master_token_offline = hostfile["master_token_offline"];
+
 		}catch(Exception ex){}
 
         PlayerPrefs.SetString("LimesurveyHost", host);
@@ -49,6 +52,19 @@ public class LimeSurveyValidator : MonoBehaviour {
         else if (PlayerPrefs.HasKey("LimesurveyToken"))
             token = PlayerPrefs.GetString("LimesurveyToken");
 
+		PlayerPrefs.SetInt ("online", 1);
+
+		if (token == master_token_online || token == master_token_offline) {
+			PlayerPrefs.SetString ("LimesurveyToken", "ADMIN");
+			PlayerPrefs.SetString ("name", "ADMIN");
+
+			if (token == master_token_offline) {
+				PlayerPrefs.SetInt ("online", 0);
+			}else
+				PlayerPrefs.SetInt ("online", 1);
+
+			SceneManager.LoadScene ("_Scene1");
+		}
         connection.GET(host + "surveys/validate?survey=" + survey_pre + ((token.Length>0)? "&token=" + token : ""), new ValidateListener(response, token));
     }
 
@@ -88,7 +104,10 @@ public class LimeSurveyValidator : MonoBehaviour {
         public void Error(string error)
         {
             SimpleJSON.JSONNode result = SimpleJSON.JSON.Parse(error);
-            response.text = result["message"];
+			if (result != null && result ["message"] != null)
+				response.text = result["message"];
+			else
+				response.text = error != ""? error : "Can't Connect";
         }
 
         public void Result(string data)

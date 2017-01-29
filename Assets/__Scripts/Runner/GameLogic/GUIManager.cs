@@ -187,7 +187,7 @@ public class GUIManager : MonoBehaviour {
 
     public void exitApplication()
     {
-		if (PlayerPrefs.HasKey ("LimesurveyPost")) {
+		if (PlayerPrefs.HasKey("LimesurveyToken") && PlayerPrefs.GetString("LimesurveyToken") != "ADMIN" && PlayerPrefs.HasKey ("LimesurveyPost")) {
 			PlayerPrefs.SetString("CurrentSurvey","post");
 			SceneManager.LoadScene ("_Survey");
 		}else

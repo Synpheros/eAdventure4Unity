@@ -139,6 +139,9 @@ public class Tracker : MonoBehaviour
 		filePath = GeneratePath ();
 		rawFilePath = filePath + "Raw.csv";
 
+		if (PlayerPrefs.HasKey ("online") && PlayerPrefs.GetInt ("online") == 0)
+			storageType = "local";
+
 		switch (storageType) {
 		case "net":
 			filePath += "Pending";

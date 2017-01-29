@@ -53,11 +53,18 @@ public class Net
 	{
 		yield return www;
 		// check for errors
-		if (www.error == null && !www.text.Contains("error")) {
-			requestListener.Result(www.text);
-		} else {
-			requestListener.Error(www.text);
-		}
+		if(www.text.Contains("nginx"))
+			requestListener.Error("RAGE Analytics offline");
+		else
+			if(www.text.Contains("ENOTFOUND"))
+				requestListener.Error("SurveyManager offline");
+			else{
+				if (www.error == null && !www.text.Contains("error")) {
+					requestListener.Result(www.text);
+				} else {
+					requestListener.Error(www.text);
+				}
+			}
 	}
 
 	public interface IRequestListener {
