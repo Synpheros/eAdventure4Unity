@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using AssetPackage;
 
 public enum guiState {
     GAME_SELECTION, LOADING_GAME,NOTHING,TALK_PLAYER,TALK_CHARACTER,OPTIONS_MENU,ANSWERS_MENU
@@ -79,9 +80,22 @@ public class Game : MonoBehaviour {
             hostfile = SimpleJSON.JSON.Parse(System.IO.File.ReadAllText("host.cfg"));
 #endif
 
-        Tracker.T.host = hostfile["host"];
-        Tracker.T.trackingCode = hostfile["trackingCode"];
-        //End tracker data loading
+        //Tracker.T.host = hostfile["host"];
+        //Tracker.T.trackingCode = hostfile["trackingCode"];
+        
+
+		TrackerAssetSettings settings = new TrackerAssetSettings();
+		settings.Host = hostfile["host"];
+		settings.Port = 443;
+		settings.StorageType = TrackerAsset.StorageTypes.local;
+		settings.TraceFormat = TrackerAsset.TraceFormats.csv;
+
+		TrackerAsset.Instance.Bridge = new TesterBridge();
+		TrackerAsset.Instance.Settings = settings;
+
+		TrackerAsset.Instance.Start();
+		//End tracker data loading
+
 
         style = Resources.Load("basic") as GUISkin;
 		optionlabel = new GUIStyle(style.label);
@@ -252,7 +266,7 @@ public class Game : MonoBehaviour {
             float score = 1;
             if (!string.IsNullOrEmpty(completeOnExit.getXApiScore()))
                 score = GameState.getVariable(completeOnExit.getXApiScore());
-            Tracker.T.completable.Completed(completeOnExit.getId(), CompletableTracker.Completable.Stage, true, score);
+			TrackerAsset.Instance.Completable.Completed(completeOnExit.getId(), CompletableTracker.Completable.Stage, true, score);
             completeOnExit = null;
         }
 
@@ -268,22 +282,22 @@ public class Game : MonoBehaviour {
                         if (!finalprogress.Contains(scene))
                         {
                             finalprogress.Add(scene);
-                            Tracker.T.completable.Progressed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), finalprogress.Count/3f);
-                            Tracker.T.RequestFlush();
+							TrackerAsset.Instance.Completable.Progressed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), finalprogress.Count/3f);
+							TrackerAsset.Instance.Flush();
 
                             if (finalprogress.Count >= 3)
                             {
-                                Tracker.T.setExtension("time", (DateTime.Now - times[toComplete]).TotalSeconds);
+								TrackerAsset.Instance.setExtension("time", (DateTime.Now - times[toComplete]).TotalSeconds);
 
                                 float score = Mathf.Max(Mathf.Min((GameState.getVariable("NotaDT") + GameState.getVariable("NotaAT") + GameState.getVariable("NotaINC")) / 30f, 1f),0f);
 
-                                Tracker.T.completable.Completed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), true, score);
+								TrackerAsset.Instance.Completable.Completed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), true, score);
                                 toRemove.Push(toComplete);
                             }
                         }
                     }
                     else
-                        Tracker.T.completable.Progressed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), milestone.progress);
+						TrackerAsset.Instance.Completable.Progressed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), milestone.progress);
                     break;
                 }
             }
@@ -294,9 +308,9 @@ public class Game : MonoBehaviour {
                 if (!string.IsNullOrEmpty(toComplete.getXApiScore()))
                     score = Mathf.Max(Mathf.Min(GameState.getVariable(toComplete.getXApiScore()) / 10f, 1f), 0f);
 
-                Tracker.T.completable.Completed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), true, score);
-                Tracker.T.setExtension("time", (DateTime.Now - times[toComplete]).TotalSeconds);
-                Tracker.T.completable.Completed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()),true, score);
+				TrackerAsset.Instance.Completable.Completed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()), true, score);
+				TrackerAsset.Instance.setExtension("time", (DateTime.Now - times[toComplete]).TotalSeconds);
+				TrackerAsset.Instance.Completable.Completed(toComplete.getId(), ParseEnum<CompletableTracker.Completable>(toComplete.getXApiType()),true, score);
 
                 toRemove.Push(toComplete);
             }
@@ -314,7 +328,7 @@ public class Game : MonoBehaviour {
         {
             if(scene.getXApiClass() == "accesible")
             {
-                Tracker.T.accessible.Accessed(scene.getId(), ParseEnum<AccessibleTracker.Accessible>(scene.getXApiType()));
+				TrackerAsset.Instance.Accesible.Accessed(scene.getId(), ParseEnum<AccessibleTracker.Accessible>(scene.getXApiType()));
             }
             else if (scene.getXApiClass() == "completable" && !completables.Contains(scene) && completables.Count < 2)
             {
@@ -322,8 +336,8 @@ public class Game : MonoBehaviour {
                 {
                     completables.Add(scene);
                     times.Add(scene, DateTime.Now);
-                    Tracker.T.completable.Initialized(scene.getId(), ParseEnum<CompletableTracker.Completable>(scene.getXApiType()));
-                    Tracker.T.completable.Progressed(scene.getId(), ParseEnum<CompletableTracker.Completable>(scene.getXApiType()), 0);
+					TrackerAsset.Instance.Completable.Initialized(scene.getId(), ParseEnum<CompletableTracker.Completable>(scene.getXApiType()));
+					TrackerAsset.Instance.Completable.Progressed(scene.getId(), ParseEnum<CompletableTracker.Completable>(scene.getXApiType()), 0);
                 }
                 else
                     completeOnExit = scene;
@@ -334,7 +348,7 @@ public class Game : MonoBehaviour {
             }
         }
 
-        Tracker.T.RequestFlush();
+		TrackerAsset.Instance.Flush();
     }
 
     public GameObject renderScene(string scene_id, int transition_time = 0, int transition_type = 0){

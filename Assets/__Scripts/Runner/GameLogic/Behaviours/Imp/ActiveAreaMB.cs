@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using LibTessDotNet;
+using AssetPackage;
 
 public class ActiveAreaMB : MonoBehaviour, Interactuable {
 
@@ -49,16 +50,16 @@ public class ActiveAreaMB : MonoBehaviour, Interactuable {
         }
 
         switch(aad.getBehaviour()) {
-        case Item.BehaviourType.FIRST_ACTION:
-            foreach (Action a in aad.getActions()) {
-                if (ConditionChecker.check (a.getConditions ())) {
-                    Game.Instance.Execute (new EffectHolder(a.getEffects()));
-                    break;
-                }
-            }
-            ret = InteractuableResult.DOES_SOMETHING;
-            Tracker.T.trackedGameObject.Interacted(aad.getId(), GameObjectTracker.TrackedGameObject.Npc);
-            Tracker.T.RequestFlush();
+		case Item.BehaviourType.FIRST_ACTION:
+			foreach (Action a in aad.getActions()) {
+				if (ConditionChecker.check (a.getConditions ())) {
+					Game.Instance.Execute (new EffectHolder (a.getEffects ()));
+					break;
+				}
+			}
+			ret = InteractuableResult.DOES_SOMETHING;
+			TrackerAsset.Instance.GameObject.Interacted (aad.getId (), GameObjectTracker.TrackedGameObject.Npc);
+			TrackerAsset.Instance.Flush ();
             break;
         case Item.BehaviourType.NORMAL:
             List<Action> available = new List<Action> ();
@@ -105,8 +106,8 @@ public class ActiveAreaMB : MonoBehaviour, Interactuable {
             if (available.Count > 0) {
                 Game.Instance.showActions (available, Input.mousePosition);
                 ret = InteractuableResult.DOES_SOMETHING;
-                Tracker.T.trackedGameObject.Interacted(aad.getId(), GameObjectTracker.TrackedGameObject.Npc);
-                Tracker.T.RequestFlush();
+				TrackerAsset.Instance.GameObject.Interacted(aad.getId(), GameObjectTracker.TrackedGameObject.Npc);
+				TrackerAsset.Instance.Flush ();
             }
 
             

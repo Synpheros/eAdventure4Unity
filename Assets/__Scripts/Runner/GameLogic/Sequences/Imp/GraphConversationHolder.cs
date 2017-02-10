@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using AssetPackage;
 
 public class ConversationNodeHolder{
     private int lastexecuted = 0;
@@ -67,8 +68,8 @@ public class ConversationNodeHolder{
     public void clicked(int option) {
         this.child = option;
         OptionConversationNode onode = ((OptionConversationNode)node);
-        Tracker.T.alternative.Selected(onode.getXApiQuestion(), onode.getLine(option).getText().Replace(","," "), onode.getLine(option).getXApiCorrect(), AlternativeTracker.Alternative.Question);
-        Tracker.T.RequestFlush();
+		TrackerAsset.Instance.Alternative.Selected(onode.getXApiQuestion(), onode.getLine(option).getText().Replace(","," "), onode.getLine(option).getXApiCorrect(), AlternativeTracker.Alternative.Question);
+		TrackerAsset.Instance.Flush();
     }
 
     public ConversationNodeHolder getChild(){

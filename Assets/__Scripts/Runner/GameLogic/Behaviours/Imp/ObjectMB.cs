@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using AssetPackage;
 
 public class ObjectMB : Representable, Interactuable {
 	
@@ -147,8 +148,8 @@ public class ObjectMB : Representable, Interactuable {
 				}
 			}
 
-            Tracker.T.trackedGameObject.Interacted(((Item)Element).getId(), GameObjectTracker.TrackedGameObject.Item);
-            Tracker.T.RequestFlush();
+			TrackerAsset.Instance.GameObject.Interacted(((Item)Element).getId(), GameObjectTracker.TrackedGameObject.Item);
+			TrackerAsset.Instance.Flush();
         }
 
         return ret;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using AssetPackage;
 
 public class GameState {
 	//###########################################################################
@@ -46,7 +47,7 @@ public class GameState {
 
         //Debug.Log ("Flag '" + name + " puesta a " + state);
         bool bstate = state == FlagCondition.FLAG_ACTIVE;
-        Tracker.T.setExtension(name,bstate);
+		TrackerAsset.Instance.setExtension(name,bstate);
 
         foreach (GeneralScene scene in Game.Instance.getTrackedScenes())
         {
@@ -54,7 +55,7 @@ public class GameState {
             {
                 if (milestone.type == GeneralScene.Milestone.MilestoneType.FLAG && name == milestone.id && milestone.value == bstate)
                 {
-                    Tracker.T.completable.Progressed(scene.getId(), Game.ParseEnum<CompletableTracker.Completable>(scene.getXApiType()), milestone.progress);
+					TrackerAsset.Instance.Completable.Progressed(scene.getId(), Game.ParseEnum<CompletableTracker.Completable>(scene.getXApiType()), milestone.progress);
                     break;
                 }
             }
@@ -79,7 +80,7 @@ public class GameState {
 			variables.Add (name, value);
 		}
 
-		Tracker.T.setExtension(name, value);
+		TrackerAsset.Instance.setExtension(name, value);
 
         
 

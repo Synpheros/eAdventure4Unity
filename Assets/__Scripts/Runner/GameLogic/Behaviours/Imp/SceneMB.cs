@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using AssetPackage;
 
 public class SceneMB : MonoBehaviour, Interactuable{
 	
@@ -309,7 +310,8 @@ public class SceneMB : MonoBehaviour, Interactuable{
                 if (movie.isPlaying())
                 {
                     movie.Stop();
-                    Tracker.T.accessible.Skipped(sceneData.getId(), AccessibleTracker.Accessible.Cutscene);
+					TrackerAsset.Instance.Accesible.Skipped(sceneData.getId(), AccessibleTracker.Accessible.Cutscene);
+					TrackerAsset.Instance.Flush ();
                 }
 
             break;

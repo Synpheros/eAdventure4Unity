@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using AssetPackage;
 
 public class ExitMB : MonoBehaviour, Interactuable {
 
@@ -44,9 +45,9 @@ public class ExitMB : MonoBehaviour, Interactuable {
             if (Game.Instance.getAlternativeScene() != null)
             {
                 if(Game.Instance.getAlternativeScene().getXApiType() == "menu")
-                    Tracker.T.alternative.Selected(Game.Instance.getAlternativeScene().getId(), ed.getNextSceneId(),AlternativeTracker.Alternative.Menu);
+					TrackerAsset.Instance.Alternative.Selected(Game.Instance.getAlternativeScene().getId(), ed.getNextSceneId(),AlternativeTracker.Alternative.Menu);
                 else
-                    Tracker.T.alternative.Selected(Game.Instance.getAlternativeScene().getId(), ed.getNextSceneId(), true);
+					TrackerAsset.Instance.Alternative.Selected(Game.Instance.getAlternativeScene().getId(), ed.getNextSceneId(), true);
             }
 
             Game.Instance.Execute(effect);
@@ -56,14 +57,14 @@ public class ExitMB : MonoBehaviour, Interactuable {
         {
             if (Game.Instance.getAlternativeScene() != null) {
                 if (Game.Instance.getAlternativeScene().getXApiType() != "menu")
-                    Tracker.T.alternative.Selected(Game.Instance.getAlternativeScene().getId(), "Incorrect", false);
+					TrackerAsset.Instance.Alternative.Selected(Game.Instance.getAlternativeScene().getId(), "Incorrect", false);
             }
 
             if (ed.isHasNotEffects())
                 Game.Instance.Execute(new EffectHolder(ed.getNotEffects()));
         }
 
-        Tracker.T.RequestFlush();
+		TrackerAsset.Instance.Flush();
 	}
 
 	void OnMouseEnter(){

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using AssetPackage;
 
 public class CharacterMB : Representable, Interactuable {
 	/*  ## ANIMATION METHOD ##
@@ -68,8 +69,8 @@ public class CharacterMB : Representable, Interactuable {
                 res = InteractuableResult.DOES_SOMETHING;
             }
 
-            Tracker.T.trackedGameObject.Interacted(((NPC)Element).getId(), GameObjectTracker.TrackedGameObject.Npc);
-            Tracker.T.RequestFlush();
+			TrackerAsset.Instance.GameObject.Interacted(((NPC)Element).getId(), GameObjectTracker.TrackedGameObject.Npc);
+			TrackerAsset.Instance.Flush();
         }
 
         return res;
