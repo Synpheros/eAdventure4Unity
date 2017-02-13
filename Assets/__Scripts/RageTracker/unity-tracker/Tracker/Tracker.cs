@@ -45,6 +45,9 @@ public class Tracker : MonoBehaviour
 
 	public bool rawCopy;
 	private string rawFilePath;
+	public string RawFilePath{
+		get { return rawFilePath; }
+	}
 
 	private ITraceFormatter traceFormatter;
 	private bool sending;

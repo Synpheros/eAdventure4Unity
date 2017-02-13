@@ -188,6 +188,13 @@ public class GUIManager : MonoBehaviour {
     public void exitApplication()
     {
 		if (PlayerPrefs.HasKey("LimesurveyToken") && PlayerPrefs.GetString("LimesurveyToken") != "ADMIN" && PlayerPrefs.HasKey ("LimesurveyPost")) {
+			string path = Application.persistentDataPath;
+
+			if (!path.EndsWith ("/")) {
+				path += "/";
+			}
+
+			System.IO.File.AppendAllText(path + PlayerPrefs.GetString("LimesurveyToken") + ".csv" , System.IO.File.ReadAllText(Tracker.T.RawFilePath));
 			PlayerPrefs.SetString("CurrentSurvey","post");
 			SceneManager.LoadScene ("_Survey");
 		}else

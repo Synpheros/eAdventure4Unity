@@ -17,6 +17,18 @@ public class NameSaver : MonoBehaviour {
 
     public void SaveName()
     {
+		string path = Application.persistentDataPath;
+
+		if (!path.EndsWith ("/")) {
+			path += "/";
+		}
+
+		if(PlayerPrefs.HasKey("username") && PlayerPrefs.GetString("username") != t.text){
+			if(System.IO.File.Exists(path + "tracesRaw.csv")){
+				System.IO.File.Copy (path + "tracesRaw.csv",path + PlayerPrefs.GetString("username") + ".csv.backup");
+				System.IO.File.Delete (path + "tracesRaw.csv");
+			}
+		}
         PlayerPrefs.SetString("username", t.text);
     }
 }
