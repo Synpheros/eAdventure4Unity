@@ -48,6 +48,15 @@ public class Net
 		behaviour.StartCoroutine (WaitForRequest (www, requestListener));
 		return www;
 	}
+
+	public WWW POST (string url, WWWForm data, IRequestListener requestListener)
+	{
+		
+		WWW www = new WWW (url, data);
+
+		behaviour.StartCoroutine (WaitForRequest (www, requestListener));
+		return www;
+	}
 		
 	private IEnumerator WaitForRequest (WWW www, IRequestListener requestListener)
 	{

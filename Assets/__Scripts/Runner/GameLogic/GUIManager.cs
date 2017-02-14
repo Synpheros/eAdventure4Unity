@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class GUIManager : MonoBehaviour {
@@ -194,10 +195,35 @@ public class GUIManager : MonoBehaviour {
 				path += "/";
 			}
 
+			Dictionary<string,string> headers = new Dictionary<string, string> ();
+
+			Net  net= new Net (this);
+
+			WWWForm data = new WWWForm ();
+
+			data.AddField ("token", PlayerPrefs.GetString ("LimesurveyToken"));
+			data.AddBinaryData ("traces", System.Text.Encoding.UTF8.GetBytes (System.IO.File.ReadAllText (Tracker.T.RawFilePath)));
+
+			//d//ata.headers.Remove ("Content-Type");// = "multipart/form-data";
+
+			net.POST (PlayerPrefs.GetString ("LimesurveyHost") + "classes/collector", data, new SavedTracesListener());
+
 			System.IO.File.AppendAllText(path + PlayerPrefs.GetString("LimesurveyToken") + ".csv" , System.IO.File.ReadAllText(Tracker.T.RawFilePath));
 			PlayerPrefs.SetString("CurrentSurvey","post");
 			SceneManager.LoadScene ("_Survey");
 		}else
 			Application.Quit();
     }
+
+	class SavedTracesListener : Net.IRequestListener{
+		public void Result(string data){
+			Debug.Log ("------------------------");
+			Debug.Log (data);
+		}
+
+		public void Error(string error){
+			Debug.Log ("------------------------");
+			Debug.Log (error);
+		}
+	}
 }
